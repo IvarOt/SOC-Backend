@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SOC_backend.logic.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
 using SOC_backend.logic.Interfaces.Logic;
-using SOC_backend.logic.Models;
 using SOC_backend.logic.Models.Request;
 using SOC_backend.logic.Models.Response;
 
@@ -51,7 +48,14 @@ namespace SOC_backend.api.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex.InnerException.Message);
+                    if (ex.InnerException != null)
+                    {
+                        return BadRequest(ex.InnerException.Message);
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
                 }
             }
             else

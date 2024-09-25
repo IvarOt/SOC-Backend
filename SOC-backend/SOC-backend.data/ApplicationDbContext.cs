@@ -5,7 +5,7 @@ namespace SOC_backend.data
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<CardModel> Cards { get; set; } = null!;
+        public DbSet<CardModel> Card { get; set; } = null!;
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     }
 }

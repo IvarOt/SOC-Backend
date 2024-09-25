@@ -9,6 +9,10 @@ namespace SOC_backend.logic.Models.DomainModel
         public int HP { get; private set; }
         public int DMG { get; private set; }
 
+        //For entity framework
+        public CardModel() { }
+
+        //Every property
         public CardModel(int id, string name, int hp, int dmg)
         {
             Id = id;
@@ -16,6 +20,15 @@ namespace SOC_backend.logic.Models.DomainModel
             HP = hp;
             DMG = dmg;
         }
+
+        //CardRequest
+        public CardModel(string name, int hp, int dmg)
+        {
+            Name = name;
+            HP = hp;
+            DMG = dmg;
+        }
+
 
         public CardResponse ToCardResponse()
         {

@@ -15,13 +15,13 @@ namespace SOC_backend.data.Repositories
 
         public async Task CreateCard(CardModel card)
         {
-            await _context.Cards.AddAsync(card);
+            await _context.Card.AddAsync(card);
             await _context.SaveChangesAsync();
         }
 
         public async Task<List<CardModel>> GetAllCards()
         {
-            var cards = await _context.Cards.ToListAsync();
+            var cards = await _context.Card.ToListAsync();
             return cards;
         }
     }
