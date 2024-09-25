@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOC-backend.api", "SOC-backend.api\SOC-backend.api.csproj", "{DD2BE40C-4771-4773-B522-A52E96099FBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOC-backend.api", "SOC-backend.api\SOC-backend.api.csproj", "{DD2BE40C-4771-4773-B522-A52E96099FBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOC-backend.logic", "SOC-backend.logic\SOC-backend.logic.csproj", "{1E41AD74-C632-46A6-8000-F2D5F5F71B73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOC-backend.logic", "SOC-backend.logic\SOC-backend.logic.csproj", "{1E41AD74-C632-46A6-8000-F2D5F5F71B73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOC-backend.data", "SOC-backend.data\SOC-backend.data.csproj", "{FFEDF2A6-EC18-42F3-BACE-35FC42D796C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "zSOC-backend.data", "SOC-backend.data\zSOC-backend.data.csproj", "{FFEDF2A6-EC18-42F3-BACE-35FC42D796C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
