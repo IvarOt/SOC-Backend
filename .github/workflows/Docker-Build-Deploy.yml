@@ -43,7 +43,7 @@ jobs:
         docker stop sagaofcards-backend || true
         docker rm sagaofcards-backend || true
 
-      - name: Run new Docker container
-        run: |
-          docker run -d --name sagaofcards-backend -p 80:80 sagaofcards-backend:latest
+    - name: Run new Docker container
+      run: |
+        docker run -d --name sagaofcards-backend -p 80:80 sagaofcards-backend:latest
     
