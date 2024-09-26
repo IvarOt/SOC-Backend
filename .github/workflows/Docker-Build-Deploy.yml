@@ -45,5 +45,5 @@ jobs:
 
     - name: Run new Docker container
       run: |
-        docker run -d --name sagaofcards-backend -p 80:80 ivarot/sagaofcards-backend:latest
+        docker run -d --name sagaofcards-backend -p 8080:8081 ivarot/sagaofcards-backend:latest
     
