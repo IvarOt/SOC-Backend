@@ -1,4 +1,5 @@
-﻿using SOC_backend.logic.Models.Response;
+﻿using SOC_backend.logic.Exceptions;
+using SOC_backend.logic.Models.Response;
 
 namespace SOC_backend.logic.Models.DomainModel
 {
@@ -16,23 +17,45 @@ namespace SOC_backend.logic.Models.DomainModel
         public CardModel(int id, string name, int hp, int dmg)
         {
             Id = id;
-            Name = name;
-            HP = hp;
-            DMG = dmg;
-        }
+            Name = ValidateName(name, 3, 30);
+			HP = ValidateInt(hp, "hp", 1, 30);
+			DMG = ValidateInt(dmg, "dmg", 0, 30);
+		}
 
         //CardRequest
         public CardModel(string name, int hp, int dmg)
         {
-            Name = name;
-            HP = hp;
-            DMG = dmg;
+            Name = ValidateName(name, 3, 30);
+            HP = ValidateInt(hp, "hp", 1, 30);
+            DMG = ValidateInt(dmg, "dmg", 0, 30);
         }
 
 
         public CardResponse ToCardResponse()
         {
             return new CardResponse(Id, Name, HP, DMG);
+        }
+
+        private string ValidateName(string name, int minLength, int maxLength)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+				throw new PropertyException("Name cannot be empty..", nameof(name));
+			}
+			if (name.Length < minLength || name.Length > maxLength)
+            {
+                throw new PropertyException($"Name has to be between {minLength} and {maxLength} long..", nameof(name));
+			}
+			return name;
+        }
+
+        private int ValidateInt(int value, string property, int minValue, int maxValue)
+        {
+            if (value < minValue || value > maxValue)
+            {
+                throw new PropertyException($"Number must be between {minValue} and {maxValue}..", property);
+            }
+            return value;
         }
     }
 }
