@@ -36,7 +36,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
         
     - name: Pull latest Docker image
-      run: docker pull sagaofcards-backend:latest
+      run: docker pull ivarot/sagaofcards-backend:latest
 
     - name: Stop and remove old Docker container (if exists)
       run: |
