@@ -21,8 +21,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore "/SOC-Backend/SOC-backend.sln"
+      run: dotnet restore "./SOC-Backend/SOC-backend.sln"
     - name: Build
-      run: dotnet build "/SOC-Backend/SOC-backend.sln" --no-restore
+      run: dotnet build "./SOC-Backend/SOC-backend.sln" --no-restore
     - name: Test
-      run: dotnet test "/SOC-Backend/SOC-backend.sln" --no-build --verbosity normal
+      run: dotnet test "./SOC-Backend/SOC-backend.sln" --no-build --verbosity normal
