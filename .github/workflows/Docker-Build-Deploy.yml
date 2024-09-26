@@ -40,8 +40,8 @@ jobs:
 
     - name: Stop and remove old Docker container (if exists)
       run: |
-        docker stop sagaofcards-backend 2>$null
-        docker rm sagaofcards-backend 2>$null
+        docker stop sagaofcards-backend
+        docker rm sagaofcards-backend
 
     - name: Run new Docker container
       run: |
