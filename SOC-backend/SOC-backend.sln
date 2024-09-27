@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOC-backend.logic", "SOC-ba
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "zSOC-backend.data", "SOC-backend.data\zSOC-backend.data.csproj", "{FFEDF2A6-EC18-42F3-BACE-35FC42D796C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zSOC-backend.test", "SOC-backend.test\zSOC-backend.test.csproj", "{ECB9C333-5498-4389-B529-0A68CB35093E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "zSOC-backend.test", "SOC-backend.test\zSOC-backend.test.csproj", "{ECB9C333-5498-4389-B529-0A68CB35093E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

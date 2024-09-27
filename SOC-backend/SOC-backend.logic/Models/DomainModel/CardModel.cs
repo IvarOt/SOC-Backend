@@ -30,6 +30,13 @@ namespace SOC_backend.logic.Models.DomainModel
             DMG = ValidateInt(dmg, "dmg", 0, 30);
         }
 
+        public void Update(int id, string name, int hp, int dmg)
+        {
+            Id = id;
+            Name = name;
+            HP = hp; 
+            DMG = dmg;
+        }
 
         public CardResponse ToCardResponse()
         {

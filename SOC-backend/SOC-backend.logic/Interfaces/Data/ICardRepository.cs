@@ -6,5 +6,9 @@ namespace SOC_backend.logic.Interfaces
     {
         Task CreateCard(CardModel card);
         Task<List<CardModel>> GetAllCards();
-    }
+        Task<CardModel> GetCard(int id);
+        Task EditCard(CardModel card);
+        Task DeleteCard(int id);
+
+	}
 }
