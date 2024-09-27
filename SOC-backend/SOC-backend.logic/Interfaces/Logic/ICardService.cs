@@ -8,5 +8,7 @@ namespace SOC_backend.logic.Interfaces.Logic
     {
         Task CreateCard(CardRequest cardRequest);
         Task<List<CardResponse>> GetAllCards();
-    }
+        Task<CardResponse> GetCard(int id);
+        Task EditCard(EditCardRequest cardRequest);
+	}
 }
