@@ -10,5 +10,6 @@ namespace SOC_backend.logic.Interfaces.Logic
         Task<List<CardResponse>> GetAllCards();
         Task<CardResponse> GetCard(int id);
         Task EditCard(EditCardRequest cardRequest);
+        Task DeleteCard(int id);
 	}
 }

@@ -113,6 +113,7 @@ namespace SOC_backend.api.Controllers
 			{
 				try
 				{
+					await _cardService.DeleteCard(id);
 					return Ok();
 				}
 				catch (Exception ex)
