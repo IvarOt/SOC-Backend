@@ -45,5 +45,10 @@ namespace SOC_backend.logic.Services
             var card = cardRequest.ToCardModel();
             await _cardRepository.EditCard(card);
         }
+
+        public async Task DeleteCard(int id)
+        {
+            await _cardRepository.DeleteCard(id);
+        }
     }
 }
