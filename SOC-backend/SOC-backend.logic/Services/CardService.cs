@@ -23,7 +23,7 @@ namespace SOC_backend.logic.Services
 
         public async Task<List<CardResponse>> GetAllCards()
         {
-            var cardModelList = await _cardRepository.GetAllCards();
+            List<CardModel> cardModelList = await _cardRepository.GetAllCards();
             List<CardResponse> cards = new List<CardResponse>();
             foreach (var cardModel in cardModelList)
             {
@@ -31,6 +31,19 @@ namespace SOC_backend.logic.Services
                 cards.Add(card);
             }
             return cards;
+        }
+
+        public async Task<CardResponse> GetCard(int id)
+        {
+            CardModel cardModel = await _cardRepository.GetCard(id);
+            CardResponse card = cardModel.ToCardResponse();
+            return card;
+        }
+
+        public async Task EditCard(EditCardRequest cardRequest)
+        {
+            var card = cardRequest.ToCardModel();
+            await _cardRepository.EditCard(card);
         }
     }
 }
