@@ -6,7 +6,7 @@ namespace SOC_backend.logic.Interfaces.Logic
 {
     public interface ICardService
     {
-        Task CreateCard(CardRequest cardRequest);
+        Task CreateCard(CreateCardRequest cardRequest);
         Task<List<CardResponse>> GetAllCards();
         Task<CardResponse> GetCard(int id);
         Task EditCard(EditCardRequest cardRequest);

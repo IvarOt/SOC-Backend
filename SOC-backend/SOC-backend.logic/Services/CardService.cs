@@ -15,7 +15,7 @@ namespace SOC_backend.logic.Services
             _cardRepository = cardRepository;
         }
 
-        public async Task CreateCard(CardRequest cardRequest)
+        public async Task CreateCard(CreateCardRequest cardRequest)
         {
             CardModel card = cardRequest.ToCardModel();
             await _cardRepository.CreateCard(card);

@@ -1,10 +1,10 @@
-using SOC_backend.logic.Exceptions;
+using SOC_backend.logic.ExceptionHandling.Exceptions;
 using SOC_backend.logic.Models.DomainModel;
 using SOC_backend.logic.Services;
 
 namespace SOC_backend.test
 {
-	[TestClass]
+    [TestClass]
 	public class CardTests
 	{
 		[TestMethod]
