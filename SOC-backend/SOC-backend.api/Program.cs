@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SOC_backend.data;
 using SOC_backend.data.Repositories;
+using SOC_backend.logic.ExceptionHandling;
 using SOC_backend.logic.Interfaces;
 using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Services;
@@ -35,13 +36,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.UseCors("ReactProject");
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseRouting();
 
 app.UseHttpsRedirection();
