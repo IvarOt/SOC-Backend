@@ -60,7 +60,7 @@ namespace SOC_backend.logic.Models.DomainModel
         {
             if (value < minValue || value > maxValue)
             {
-                throw new PropertyException($"Number must be between {minValue} and {maxValue}..", property);
+                throw new PropertyException($"{property} must be between {minValue} and {maxValue}..", property);
             }
             return value;
         }
