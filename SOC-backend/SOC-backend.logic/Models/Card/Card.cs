@@ -1,10 +1,9 @@
 ﻿using SOC_backend.logic.ExceptionHandling.Exceptions;
-using SOC_backend.logic.Models.Response;
 using System.Drawing;
 
-namespace SOC_backend.logic.Models.DomainModel
+namespace SOC_backend.logic.Models.Card
 {
-    public class CardModel
+    public class Card
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
@@ -13,20 +12,20 @@ namespace SOC_backend.logic.Models.DomainModel
         public string Color { get; private set; }
 
         //For entity framework
-        public CardModel() { }
+        public Card() { }
 
         //Every property
-        public CardModel(int id, string name, int hp, int dmg, string color)
+        public Card(int id, string name, int hp, int dmg, string color)
         {
             Id = id;
             Name = ValidateString(name, "name", 3, 30);
-			HP = ValidateInt(hp, "hp", 1, 30);
-			DMG = ValidateInt(dmg, "dmg", 0, 30);
+            HP = ValidateInt(hp, "hp", 1, 30);
+            DMG = ValidateInt(dmg, "dmg", 0, 30);
             Color = color;
         }
 
         //CardRequest
-        public CardModel(string name, int hp, int dmg, string color)
+        public Card(string name, int hp, int dmg, string color)
         {
             Name = ValidateString(name, "name", 3, 30);
             HP = ValidateInt(hp, "hp", 1, 30);
@@ -38,7 +37,7 @@ namespace SOC_backend.logic.Models.DomainModel
         {
             Id = id;
             Name = name;
-            HP = hp; 
+            HP = hp;
             DMG = dmg;
             Color = color;
         }
@@ -52,13 +51,13 @@ namespace SOC_backend.logic.Models.DomainModel
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-				throw new PropertyException($"{property} cannot be empty..", nameof(property));
-			}
-			if (value.Length < minLength || value.Length > maxLength)
+                throw new PropertyException($"{property} cannot be empty..", nameof(property));
+            }
+            if (value.Length < minLength || value.Length > maxLength)
             {
                 throw new PropertyException($"{property} has to be between {minLength} and {maxLength} long..", nameof(property));
-			}
-			return value;
+            }
+            return value;
         }
 
         private int ValidateInt(int value, string property, int minValue, int maxValue)

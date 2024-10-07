@@ -1,4 +1,4 @@
-﻿namespace SOC_backend.logic.Models.Response
+﻿namespace SOC_backend.logic.Models.Card
 {
     public class CardResponse
     {
