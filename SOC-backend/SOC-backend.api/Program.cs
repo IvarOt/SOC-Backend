@@ -2,18 +2,23 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SOC_backend.api;
 using SOC_backend.data;
 using SOC_backend.data.Repositories;
-using SOC_backend.logic.ExceptionHandling;
 using SOC_backend.logic.Interfaces;
+using SOC_backend.logic.Interfaces.Api;
 using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Interfaces.Logic;
+using SOC_backend.logic.Pipelines;
 using SOC_backend.logic.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddAuthentication (x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -32,8 +37,8 @@ builder.Services.AddAuthentication (x =>
         ValidateIssuerSigningKey = true,
     };
 });
-builder.Services.AddAuthorization();
 
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddScoped<ICardRepository, CardRepository>();
 builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -105,6 +110,9 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<TokenMiddleware>();
+
 
 app.MapControllers();
 

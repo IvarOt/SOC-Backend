@@ -5,6 +5,7 @@ using SOC_backend.logic.Models.Card;
 
 namespace SOC_backend.api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CardsController : ControllerBase

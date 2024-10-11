@@ -1,6 +1,7 @@
 ﻿using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Models.Player;
+using System.Numerics;
 
 namespace SOC_backend.logic.Services
 {
@@ -24,9 +25,17 @@ namespace SOC_backend.logic.Services
 
         public async Task<string> Login(PlayerLoginRequest loginRequest)
         {
-            Player player = new Player();
-            string token = _tokenService.CreateToken(player);
-            return token;
-        }
+            Player player = loginRequest.ToPlayer();
+            var credentialsMatch = await _playerRepository.Login(player);
+            if (credentialsMatch)
+            {
+				string token = _tokenService.CreateToken(player);
+				return token;
+			}
+            else
+            {
+                throw new Exception();
+            }
+		}
     }
 }

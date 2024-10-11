@@ -21,11 +21,11 @@ namespace SOC_backend.api.Controllers
             return Ok(token);
         }
 
-        [HttpGet]
+        [HttpPut]
         public async Task<ActionResult> Login(PlayerLoginRequest loginRequest)
         {
-            var token = _playerService.Login(loginRequest);
-            return Ok(token);
+            var token = await _playerService.Login(loginRequest);
+            return Ok("Bearer " + token);
         }
     }
 }

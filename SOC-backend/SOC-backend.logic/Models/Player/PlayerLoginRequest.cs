@@ -11,5 +11,10 @@ namespace SOC_backend.logic.Models.Player
             Username = username;
             Password = password;
         }
+
+        public Player ToPlayer()
+        {
+            return new Player(Username, Password);
+        }
     }
 }

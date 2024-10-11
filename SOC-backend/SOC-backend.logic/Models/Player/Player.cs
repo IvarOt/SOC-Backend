@@ -10,13 +10,27 @@ namespace SOC_backend.logic.Models.Player
         public string Role { get; private set; }
 
         public Player() { }
+		public Player(int id, string username, string email, string password)
+		{
+			Id = id;
+			Username = username;
+			Email = email;
+			Password = password;
+			Role = "player";
+		}
 
-        public Player(string username, string email, string password)
+		public Player(string username, string email, string password)
         {
             Username = username;
             Email = email;
             Password = password;
             Role = "player";
         }
-    }
+
+		public Player(string username, string password)
+		{
+			Username = username;
+			Password = password;
+		}
+	}
 }
