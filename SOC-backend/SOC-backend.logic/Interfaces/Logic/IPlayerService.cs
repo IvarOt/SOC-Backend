@@ -7,5 +7,6 @@ namespace SOC_backend.logic.Interfaces.Logic
     {
         Task Register(RegisterPlayerRequest newPlayer);
         Task<PlayerLoginResponse> Login(PlayerLoginRequest loginRequest);
+        Task<PlayerProfileResponse> GetProfileInfo(int id);
     }
 }

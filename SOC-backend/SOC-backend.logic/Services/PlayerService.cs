@@ -16,6 +16,13 @@ namespace SOC_backend.logic.Services
             _tokenService = tokenService;
         }
 
+        public async Task<PlayerProfileResponse> GetProfileInfo(int id)
+        {
+            var player = await _playerRepository.GetProfileInfo(id);
+            var profileInfo = player.ToPlayerProfileResponse();
+            return profileInfo;
+        }
+
         public async Task Register(RegisterPlayerRequest newPlayer)
         {
             if (PasswordsMatch(newPlayer))
@@ -31,13 +38,13 @@ namespace SOC_backend.logic.Services
             var retreivedPlayer = await _playerRepository.Login(player);
             if (BCrypt.Net.BCrypt.EnhancedVerify(loginRequest.Password, retreivedPlayer.Password))
             {
-				string token = _tokenService.CreateToken(player);
+				string token = _tokenService.CreateToken(retreivedPlayer);
                 PlayerLoginResponse response = new PlayerLoginResponse(token, retreivedPlayer.Username);
 				return response;
 			}
             else
             {
-                throw new Exception();
+                throw new PropertyException("Passwords don't match", nameof(player.Password));
             }
 		}
 
