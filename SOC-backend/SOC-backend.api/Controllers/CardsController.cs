@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SOC_backend.logic.Interfaces.Logic;
-using SOC_backend.logic.Models.Request;
-using SOC_backend.logic.Models.Response;
+using SOC_backend.logic.Models.Card;
 
 namespace SOC_backend.api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CardsController : ControllerBase

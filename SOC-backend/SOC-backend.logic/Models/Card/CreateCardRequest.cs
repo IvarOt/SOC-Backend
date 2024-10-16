@@ -1,7 +1,6 @@
-﻿using SOC_backend.logic.Models.DomainModel;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace SOC_backend.logic.Models.Request
+namespace SOC_backend.logic.Models.Card
 {
     public class CreateCardRequest
     {
@@ -12,16 +11,16 @@ namespace SOC_backend.logic.Models.Request
 
 
         public CreateCardRequest(string name, int hp, int dmg, string color)
-		{
-			Name = name;
-			HP = hp;
-			DMG = dmg;
+        {
+            Name = name;
+            HP = hp;
+            DMG = dmg;
             Color = color;
         }
 
-        public CardModel ToCardModel()
+        public Card ToCardModel()
         {
-            return new CardModel(Name, HP, DMG, Color);
+            return new Card(Name, HP, DMG, Color);
         }
     }
 }
