@@ -8,6 +8,7 @@ namespace SOC_backend.logic.Models.Match
 {
     public class FinishedMatch
     {
+        public int Id { get; private set; }
         public string Opponent { get; private set; }
         public DateTime Date { get; private set; }
         public bool IsWinner {  get; private set; }

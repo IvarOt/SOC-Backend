@@ -27,5 +27,12 @@ namespace SOC_backend.api.Controllers
             var user = await _playerService.Login(loginRequest);
             return Ok(new { token = "Bearer " + user.Token, username = user.Username });
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Profile(int id)
+        {
+            var playerInfo = await _playerService.GetProfileInfo(id);
+            return Ok(playerInfo);
+        }
     }
 }

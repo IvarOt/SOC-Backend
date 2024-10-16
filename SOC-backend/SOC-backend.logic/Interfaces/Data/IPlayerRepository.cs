@@ -7,6 +7,8 @@ namespace SOC_backend.logic.Interfaces.Data
     {
         Task Register(Player player);
         Task<Player> Login(Player player);
+        Task<Player> GetProfileInfo(int id);
 
-	}
+
+    }
 }

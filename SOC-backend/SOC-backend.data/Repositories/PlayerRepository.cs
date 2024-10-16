@@ -13,6 +13,19 @@ namespace SOC_backend.data.Repositories
             _context = context;
         }
 
+        public async Task<Player> GetProfileInfo(int id)
+        {
+            var player = await _context.Player.FindAsync(id);
+            if (player == null)
+            {
+                throw new NotFoundException("Player", id);
+            }
+            else
+            {
+                return player;
+            }
+        }
+
         public async Task Register(Player player)
         {
             await _context.Player.AddAsync(player);

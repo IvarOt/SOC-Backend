@@ -11,7 +11,6 @@ namespace SOC_backend.logic.Models.Player
         public string Email { get; private set; }
         public string Password { get; private set; }
         public string Role { get; private set; }
-        public List<FinishedMatch> MatchHistory { get; private set; }
 
 		//entity framework
         public Player() { }
@@ -40,6 +39,11 @@ namespace SOC_backend.logic.Models.Player
 			Username = username;
 			Password = password;
 		}
+
+        public PlayerProfileResponse ToPlayerProfileResponse()
+        {
+            return new PlayerProfileResponse(Username, Email);
+        }
 
         private string ValidateUsername(string username)
         {
