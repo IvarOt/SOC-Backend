@@ -1,4 +1,5 @@
-﻿using SOC_backend.logic.Interfaces.Data;
+﻿using SOC_backend.logic.ExceptionHandling.Exceptions;
+using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Models.Player;
 using System.Numerics;
@@ -15,27 +16,41 @@ namespace SOC_backend.logic.Services
             _tokenService = tokenService;
         }
 
-        public async Task<string> Register(RegisterPlayerRequest newPlayer)
+        public async Task Register(RegisterPlayerRequest newPlayer)
         {
-            Player player = newPlayer.ToPlayer();
-            await _playerRepository.Register(player);
-            string token = _tokenService.CreateToken(player);
-            return token;
+            if (PasswordsMatch(newPlayer))
+            {
+                Player player = newPlayer.ToPlayer();
+                await _playerRepository.Register(player);
+            }
         }
 
-        public async Task<string> Login(PlayerLoginRequest loginRequest)
+        public async Task<PlayerLoginResponse> Login(PlayerLoginRequest loginRequest)
         {
             Player player = loginRequest.ToPlayer();
-            var credentialsMatch = await _playerRepository.Login(player);
-            if (credentialsMatch)
+            var retreivedPlayer = await _playerRepository.Login(player);
+            if (BCrypt.Net.BCrypt.EnhancedVerify(loginRequest.Password, retreivedPlayer.Password))
             {
 				string token = _tokenService.CreateToken(player);
-				return token;
+                PlayerLoginResponse response = new PlayerLoginResponse(token, retreivedPlayer.Username);
+				return response;
 			}
             else
             {
                 throw new Exception();
             }
 		}
+
+        private bool PasswordsMatch(RegisterPlayerRequest player)
+        {
+            if (player.Password == player.ConfirmPassword)
+            {
+                return true;
+            }
+            else
+            {
+                throw new PropertyException("Passwords don't match", nameof(player.Password));
+            }
+        }
     }
 }

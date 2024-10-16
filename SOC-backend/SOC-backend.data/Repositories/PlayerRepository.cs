@@ -19,16 +19,16 @@ namespace SOC_backend.data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> Login(Player player)
+        public async Task<Player> Login(Player player)
         {
-            var result = await _context.Player.FirstOrDefaultAsync(x => x.Username == player.Username);
-			if (result == null)
+            var existingPlayer = await _context.Player.FirstOrDefaultAsync(x => x.Username == player.Username);
+			if (existingPlayer == null)
             {
 				throw new NotFoundException("Player", player.Id);
 			}
             else
             {
-                return true;
+                return existingPlayer;
             }
 		}
     }

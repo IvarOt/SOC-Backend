@@ -17,15 +17,15 @@ namespace SOC_backend.api.Controllers
         [HttpPost]
         public async Task<ActionResult> Register(RegisterPlayerRequest newPlayer)
         {
-            var token = await _playerService.Register(newPlayer);
-            return Ok(token);
+            await _playerService.Register(newPlayer);
+            return Ok();
         }
 
-        [HttpPut]
+        [HttpPost("Login")]
         public async Task<ActionResult> Login(PlayerLoginRequest loginRequest)
         {
-            var token = await _playerService.Login(loginRequest);
-            return Ok("Bearer " + token);
+            var user = await _playerService.Login(loginRequest);
+            return Ok(new { token = "Bearer " + user.Token, username = user.Username });
         }
     }
 }

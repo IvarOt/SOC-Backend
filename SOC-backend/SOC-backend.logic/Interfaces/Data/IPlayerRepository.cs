@@ -6,7 +6,7 @@ namespace SOC_backend.logic.Interfaces.Data
     public interface IPlayerRepository
     {
         Task Register(Player player);
-        Task<bool> Login(Player player);
+        Task<Player> Login(Player player);
 
 	}
 }

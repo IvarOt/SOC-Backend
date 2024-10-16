@@ -14,23 +14,23 @@ namespace SOC_backend.logic.Models.Card
         //For entity framework
         public Card() { }
 
-        //Every property
+        //Database / edit card
         public Card(int id, string name, int hp, int dmg, string color)
         {
             Id = id;
-            Name = ValidateString(name, "name", 3, 30);
-            HP = ValidateInt(hp, "hp", 1, 30);
-            DMG = ValidateInt(dmg, "dmg", 0, 30);
-            Color = color;
+            Name = ValidateString(name, 3, 30);
+            HP = ValidateInt(hp, 1, 30);
+            DMG = ValidateInt(dmg,  0, 30);
+            Color = ValidateString(color, 1, 20); 
         }
 
         //CardRequest
         public Card(string name, int hp, int dmg, string color)
         {
-            Name = ValidateString(name, "name", 3, 30);
-            HP = ValidateInt(hp, "hp", 1, 30);
-            DMG = ValidateInt(dmg, "dmg", 0, 30);
-            Color = color;
+            Name = ValidateString(name, 3, 30);
+            HP = ValidateInt(hp, 1, 30);
+            DMG = ValidateInt(dmg, 0, 30);
+            Color = ValidateString(color, 7, 7);
         }
 
         public void Update(int id, string name, int hp, int dmg, string color)
@@ -47,24 +47,24 @@ namespace SOC_backend.logic.Models.Card
             return new CardResponse(Id, Name, HP, DMG, Color);
         }
 
-        private string ValidateString(string value, string property, int minLength, int maxLength)
+        private string ValidateString(string value, int minLength, int maxLength)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                throw new PropertyException($"{property} cannot be empty..", nameof(property));
+                throw new PropertyException($"{nameof(value)} cannot be empty..", nameof(value));
             }
             if (value.Length < minLength || value.Length > maxLength)
             {
-                throw new PropertyException($"{property} has to be between {minLength} and {maxLength} long..", nameof(property));
+                throw new PropertyException($"{nameof(value)} has to be between {minLength} and {maxLength} long..", nameof(value));
             }
             return value;
         }
 
-        private int ValidateInt(int value, string property, int minValue, int maxValue)
+        private int ValidateInt(int value, int minValue, int maxValue)
         {
             if (value < minValue || value > maxValue)
             {
-                throw new PropertyException($"{property} must be between {minValue} and {maxValue}..", property);
+                throw new PropertyException($"{nameof(value)} must be between {minValue} and {maxValue}..",  nameof(value));
             }
             return value;
         }

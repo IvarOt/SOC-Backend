@@ -18,7 +18,7 @@ namespace SOC_backend.logic.Pipelines
 			_httpClientFactory = httpClientFactory;
 		}
 
-		public async Task InvokeAsync(HttpContext context, ITokenProvider _tokenProvider)
+		public async Task Invoke(HttpContext context, ITokenProvider _tokenProvider)
 		{
 			await _next(context);
 
