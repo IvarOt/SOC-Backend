@@ -44,7 +44,7 @@ namespace SOC_backend.api.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCard(int id)
         {
             await _cardService.DeleteCard(id);
