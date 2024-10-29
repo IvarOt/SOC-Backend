@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SOC_backend.logic.ExceptionHandling.Exceptions;
 using SOC_backend.logic.Interfaces;
-using SOC_backend.logic.Models.DomainModel;
+using SOC_backend.logic.Models.Card;
 
 namespace SOC_backend.data.Repositories
 {
@@ -14,26 +14,26 @@ namespace SOC_backend.data.Repositories
             _context = context;
         }
 
-        public async Task CreateCard(CardModel card)
+        public async Task CreateCard(Card card)
         {
             await _context.Card.AddAsync(card);
             await _context.SaveChangesAsync();
         }
 
-        public async Task EditCard(CardModel cardModel)
+        public async Task EditCard(Card cardModel)
         {
-            CardModel card = await _context.Card.FindAsync(cardModel.Id);
+            Card card = await _context.Card.FindAsync(cardModel.Id);
             if (card == null)
             {
                 throw new NotFoundException("Card", cardModel.Id);
             }
-            card.Update(cardModel.Id, cardModel.Name, cardModel.HP, cardModel.DMG);
+            card.Update(cardModel.Id, cardModel.Name, cardModel.HP, cardModel.DMG, cardModel.Color);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteCard(int id)
         {
-            CardModel card = await _context.Card.FindAsync(id);
+            Card card = await _context.Card.FindAsync(id);
             if (card == null)
             {
                 throw new NotFoundException("Card", id);
@@ -42,7 +42,7 @@ namespace SOC_backend.data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<CardModel> GetCard(int id)
+        public async Task<Card> GetCard(int id)
         {
             var card = await _context.Card.FindAsync(id);
             if (card == null)
@@ -53,7 +53,7 @@ namespace SOC_backend.data.Repositories
 
         }
 
-        public async Task<List<CardModel>> GetAllCards()
+        public async Task<List<Card>> GetAllCards()
         {
             var cards = await _context.Card.ToListAsync();
             if (cards == null)

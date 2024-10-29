@@ -1,8 +1,6 @@
 ﻿using SOC_backend.logic.Interfaces;
 using SOC_backend.logic.Interfaces.Logic;
-using SOC_backend.logic.Models.DomainModel;
-using SOC_backend.logic.Models.Request;
-using SOC_backend.logic.Models.Response;
+using SOC_backend.logic.Models.Card;
 
 namespace SOC_backend.logic.Services
 {
@@ -17,13 +15,13 @@ namespace SOC_backend.logic.Services
 
         public async Task CreateCard(CreateCardRequest cardRequest)
         {
-            CardModel card = cardRequest.ToCardModel();
+            Card card = cardRequest.ToCardModel();
             await _cardRepository.CreateCard(card);
         }
 
         public async Task<List<CardResponse>> GetAllCards()
         {
-            List<CardModel> cardModelList = await _cardRepository.GetAllCards();
+            List<Card> cardModelList = await _cardRepository.GetAllCards();
             List<CardResponse> cards = new List<CardResponse>();
             foreach (var cardModel in cardModelList)
             {
@@ -35,7 +33,7 @@ namespace SOC_backend.logic.Services
 
         public async Task<CardResponse> GetCard(int id)
         {
-            CardModel cardModel = await _cardRepository.GetCard(id);
+            Card cardModel = await _cardRepository.GetCard(id);
             CardResponse card = cardModel.ToCardResponse();
             return card;
         }

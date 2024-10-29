@@ -1,5 +1,5 @@
 using SOC_backend.logic.ExceptionHandling.Exceptions;
-using SOC_backend.logic.Models.DomainModel;
+using SOC_backend.logic.Models.Card;
 using SOC_backend.logic.Services;
 
 namespace SOC_backend.test
@@ -11,7 +11,7 @@ namespace SOC_backend.test
 		[ExpectedException(typeof(PropertyException))]
 		public void TestCardNameValidation()
 		{
-			CardModel card = new CardModel(0, "b", 10, 10);
+			Card card = new Card(0, "b", 10, 10, "rgb(255, 255, 255)");
 		}
 	}
 }
