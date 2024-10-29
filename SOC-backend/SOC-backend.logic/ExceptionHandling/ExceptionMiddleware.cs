@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SOC_backend.logic.Pipelines
+namespace SOC_backend.logic.ExceptionHandling
 {
     public class ExceptionMiddleware
     {

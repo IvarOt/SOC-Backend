@@ -1,4 +1,6 @@
-﻿using SOC_backend.logic.Models.Card;
+﻿using SOC_backend.logic.Models.DomainModel;
+using SOC_backend.logic.Models.Request;
+using SOC_backend.logic.Models.Response;
 
 namespace SOC_backend.logic.Interfaces.Logic
 {

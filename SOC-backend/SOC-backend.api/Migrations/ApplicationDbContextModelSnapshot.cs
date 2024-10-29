@@ -21,17 +21,13 @@ namespace SOC_backend.api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SOC_backend.logic.Models.Card.Card", b =>
+            modelBuilder.Entity("SOC_backend.logic.Models.DomainModel.CardModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DMG")
                         .HasColumnType("int");
@@ -45,36 +41,7 @@ namespace SOC_backend.api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Card");
-                });
-
-            modelBuilder.Entity("SOC_backend.logic.Models.Player.Player", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Player");
+                    b.ToTable("Cards");
                 });
 #pragma warning restore 612, 618
         }
