@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SOC_backend.logic.Interfaces.Logic;
-using SOC_backend.logic.Models.Card;
+using SOC_backend.logic.Models.Request;
+using SOC_backend.logic.Models.Response;
 
 namespace SOC_backend.api.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CardsController : ControllerBase
@@ -44,7 +43,7 @@ namespace SOC_backend.api.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<ActionResult> DeleteCard(int id)
         {
             await _cardService.DeleteCard(id);
