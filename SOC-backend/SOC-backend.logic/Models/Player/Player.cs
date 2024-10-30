@@ -11,8 +11,10 @@ namespace SOC_backend.logic.Models.Player
         public string Email { get; private set; }
         public string Password { get; private set; }
         public string Role { get; private set; }
+        public string RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiry { get; set; }
 
-		//entity framework
+        //entity framework
         public Player() { }
 
 		//Profile function?
@@ -69,7 +71,10 @@ namespace SOC_backend.logic.Models.Player
             {
                 throw new PropertyException($"{nameof(Password)} must be at least 6 characters long.", nameof(Password));
             }
-            return BCrypt.Net.BCrypt.EnhancedHashPassword(password);
+            else
+            {
+                return BCrypt.Net.BCrypt.EnhancedHashPassword(password);
+            }
         }
     }
 }

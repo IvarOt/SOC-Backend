@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Models.Player;
 
@@ -24,8 +25,18 @@ namespace SOC_backend.api.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult> Login(PlayerLoginRequest loginRequest)
         {
-            var user = await _playerService.Login(loginRequest);
-            return Ok(new { token = "Bearer " + user.Token, username = user.Username });
+            var player = await _playerService.Login(loginRequest);
+
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTime.UtcNow.AddDays(7)
+            };
+
+            Response.Cookies.Append("RefreshToken", player.RefreshToken, cookieOptions);
+            return Ok(player.AccesToken);
         }
 
         [HttpGet("{id}")]
@@ -33,6 +44,19 @@ namespace SOC_backend.api.Controllers
         {
             var playerInfo = await _playerService.GetProfileInfo(id);
             return Ok(playerInfo);
+        }
+
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult> RefreshToken()
+        {
+            var refreshToken = Request.Cookies["RefreshToken"];
+            if (refreshToken == null)
+            {
+                return Unauthorized("No refreshToken");
+            }
+            var accesToken = await _playerService.RefreshAccesToken(refreshToken);
+            
+            return Ok(accesToken);
         }
     }
 }

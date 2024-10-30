@@ -8,13 +8,13 @@ namespace SOC_backend.logic.Models.Player
 {
     public class PlayerLoginResponse
     {
-        public string Token { get; private set; }
-        public string Username { get; private set; }
+        public string AccesToken { get; private set; }
+        public string RefreshToken { get; private set; }
 
-        public PlayerLoginResponse(string token, string username)
+        public PlayerLoginResponse(string token, string refreshToken)
         {
-            Token = token;
-            Username = username;
+            AccesToken = token;
+            RefreshToken = refreshToken;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace SOC_backend.logic.Services
 
         public async Task Register(RegisterPlayerRequest newPlayer)
         {
-            if (PasswordsMatch(newPlayer))
+            if (RegisterPasswordsMatch(newPlayer.Password, newPlayer.ConfirmPassword))
             {
                 Player player = newPlayer.ToPlayer();
                 await _playerRepository.Register(player);
@@ -36,27 +36,55 @@ namespace SOC_backend.logic.Services
         {
             Player player = loginRequest.ToPlayer();
             var retreivedPlayer = await _playerRepository.Login(player);
-            if (BCrypt.Net.BCrypt.EnhancedVerify(loginRequest.Password, retreivedPlayer.Password))
+            if (LoginPasswordsMatch(player.Password, retreivedPlayer.Password))
             {
-				string token = _tokenService.CreateToken(retreivedPlayer);
-                PlayerLoginResponse response = new PlayerLoginResponse(token, retreivedPlayer.Username);
-				return response;
-			}
+                string accesToken = _tokenService.CreateAccesToken(retreivedPlayer);
+                string refreshToken = _tokenService.CreateRefreshToken();
+                await _playerRepository.StoreRefreshToken(retreivedPlayer.Id, refreshToken);
+                PlayerLoginResponse response = new PlayerLoginResponse(accesToken, refreshToken);
+                return response;
+            }
             else
             {
-                throw new PropertyException("Passwords don't match", nameof(player.Password));
+                throw new PropertyException("Password is incorrect", "password");
             }
-		}
+        }
 
-        private bool PasswordsMatch(RegisterPlayerRequest player)
+        public async Task<string> RefreshAccesToken(string refreshToken)
         {
-            if (player.Password == player.ConfirmPassword)
+            Player player = await _playerRepository.GetMatchingPlayer(refreshToken);
+            if (player.RefreshTokenExpiry < DateTime.UtcNow)
+            {
+                throw new PropertyException("Refresh token is expired", "RefreshToken");
+            }
+            else
+            {
+                string accesToken = _tokenService.CreateAccesToken(player);
+                return accesToken;
+            }
+        }
+
+        private bool LoginPasswordsMatch(string password, string passwordHash)
+        {
+            if (BCrypt.Net.BCrypt.EnhancedVerify(password, passwordHash))
             {
                 return true;
             }
             else
             {
-                throw new PropertyException("Passwords don't match", nameof(player.Password));
+                return false;
+            }
+        }
+
+        public bool RegisterPasswordsMatch(string password, string confirmPassword)
+        {
+            if (password == confirmPassword)
+            {
+                return true;
+            }
+            else
+            {
+                throw new PropertyException("Passwords don't match", "password");
             }
         }
     }
