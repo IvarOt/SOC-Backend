@@ -1,6 +1,7 @@
 ﻿using SOC_backend.logic.ExceptionHandling.Exceptions;
 using System.Text.RegularExpressions;
 using SOC_backend.logic.Models.Match;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SOC_backend.logic.Models.Player
 {
@@ -11,8 +12,8 @@ namespace SOC_backend.logic.Models.Player
         public string Email { get; private set; }
         public string Password { get; private set; }
         public string Role { get; private set; }
-        public string RefreshToken { get; set; }
-        public DateTime RefreshTokenExpiry { get; set; }
+        public string? RefreshToken { get; set; }
+		public DateTime? RefreshTokenExpiry { get; set; }
 
         //entity framework
         public Player() { }

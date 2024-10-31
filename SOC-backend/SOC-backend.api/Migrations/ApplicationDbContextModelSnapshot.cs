@@ -46,7 +46,7 @@ namespace SOC_backend.api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Card");
+                    b.ToTable("Card", (string)null);
                 });
 
             modelBuilder.Entity("SOC_backend.logic.Models.Player.Player", b =>
@@ -82,7 +82,7 @@ namespace SOC_backend.api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Player");
+                    b.ToTable("Player", (string)null);
                 });
 #pragma warning restore 612, 618
         }
