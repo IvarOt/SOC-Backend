@@ -26,6 +26,32 @@ namespace SOC_backend.data.Repositories
             }
         }
 
+        public async Task StoreRefreshToken(int playerId, string refreshToken)
+        {
+            var player = await _context.Player.FirstOrDefaultAsync(x => x.Id == playerId);
+            if (player == null)
+            {
+                throw new NotFoundException("Player", player.Id);
+            }
+            player.RefreshToken = refreshToken;
+            player.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Player> GetMatchingPlayer(string refreshToken)
+        {
+            var player = await _context.Player.FirstOrDefaultAsync(x => x.RefreshToken == refreshToken);
+            if (player == null)
+            {
+                throw new NotFoundException("Refresh token does not exist");
+            }
+            else
+            {
+                return player;
+            }
+        }
+
         public async Task Register(Player player)
         {
             await _context.Player.AddAsync(player);

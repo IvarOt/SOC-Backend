@@ -9,6 +9,7 @@ namespace SOC_backend.logic.Interfaces.Logic
 {
     public interface ITokenService
     {
-        string CreateToken(Player player);
+        string CreateAccesToken(Player player);
+        string CreateRefreshToken();
     }
 }
