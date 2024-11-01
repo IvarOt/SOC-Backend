@@ -6,7 +6,6 @@ using SOC_backend.api;
 using SOC_backend.data;
 using SOC_backend.data.Repositories;
 using SOC_backend.logic.Interfaces;
-using SOC_backend.logic.Interfaces.Api;
 using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Pipelines;
@@ -15,10 +14,10 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Services:
 builder.Services.AddHttpClient();
-builder.Services.AddHttpContextAccessor();
 
+//JWT-token setup
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -38,7 +37,7 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+//Interfaces registration
 builder.Services.AddScoped<ICardRepository, CardRepository>();
 builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -58,8 +57,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -90,7 +89,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
 var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -102,18 +100,15 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors("ReactProject");
-// Configure the HTTP request pipeline.
+
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseRouting();
 
+app.UseRouting();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseMiddleware<TokenMiddleware>();
-
 
 app.MapControllers();
 

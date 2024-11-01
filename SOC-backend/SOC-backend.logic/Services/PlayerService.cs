@@ -1,4 +1,4 @@
-﻿using SOC_backend.logic.ExceptionHandling.Exceptions;
+﻿using SOC_backend.logic.Exceptions;
 using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Models.Player;

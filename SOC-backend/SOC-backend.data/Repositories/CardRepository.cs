@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SOC_backend.logic.ExceptionHandling.Exceptions;
+using SOC_backend.logic.Exceptions;
 using SOC_backend.logic.Interfaces;
 using SOC_backend.logic.Models.Card;
 
