@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using SOC_backend.logic.ExceptionHandling.Exceptions;
+using SOC_backend.logic.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

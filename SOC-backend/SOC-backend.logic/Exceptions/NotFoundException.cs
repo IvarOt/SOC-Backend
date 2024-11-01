@@ -5,11 +5,11 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SOC_backend.logic.ExceptionHandling.Exceptions
+namespace SOC_backend.logic.Exceptions
 {
     public class NotFoundException : Exception
     {
-        public override string Message {  get;  }
+        public override string Message { get; }
         public HttpStatusCode StatusCode;
 
         public NotFoundException(string item, int id)

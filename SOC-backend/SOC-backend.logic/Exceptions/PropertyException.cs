@@ -1,4 +1,4 @@
-﻿namespace SOC_backend.logic.ExceptionHandling.Exceptions
+﻿namespace SOC_backend.logic.Exceptions
 {
     public class PropertyException : Exception
     {

@@ -1,5 +1,4 @@
-﻿using SOC_backend.logic.ExceptionHandling.Exceptions;
-using System.Drawing;
+﻿using SOC_backend.logic.Exceptions;
 
 namespace SOC_backend.logic.Models.Card
 {

@@ -1,7 +1,7 @@
-﻿using SOC_backend.logic.ExceptionHandling.Exceptions;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using SOC_backend.logic.Models.Match;
 using System.Diagnostics.CodeAnalysis;
+using SOC_backend.logic.Exceptions;
 
 namespace SOC_backend.logic.Models.Player
 {
