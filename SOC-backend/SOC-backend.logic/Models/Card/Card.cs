@@ -9,7 +9,7 @@ namespace SOC_backend.logic.Models.Card
         public int HP { get; private set; }
         public int DMG { get; private set; }
         public string Color { get; private set; }
-        public string ImageURL { get; set; }
+        public string? ImageURL { get; set; }
 
         //For entity framework
         public Card() { }

@@ -45,7 +45,14 @@ namespace SOC_backend.data.Repositories
                     Overwrite = true
                 };
                 var uploadResult = await cloudinary.UploadAsync(uploadParams);
-                return uploadResult.SecureUrl.ToString();
+                if (uploadResult.SecureUrl != null)
+                {
+                    return uploadResult.SecureUrl.ToString();
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
         }
     }
