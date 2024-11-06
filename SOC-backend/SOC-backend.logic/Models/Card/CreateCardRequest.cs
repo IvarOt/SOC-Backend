@@ -1,22 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System.Drawing;
-using static System.Net.Mime.MediaTypeNames;
+using System.ComponentModel.DataAnnotations;
 
 namespace SOC_backend.logic.Models.Card
 {
-    public class CreateCardRequest
+    public class CreateCardRequest : CardRequest
     {
-        public string Name { get; set; }
-        public int HP { get; set; }
-        public int DMG { get; set; }
-        public string Color { get; set; }
+        [Required]
         public IFormFile Image { get; set; }
 
         public CreateCardRequest() { }
 
-        public Card ToCardModel()
+        public Card ToCard()
         {
-            return new Card(Name, HP, DMG, Color);
+            return new Card(0, Name, HP, DMG, Color, null);
         }
     }
 }
