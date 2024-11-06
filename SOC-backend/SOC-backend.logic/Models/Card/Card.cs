@@ -9,6 +9,7 @@ namespace SOC_backend.logic.Models.Card
         public int HP { get; private set; }
         public int DMG { get; private set; }
         public string Color { get; private set; }
+        public string ImageURL { get; set; }
 
         //For entity framework
         public Card() { }
@@ -20,7 +21,7 @@ namespace SOC_backend.logic.Models.Card
             Name = ValidateString(name, 3, 30);
             HP = ValidateInt(hp, 1, 30);
             DMG = ValidateInt(dmg,  0, 30);
-            Color = ValidateString(color, 1, 20); 
+            Color = ValidateString(color, 1, 20);
         }
 
         //CardRequest
@@ -32,18 +33,19 @@ namespace SOC_backend.logic.Models.Card
             Color = ValidateString(color, 7, 7);
         }
 
-        public void Update(int id, string name, int hp, int dmg, string color)
+        public void Update(int id, string name, int hp, int dmg, string color, string? imageURL)
         {
             Id = id;
             Name = name;
             HP = hp;
             DMG = dmg;
             Color = color;
+            ImageURL = imageURL;
         }
 
         public CardResponse ToCardResponse()
         {
-            return new CardResponse(Id, Name, HP, DMG, Color);
+            return new CardResponse(Id, Name, HP, DMG, Color, ImageURL);
         }
 
         private string ValidateString(string value, int minLength, int maxLength)

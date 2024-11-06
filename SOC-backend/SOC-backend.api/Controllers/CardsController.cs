@@ -31,7 +31,7 @@ namespace SOC_backend.api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateCard(CreateCardRequest requestCard)
+        public async Task<ActionResult> CreateCard([FromForm]CreateCardRequest requestCard)
         {
             await _cardService.CreateCard(requestCard);
             return Ok();

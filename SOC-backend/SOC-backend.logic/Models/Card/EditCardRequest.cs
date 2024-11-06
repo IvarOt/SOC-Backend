@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,21 +9,12 @@ namespace SOC_backend.logic.Models.Card
 {
     public class EditCardRequest
     {
-        public int Id { get; private set; }
-        public string Name { get; private set; }
-        public int HP { get; private set; }
-        public int DMG { get; private set; }
-        public string Color { get; private set; }
-
-
-        public EditCardRequest(int id, string name, int hp, int dmg, string color)
-        {
-            Id = id;
-            Name = name;
-            HP = hp;
-            DMG = dmg;
-            Color = color;
-        }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int HP { get; set; }
+        public int DMG { get; set; }
+        public string Color { get; set; }
+        public IFormFile? Image { get; set; }
 
         public Card ToCardModel()
         {

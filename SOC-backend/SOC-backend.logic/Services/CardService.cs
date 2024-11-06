@@ -1,4 +1,5 @@
 ﻿using SOC_backend.logic.Interfaces;
+using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Models.Card;
 
@@ -7,15 +8,19 @@ namespace SOC_backend.logic.Services
     public class CardService : ICardService
     {
         private readonly ICardRepository _cardRepository;
+        private readonly IImageRepository _imageRepository;
 
-        public CardService(ICardRepository cardRepository)
+        public CardService(ICardRepository cardRepository, IImageRepository imageRepository)
         {
             _cardRepository = cardRepository;
+            _imageRepository = imageRepository;
         }
 
         public async Task CreateCard(CreateCardRequest cardRequest)
         {
             Card card = cardRequest.ToCardModel();
+            var imageUrl = await _imageRepository.UploadImage(cardRequest.Image);
+            card.ImageURL = imageUrl;
             await _cardRepository.CreateCard(card);
         }
 
@@ -41,6 +46,10 @@ namespace SOC_backend.logic.Services
         public async Task EditCard(EditCardRequest cardRequest)
         {
             var card = cardRequest.ToCardModel();
+            if (cardRequest.Image != null)
+            {
+                card.ImageURL = await _imageRepository.UploadImage(cardRequest.Image);
+            }
             await _cardRepository.EditCard(card);
         }
 
