@@ -33,15 +33,30 @@ namespace SOC_backend.api.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateCard([FromForm]CreateCardRequest requestCard)
         {
-            await _cardService.CreateCard(requestCard);
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                await _cardService.CreateCard(requestCard);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut]
         public async Task<ActionResult> EditCard(EditCardRequest card)
         {
-            await _cardService.EditCard(card);
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                await _cardService.EditCard(card);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
         }
 
         [HttpDelete("{id}")]

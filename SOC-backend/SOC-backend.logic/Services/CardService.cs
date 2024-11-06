@@ -18,7 +18,7 @@ namespace SOC_backend.logic.Services
 
         public async Task CreateCard(CreateCardRequest cardRequest)
         {
-            Card card = cardRequest.ToCardModel();
+            Card card = cardRequest.ToCard();
             var imageUrl = await _imageRepository.UploadImage(cardRequest.Image);
             card.ImageURL = imageUrl;
             await _cardRepository.CreateCard(card);

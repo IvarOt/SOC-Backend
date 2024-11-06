@@ -22,18 +22,18 @@ namespace SOC_backend.data.Repositories
 
         public async Task EditCard(Card cardModel)
         {
-            Card card = await _context.Card.FindAsync(cardModel.Id);
+            Card? card = await _context.Card.FindAsync(cardModel.Id);
             if (card == null)
             {
                 throw new NotFoundException("Card", cardModel.Id);
             }
-            card.Update(cardModel.Id, cardModel.Name, cardModel.HP, cardModel.DMG, cardModel.Color, string.IsNullOrEmpty(cardModel.ImageURL) ? card.ImageURL : cardModel.ImageURL);
+            card.Update(cardModel.Name, cardModel.HP, cardModel.DMG, cardModel.Color, string.IsNullOrEmpty(cardModel.ImageURL) ? card.ImageURL : cardModel.ImageURL);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteCard(int id)
         {
-            Card card = await _context.Card.FindAsync(id);
+            Card? card = await _context.Card.FindAsync(id);
             if (card == null)
             {
                 throw new NotFoundException("Card", id);

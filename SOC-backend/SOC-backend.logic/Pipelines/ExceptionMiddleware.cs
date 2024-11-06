@@ -1,13 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using SOC_backend.logic.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace SOC_backend.logic.Pipelines
 {

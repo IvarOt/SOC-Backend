@@ -1,6 +1,4 @@
-﻿using SOC_backend.logic.Exceptions;
-
-namespace SOC_backend.logic.Models.Card
+﻿namespace SOC_backend.logic.Models.Card
 {
     public class Card
     {
@@ -13,61 +11,30 @@ namespace SOC_backend.logic.Models.Card
 
         //For entity framework
         public Card() { }
-
-        //Database / edit card
-        public Card(int id, string name, int hp, int dmg, string color)
-        {
-            Id = id;
-            Name = ValidateString(name, 3, 30);
-            HP = ValidateInt(hp, 1, 30);
-            DMG = ValidateInt(dmg,  0, 30);
-            Color = ValidateString(color, 1, 20);
-        }
-
-        //CardRequest
-        public Card(string name, int hp, int dmg, string color)
-        {
-            Name = ValidateString(name, 3, 30);
-            HP = ValidateInt(hp, 1, 30);
-            DMG = ValidateInt(dmg, 0, 30);
-            Color = ValidateString(color, 7, 7);
-        }
-
-        public void Update(int id, string name, int hp, int dmg, string color, string? imageURL)
+        public Card(int id, string name, int hp, int dmg, string color, string? imageUrl)
         {
             Id = id;
             Name = name;
             HP = hp;
             DMG = dmg;
             Color = color;
-            ImageURL = imageURL;
+            ImageURL = imageUrl;
         }
-
+        public void Update(string name, int hp, int dmg, string color, string? imageUrl)
+        {
+            Name = name;
+            HP = hp;
+            DMG = dmg;
+            Color = color;
+            if (ImageURL != null)
+            {
+                ImageURL = imageUrl;
+            }
+        }
+        
         public CardResponse ToCardResponse()
         {
             return new CardResponse(Id, Name, HP, DMG, Color, ImageURL);
-        }
-
-        private string ValidateString(string value, int minLength, int maxLength)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                throw new PropertyException($"{nameof(value)} cannot be empty..", nameof(value));
-            }
-            if (value.Length < minLength || value.Length > maxLength)
-            {
-                throw new PropertyException($"{nameof(value)} has to be between {minLength} and {maxLength} long..", nameof(value));
-            }
-            return value;
-        }
-
-        private int ValidateInt(int value, int minValue, int maxValue)
-        {
-            if (value < minValue || value > maxValue)
-            {
-                throw new PropertyException($"{nameof(value)} must be between {minValue} and {maxValue}..",  nameof(value));
-            }
-            return value;
         }
     }
 }
