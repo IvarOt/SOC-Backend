@@ -27,7 +27,7 @@ namespace SOC_backend.data.Repositories
             {
                 throw new NotFoundException("Card", cardModel.Id);
             }
-            card.Update(cardModel.Id, cardModel.Name, cardModel.HP, cardModel.DMG, cardModel.Color, cardModel.ImageURL);
+            card.Update(cardModel.Id, cardModel.Name, cardModel.HP, cardModel.DMG, cardModel.Color, string.IsNullOrEmpty(cardModel.ImageURL) ? card.ImageURL : cardModel.ImageURL);
             await _context.SaveChangesAsync();
         }
 
