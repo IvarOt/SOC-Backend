@@ -27,13 +27,13 @@ jobs:
       run: dotnet build SOC-backend/SOC-backend.sln --no-restore
       
     - name: Test
-      run: dotnet test SOC-backend/SOC-backend.sln --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" || true
-      
-    - name: Test Report
-      uses: dorny/test-reporter@v1
-      if: always()
-      with:
-        name: DotNET Tests
-        path: "**/test-results.trx"                            
-        reporter: dotnet-trx
-        fail-on-error: true
+      run: dotnet test SOC-backend/SOC-backend.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+
+    - name: Generate Code Coverage Report
+      run: dotnet tool run reportgenerator -reports:**/coverage.cobertura.xml -targetdir:coverage-report -reporttypes:Html
+
+    -  name: Upload Coverage Report
+       uses: actions/upload-artifact@v3
+       with:
+        name: code-coverage-report
+        path: coverage-report
