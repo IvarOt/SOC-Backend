@@ -1,0 +1,49 @@
+name: Docker Image build
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build Docker image and push to repositories
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+  
+      - name: login to docker hub  
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ivarot/sagaofcards-backend:latest
+  deploy:
+    needs: build
+    runs-on: self-hosted  # This will run on your self-hosted runner
+    steps:
+    - name: login to docker hub  
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        
+    - name: Pull latest Docker image
+      run: docker pull ivarot/sagaofcards-backend:latest
+
+    - name: Stop and remove old Docker container (if exists)
+      run: |
+        docker stop sagaofcards-backend
+        docker rm sagaofcards-backend
+
+    - name: Run new Docker container
+      run: |
+        docker run -d --name sagaofcards-backend -p 8080:8080 ivarot/sagaofcards-backend:latest
+    
