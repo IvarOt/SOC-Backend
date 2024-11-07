@@ -24,7 +24,7 @@ jobs:
       run: dotnet restore SOC-backend/SOC-backend.sln
 
     - name: Install local tools
-      run: dotnet tool restore --tool-manifest SOC-backend/.config/dotnet-tools.json
+      run: dotnet tool restore --tool-manifest SOC-backend/SOC-Backend/.config/dotnet-tools.json
       
     - name: Build
       run: dotnet build SOC-backend/SOC-backend.sln --no-restore
