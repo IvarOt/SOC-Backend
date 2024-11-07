@@ -37,3 +37,8 @@ jobs:
         path: "**/test-results.trx"                            
         reporter: dotnet-trx
         fail-on-error: true
+        
+    - name: Set code coverage commit status 📫
+      run: npx -p check-code-coverage set-gh-status
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
