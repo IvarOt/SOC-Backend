@@ -11,7 +11,7 @@ namespace SOC_backend.test
 		[ExpectedException(typeof(PropertyException))]
 		public void TestCardNameValidation()
 		{
-			Card card = new Card(0, "b", 10, 10, "rgb(255, 255, 255)");
+			Card card = new Card(0, "b", 10, 10, "rgb(255, 255, 255)", null);
 		}
 	}
 }
