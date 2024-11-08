@@ -28,4 +28,4 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./test-results/**/*.xml
+          files: /home/runner/work/SOC-Backend/SOC-Backend/SOC-backend/SOC-backend.test/TestResults/*/coverage.cobertura.xml
