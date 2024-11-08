@@ -2,7 +2,7 @@ name: On Push Event Workflow — DEV Environment — API Regression
 
 on:
   push:
-    branches: [main]
+    branches: [dev]
 
 env:
   TEST_EXECUTION_ENV: dev
