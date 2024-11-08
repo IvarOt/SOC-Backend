@@ -11,34 +11,27 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      # Stap om de repository te klonen
       - uses: actions/checkout@v2
 
-      # Installeer .NET
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'  # Pas aan naar jouw specifieke versie indien nodig
+          dotnet-version: '8.0.x'
 
-      # Herstel de pakketten
-      - name: Restore dependencies
+      - name: Restore
         run: dotnet restore SOC-backend/SOC-backend.sln
 
-      # Bouw de oplossing
-      - name: Build the solution
+      - name: Build
         run: dotnet build SOC-backend/SOC-backend.sln --configuration Release --no-restore
 
-      # Voer de tests uit
       - name: Run tests
         run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"
 
-      # Publiceer de testresultaten (optioneel)
-      - name: Publish Test Results
-        if: always()
+      - name: Publish Results
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: test-results.trx
+          path: ./test-results/test-results.trx
 
       # Stap om huidige datum en workflow-variabelen in te stellen
       - name: Set current date as env variable.
