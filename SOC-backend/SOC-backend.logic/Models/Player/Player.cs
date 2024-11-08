@@ -7,8 +7,8 @@
 		public string Email { get; private set; }
 		public string Password { get; private set; }
 		public string Role { get; private set; }
-		public string? RefreshToken { get; private set; }
-		public DateTime? RefreshTokenExpiry { get; private set; }
+		public string? RefreshToken { get; set; }
+		public DateTime? RefreshTokenExpiry { get; set; }
 
 		//Entity framework
 		public Player() { }
