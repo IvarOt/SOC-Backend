@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: ./test-results/test-results.trx
+          path: /home/runner/work/SOC-Backend/SOC-Backend/SOC-backend/SOC-backend.test/TestResults/test-results.trx
 
       # Stap om huidige datum en workflow-variabelen in te stellen
       - name: Set current date as env variable.
