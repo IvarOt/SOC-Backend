@@ -1,4 +1,4 @@
-name: On Push Event Workflow — DEV Environment — API Regression
+name: Run tests and generate report
 
 on:
   push:
@@ -24,8 +24,8 @@ jobs:
       - name: Run tests
         run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./test-results
 
-      - name: Publish Results
-        uses: actions/upload-artifact@v3
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@v4
         with:
-          name: test-results
-          path: /home/runner/work/SOC-Backend/SOC-Backend/test-results/*/coverage.cobertura.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./test-results/**/*.xml
