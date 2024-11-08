@@ -22,15 +22,15 @@ jobs:
 
       # Herstel de pakketten
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore SOC-backend/SOC-backend.sln
 
       # Bouw de oplossing
       - name: Build the solution
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build SOC-backend/SOC-backend.sln --configuration Release --no-restore
 
       # Voer de tests uit
       - name: Run tests
-        run: dotnet test --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"
+        run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"
 
       # Publiceer de testresultaten (optioneel)
       - name: Publish Test Results
