@@ -31,4 +31,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: /home/runner/work/SOC-Backend/SOC-Backend/SOC-backend/SOC-backend.test/TestResults/test-results.xml
+          path: /home/runner/work/SOC-Backend/SOC-Backend/test-results/7267eab4-b3e9-439e-a6e8-75918582b002/coverage.cobertura.xml
