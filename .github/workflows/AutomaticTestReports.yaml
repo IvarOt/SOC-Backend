@@ -30,3 +30,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: /home/runner/work/SOC-Backend/SOC-Backend/SOC-backend/SOC-backend.test/TestResults/*/coverage.cobertura.xml
+          base_commit: ${{ github.event.pull_request.base.sha }}
