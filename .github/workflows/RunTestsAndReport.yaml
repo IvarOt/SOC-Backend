@@ -1,0 +1,33 @@
+name: Run tests and generate report
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore SOC-backend/SOC-backend.sln
+
+      - name: Build
+        run: dotnet build SOC-backend/SOC-backend.sln --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./test-results
+
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: /home/runner/work/SOC-Backend/SOC-Backend/SOC-backend/SOC-backend.test/TestResults/*/coverage.cobertura.xml
+          base_commit: ${{ github.event.pull_request.base.sha }}

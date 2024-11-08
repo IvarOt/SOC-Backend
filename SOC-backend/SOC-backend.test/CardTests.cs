@@ -1,6 +1,7 @@
 using SOC_backend.logic.Exceptions;
 using SOC_backend.logic.Models.Card;
 using SOC_backend.logic.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace SOC_backend.test
 {
@@ -8,10 +9,13 @@ namespace SOC_backend.test
 	public class CardTests
 	{
 		[TestMethod]
-		[ExpectedException(typeof(PropertyException))]
+		[ExpectedException(typeof(ValidationException))]
 		public void TestCardNameValidation()
 		{
-			Card card = new Card(0, "b", 10, 10, "rgb(255, 255, 255)");
+			CardRequest card = new CardRequest();
+			card.Name = "1";
+			var context = new ValidationContext(card);
+			Validator.ValidateObject(card, context, validateAllProperties: true);
 		}
 	}
 }
