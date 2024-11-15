@@ -6,6 +6,7 @@ namespace SOC_backend.logic.Models.Match
     public class Opponent
     {
         public int Id { get; set; }
+
         [ForeignKey("GameStateId")]
         public int GameStateId {  get; set; }
         public string Name { get; set; }

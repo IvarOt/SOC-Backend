@@ -18,42 +18,6 @@ namespace SOC_backend.api.Migrations
                 defaultValue: 0);
 
             migrationBuilder.CreateTable(
-                name: "Shop",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Shop", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ShopCard",
-                columns: table => new
-                {
-                    ShopId = table.Column<int>(type: "int", nullable: false),
-                    CardId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShopCard", x => new { x.ShopId, x.CardId });
-                    table.ForeignKey(
-                        name: "FK_ShopCard_Card_CardId",
-                        column: x => x.CardId,
-                        principalTable: "Card",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ShopCard_Shop_ShopId",
-                        column: x => x.ShopId,
-                        principalTable: "Shop",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "GameState",
                 columns: table => new
                 {
@@ -65,6 +29,18 @@ namespace SOC_backend.api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GameState", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Shop",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shop", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,6 +73,30 @@ namespace SOC_backend.api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShopCard",
+                columns: table => new
+                {
+                    ShopId = table.Column<int>(type: "int", nullable: false),
+                    CardId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShopCard", x => new { x.ShopId, x.CardId });
+                    table.ForeignKey(
+                        name: "FK_ShopCard_Card_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Card",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ShopCard_Shop_ShopId",
+                        column: x => x.ShopId,
+                        principalTable: "Shop",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OpponentCard",
                 columns: table => new
                 {
@@ -122,15 +122,9 @@ namespace SOC_backend.api.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_GameState_PlayerId",
-                table: "GameState",
-                column: "PlayerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Opponent_GameStateId",
                 table: "Opponent",
-                column: "GameStateId",
-                unique: true);
+                column: "GameStateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Opponent_ShopId",
@@ -146,23 +140,11 @@ namespace SOC_backend.api.Migrations
                 name: "IX_ShopCard_CardId",
                 table: "ShopCard",
                 column: "CardId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_GameState_Opponent_PlayerId",
-                table: "GameState",
-                column: "PlayerId",
-                principalTable: "Opponent",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_GameState_Opponent_PlayerId",
-                table: "GameState");
-
             migrationBuilder.DropTable(
                 name: "OpponentCard");
 

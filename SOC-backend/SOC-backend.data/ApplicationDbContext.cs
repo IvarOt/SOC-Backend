@@ -31,12 +31,6 @@ namespace SOC_backend.data
 				.HasForeignKey(oc => oc.CardId)
 				.OnDelete(DeleteBehavior.Restrict);
 
-			modelBuilder.Entity<GameState>()
-				.HasOne(gs => gs.Player)
-				.WithMany()
-				.HasForeignKey(gs => gs.PlayerId)
-				.OnDelete(DeleteBehavior.Restrict);
-
 			modelBuilder.Entity<ShopCard>()
 				.HasKey(oc => new { oc.ShopId, oc.CardId });
 

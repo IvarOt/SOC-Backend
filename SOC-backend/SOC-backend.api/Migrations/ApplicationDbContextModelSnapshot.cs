@@ -71,8 +71,6 @@ namespace SOC_backend.api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerId");
-
                     b.ToTable("GameState");
                 });
 
@@ -102,8 +100,7 @@ namespace SOC_backend.api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GameStateId")
-                        .IsUnique();
+                    b.HasIndex("GameStateId");
 
                     b.HasIndex("ShopId");
 
@@ -191,22 +188,11 @@ namespace SOC_backend.api.Migrations
                     b.ToTable("Player");
                 });
 
-            modelBuilder.Entity("SOC_backend.logic.Models.Match.GameState", b =>
-                {
-                    b.HasOne("SOC_backend.logic.Models.Match.Opponent", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Player");
-                });
-
             modelBuilder.Entity("SOC_backend.logic.Models.Match.Opponent", b =>
                 {
                     b.HasOne("SOC_backend.logic.Models.Match.GameState", null)
-                        .WithOne("Opponent")
-                        .HasForeignKey("SOC_backend.logic.Models.Match.Opponent", "GameStateId")
+                        .WithMany("Players")
+                        .HasForeignKey("GameStateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -259,8 +245,7 @@ namespace SOC_backend.api.Migrations
 
             modelBuilder.Entity("SOC_backend.logic.Models.Match.GameState", b =>
                 {
-                    b.Navigation("Opponent")
-                        .IsRequired();
+                    b.Navigation("Players");
                 });
 
             modelBuilder.Entity("SOC_backend.logic.Models.Match.Opponent", b =>

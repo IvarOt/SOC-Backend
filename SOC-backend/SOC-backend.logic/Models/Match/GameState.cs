@@ -5,15 +5,17 @@ namespace SOC_backend.logic.Models.Match
     {
         public int Id { get; set; }
         public int PlayerId { get; set; }
-        public Opponent Player { get; set; }
-        public Opponent Opponent { get; set; }
+        public List<Opponent> Players { get; set; }
         public bool PlayersTurn { get; set; }
 
         public GameState() { }
         public GameState(int playerId)
         {
-            Player = new Opponent("Me", 30, 1);
-            Opponent = new Opponent("Bob", 30, 1);
+            Players = new List<Opponent>();
+            Opponent Player = new Opponent("Me", 30, 1);
+            Opponent Enemy = new Opponent("Bob", 30, 1);
+            Players.Add(Player);
+            Players.Add(Enemy);
             PlayersTurn = true;
             PlayerId = playerId;
         }

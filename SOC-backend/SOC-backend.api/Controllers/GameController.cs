@@ -21,18 +21,8 @@ namespace SOC_backend.api.Controllers
         [HttpPost("StartGame")]
         public async Task<ActionResult> StartGame()
         {
-            var userId = GetUserId();
-            var gameState = await _gameService.StartNewGame(userId);
+            var gameState = await _gameService.StartNewGame(1);
             return Ok(gameState);
-        }
-
-        private int GetUserId()
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var jwtToken = HttpContext.Request.Headers.Authorization.ToString();
-            var token = tokenHandler.ReadJwtToken(jwtToken);
-            var userId = int.Parse(token.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
-            return userId;
         }
     }
 }
