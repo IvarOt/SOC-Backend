@@ -25,6 +25,7 @@ namespace SOC_backend.logic.Services
 
 		public async Task Register(RegisterPlayerRequest newPlayer)
 		{
+			newPlayer.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(newPlayer.Password);
 			Player player = newPlayer.ToPlayer();
 			await _playerRepository.Register(player);
 		}

@@ -57,7 +57,48 @@ namespace SOC_backend.test.Services
             Assert.AreEqual(cards.Count, result.Count);
         }
 
-        
+        [TestMethod]
+        public async Task GetCard_ReturnsMappedCard()
+        {
+            //Arrange
+            var card = new Card();
+            _mockCardRepository.Setup(repo => repo.GetCard(1)).ReturnsAsync(card); 
+
+            //Act
+            var result = await _cardService.GetCard(1);
+
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(CardResponse));
+        }
+
+        [TestMethod]
+        public async Task EditCard_CallsRepositories()
+        {
+            //Arrange
+            var card = new EditCardRequest { Name = "Test", Image = CreateMockFormFile() };
+            _mockImageRepository.Setup(repo => repo.UploadImage(card.Image)).ReturnsAsync("http://test.com/image.png");
+
+            //Act
+            await _cardService.EditCard(card);
+
+            //Assert
+            _mockImageRepository.Verify(repo => repo.UploadImage(card.Image), Times.Once);
+            _mockCardRepository.Verify(repo => repo.EditCard(It.Is<Card>(card => card.ImageURL == "http://test.com/image.png")), Times.Once);
+        }
+
+        [TestMethod]
+        public async Task DeleteCard_CallsRepositories()
+        {
+            //Arrange
+            int cardId = 1;
+
+            //Act
+            await _cardService.DeleteCard(cardId);
+
+            //Assert
+            _mockCardRepository.Verify(repo => repo.DeleteCard(cardId), Times.Once);
+        }
+
 
         private IFormFile CreateMockFormFile(string content = "Mock image", string fileName = "test.jpg", string contentType = "image/jpeg")
         {
