@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SOC_backend.logic.Exceptions;
 using SOC_backend.logic.Interfaces;
-using SOC_backend.logic.Models.Card;
+using SOC_backend.logic.Models.Cards;
 
 namespace SOC_backend.data.Repositories
 {

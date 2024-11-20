@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SOC_backend.logic.Interfaces.Logic;
-using SOC_backend.logic.Models.Card;
+using SOC_backend.logic.Models.Cards;
 
 namespace SOC_backend.api.Controllers
 {

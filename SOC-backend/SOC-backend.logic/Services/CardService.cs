@@ -1,7 +1,7 @@
 ﻿using SOC_backend.logic.Interfaces;
 using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Interfaces.Logic;
-using SOC_backend.logic.Models.Card;
+using SOC_backend.logic.Models.Cards;
 
 namespace SOC_backend.logic.Services
 {
