@@ -50,7 +50,6 @@ namespace SOC_backend.data.Repositories
                 throw new NotFoundException("Card", id);
             }
             return card;
-
         }
 
         public async Task<List<Card>> GetAllCards()
