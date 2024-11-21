@@ -42,7 +42,7 @@ namespace SOC_backend.test.Repositories
             var result = await _cardRepository.GetCard(1);
 
             // Assert
-            Assert.AreEqual("Test", result.Name);
+            Assert.AreSame(result, card);
         }
 
         [TestMethod]
