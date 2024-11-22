@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SOC_backend.data;
 using SOC_backend.data.Repositories;
-using SOC_backend.logic.Exceptions;
 using SOC_backend.logic.Models.Cards;
 using System;
 using System.Collections.Generic;
@@ -46,7 +45,7 @@ namespace SOC_backend.test.Repositories
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotFoundException))]
+        [ExpectedException(typeof(KeyNotFoundException))]
         public async Task GetCard_ShouldThrowException()
         {
             //Act

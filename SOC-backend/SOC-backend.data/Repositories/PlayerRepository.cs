@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SOC_backend.logic.Exceptions;
 using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Models.Player;
 
@@ -18,7 +17,7 @@ namespace SOC_backend.data.Repositories
             var player = await _context.Player.FindAsync(id);
             if (player == null)
             {
-                throw new NotFoundException("Player", id);
+                throw new KeyNotFoundException("Card not found");
             }
             else
             {
@@ -31,7 +30,7 @@ namespace SOC_backend.data.Repositories
             var player = await _context.Player.FirstOrDefaultAsync(x => x.Id == playerId);
             if (player == null)
             {
-                throw new NotFoundException("Player", player.Id);
+                throw new InvalidOperationException();
             }
             player.RefreshToken = refreshToken;
             player.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
@@ -44,7 +43,7 @@ namespace SOC_backend.data.Repositories
             var player = await _context.Player.FirstOrDefaultAsync(x => x.RefreshToken == refreshToken);
             if (player == null)
             {
-                throw new NotFoundException("Refresh token does not exist");
+                throw new InvalidOperationException();
             }
             else
             {
@@ -63,7 +62,7 @@ namespace SOC_backend.data.Repositories
             var existingPlayer = await _context.Player.FirstOrDefaultAsync(x => x.Username == player.Username);
 			if (existingPlayer == null)
             {
-				throw new NotFoundException("Player", player.Id);
+                throw new InvalidOperationException();
 			}
             else
             {

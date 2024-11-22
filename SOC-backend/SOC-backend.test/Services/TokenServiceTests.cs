@@ -43,5 +43,15 @@ namespace SOC_backend.test.Services
 			var tokenHandler = new JwtSecurityTokenHandler();
 			Assert.IsTrue(tokenHandler.CanReadToken(result));
 		}
+
+		[TestMethod]
+		public async Task CreateRefreshToken_ReturnsRefreshToken()
+		{
+			//Act
+			var result = _tokenService.CreateRefreshToken();
+
+			//Assert
+			Assert.IsNotNull(result);
+		}
 	}
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SOC_backend.logic.Exceptions;
 using SOC_backend.logic.Interfaces;
 using SOC_backend.logic.Models.Cards;
 
@@ -25,7 +24,7 @@ namespace SOC_backend.data.Repositories
             Card? card = await _context.Card.FindAsync(cardModel.Id);
             if (card == null)
             {
-                throw new NotFoundException("Card", cardModel.Id);
+                throw new InvalidOperationException("Card not found");
             }
             card.Update(cardModel.Name, cardModel.HP, cardModel.DMG, cardModel.Color, string.IsNullOrEmpty(cardModel.ImageURL) ? card.ImageURL : cardModel.ImageURL);
             await _context.SaveChangesAsync();
@@ -36,7 +35,7 @@ namespace SOC_backend.data.Repositories
             Card? card = await _context.Card.FindAsync(id);
             if (card == null)
             {
-                throw new NotFoundException("Card", id);
+                throw new InvalidOperationException("Card not found");
 			}
             _context.Card.Remove(card);
             await _context.SaveChangesAsync();
@@ -47,7 +46,7 @@ namespace SOC_backend.data.Repositories
             var card = await _context.Card.FindAsync(id);
             if (card == null)
             {
-                throw new NotFoundException("Card", id);
+                throw new KeyNotFoundException("Card not found");
             }
             return card;
         }
@@ -57,9 +56,9 @@ namespace SOC_backend.data.Repositories
             var cards = await _context.Card.ToListAsync();
             if (cards == null)
             {
-                throw new NotFoundException("Cards");
-            }
-            return cards;
+				throw new KeyNotFoundException("Card not found");
+			}
+			return cards;
         }
     }
 }

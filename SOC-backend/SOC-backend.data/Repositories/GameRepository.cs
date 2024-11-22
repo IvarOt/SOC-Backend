@@ -24,7 +24,7 @@ namespace SOC_backend.data.Repositories
             GameState? gameState = await _context.GameState.Where(x => x.PlayerId == playerId).FirstOrDefaultAsync();
             if (gameState == null)
             {
-                throw new Exception();
+                throw new KeyNotFoundException();
             }
             return gameState;
         }
