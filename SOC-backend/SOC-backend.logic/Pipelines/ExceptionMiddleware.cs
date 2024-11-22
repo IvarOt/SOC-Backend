@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
 using System.Net;
 using System.Text.Json;
 
@@ -32,6 +33,10 @@ namespace SOC_backend.logic.Pipelines
 
             switch (ex)
             {
+                case SqlException:
+                    statusCode = HttpStatusCode.InternalServerError;
+                    message = "Database connection could not be established";
+                    break;
             }
 
             var response = new

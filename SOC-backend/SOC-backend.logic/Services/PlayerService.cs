@@ -18,14 +18,13 @@ namespace SOC_backend.logic.Services
 
 		public async Task<PlayerProfileResponse> GetProfileInfo(int id)
 		{
-			var player = await _playerRepository.GetProfileInfo(id);
+			var player = await _playerRepository.GetPlayer(id);
 			var profileInfo = player.ToPlayerProfileResponse();
 			return profileInfo;
 		}
 
 		public async Task Register(RegisterPlayerRequest newPlayer)
 		{
-			newPlayer.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(newPlayer.Password);
 			Player player = newPlayer.ToPlayer();
 			await _playerRepository.Register(player);
 		}

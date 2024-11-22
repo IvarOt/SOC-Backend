@@ -32,7 +32,7 @@ namespace SOC_backend.test.Services
         {
             //Arrange
             var player = new Player();
-            _mockPlayerRepository.Setup(repo => repo.GetProfileInfo(1)).ReturnsAsync(player);
+            _mockPlayerRepository.Setup(repo => repo.GetPlayer(1)).ReturnsAsync(player);
 
             //Act
             var result = await _playerService.GetProfileInfo(1);

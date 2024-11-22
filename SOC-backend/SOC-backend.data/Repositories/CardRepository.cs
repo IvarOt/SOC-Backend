@@ -54,9 +54,9 @@ namespace SOC_backend.data.Repositories
         public async Task<List<Card>> GetAllCards()
         {
             var cards = await _context.Card.ToListAsync();
-            if (cards == null)
+            if (cards.Count == 0)
             {
-				throw new KeyNotFoundException("Card not found");
+				throw new KeyNotFoundException("Cards not found");
 			}
 			return cards;
         }

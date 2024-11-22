@@ -12,12 +12,12 @@ namespace SOC_backend.data.Repositories
             _context = context;
         }
 
-        public async Task<Player> GetProfileInfo(int id)
+        public async Task<Player> GetPlayer(int id)
         {
             var player = await _context.Player.FindAsync(id);
             if (player == null)
             {
-                throw new KeyNotFoundException("Card not found");
+                throw new KeyNotFoundException("Player not found");
             }
             else
             {

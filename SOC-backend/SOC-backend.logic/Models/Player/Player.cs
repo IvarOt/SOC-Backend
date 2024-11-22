@@ -50,10 +50,12 @@
 			RefreshTokenExpiry = refreshTokenExpiry;
         }
 
-        public PlayerProfileResponse ToPlayerProfileResponse()
+		public PlayerProfileResponse ToPlayerProfileResponse()
 		{
 			return new PlayerProfileResponse(Username, Email);
 		}
+
+
 
 		private string HashPassword(string password)
 		{
