@@ -16,7 +16,7 @@ namespace SOC_backend.test
 	public class ExceptionMiddlewareTests
 	{
 		[TestMethod]
-		public async Task ExceptionMiddleware()
+		public async Task ExceptionMiddleware_GivesInternalServerError()
 		{
 			using var host = await new HostBuilder()
 				.ConfigureWebHost(webBuilder =>
