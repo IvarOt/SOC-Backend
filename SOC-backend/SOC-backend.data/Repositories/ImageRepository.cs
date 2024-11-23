@@ -51,7 +51,7 @@ namespace SOC_backend.data.Repositories
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new InvalidOperationException();
                 }
             }
         }

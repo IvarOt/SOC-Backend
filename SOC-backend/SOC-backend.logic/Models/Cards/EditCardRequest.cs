@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace SOC_backend.logic.Models.Card
+namespace SOC_backend.logic.Models.Cards
 {
     public class EditCardRequest : CardRequest
     {

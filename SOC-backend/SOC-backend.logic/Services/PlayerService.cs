@@ -1,7 +1,7 @@
-﻿using SOC_backend.logic.Exceptions;
-using SOC_backend.logic.Interfaces.Data;
+﻿using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Models.Player;
+using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 
 namespace SOC_backend.logic.Services
@@ -18,7 +18,7 @@ namespace SOC_backend.logic.Services
 
 		public async Task<PlayerProfileResponse> GetProfileInfo(int id)
 		{
-			var player = await _playerRepository.GetProfileInfo(id);
+			var player = await _playerRepository.GetPlayer(id);
 			var profileInfo = player.ToPlayerProfileResponse();
 			return profileInfo;
 		}
@@ -43,7 +43,7 @@ namespace SOC_backend.logic.Services
 			}
 			else
 			{
-				throw new PropertyException("Password is incorrect", "password");
+				throw new ValidationException();
 			}
 		}
 
@@ -52,7 +52,7 @@ namespace SOC_backend.logic.Services
 			Player player = await _playerRepository.GetMatchingPlayer(refreshToken);
 			if (player.RefreshTokenExpiry < DateTime.UtcNow)
 			{
-				throw new PropertyException("Refresh token is expired", "RefreshToken");
+				throw new ValidationException();
 			}
 			else
 			{

@@ -1,4 +1,4 @@
-﻿using SOC_backend.logic.Models.Card;
+﻿using SOC_backend.logic.Models.Cards;
 
 namespace SOC_backend.logic.Interfaces
 {

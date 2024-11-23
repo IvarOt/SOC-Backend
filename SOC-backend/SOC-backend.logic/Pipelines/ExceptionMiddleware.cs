@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using SOC_backend.logic.Exceptions;
+using Microsoft.Data.SqlClient;
 using System.Net;
 using System.Text.Json;
 
@@ -33,13 +33,9 @@ namespace SOC_backend.logic.Pipelines
 
             switch (ex)
             {
-                case NotFoundException _:
-                    statusCode = HttpStatusCode.NotFound;
-                    message = ex.Message;
-                    break;
-                case PropertyException _:
-                    statusCode = HttpStatusCode.BadRequest;
-                    message = ex.Message;
+                case SqlException:
+                    statusCode = HttpStatusCode.InternalServerError;
+                    message = "Database connection could not be established";
                     break;
             }
 

@@ -1,4 +1,4 @@
-﻿namespace SOC_backend.logic.Models.Card
+﻿namespace SOC_backend.logic.Models.Cards
 {
     public class Card
     {
@@ -8,6 +8,7 @@
         public int DMG { get; private set; }
         public string Color { get; private set; }
         public string? ImageURL { get; set; }
+        public int Cost { get; private set; }
 
         //For entity framework
         public Card() { }
