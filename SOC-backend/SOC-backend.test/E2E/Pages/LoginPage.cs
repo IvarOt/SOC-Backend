@@ -24,6 +24,5 @@ namespace SOC_backend.test.E2E.Pages
 		{
 			_driver.FindElement(LoginButton).Click();
 		}
-
 	}
 }

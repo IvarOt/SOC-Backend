@@ -1,13 +1,6 @@
-﻿using CloudinaryDotNet.Actions;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using SOC_backend.test.E2E.Pages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SOC_backend.test.E2E.Tests
 {
@@ -15,31 +8,35 @@ namespace SOC_backend.test.E2E.Tests
 	public class LoginTests
 	{
 		private IWebDriver _driver;
+		private LoginPage _loginPage;
 
 		[TestInitialize]
 		public void Setup()
 		{
 			_driver = new ChromeDriver();
 			_driver.Navigate().GoToUrl("http://localhost:5173/Login");
-		}
+            _loginPage = new LoginPage(_driver);
+        }
 
-		[TestMethod]
-		public void TestLogin()
+        [TestCleanup]
+        public void Cleanup()
+        {
+            _driver.Quit();
+        }
+
+        [TestMethod]
+		public void TestLogin_SuccesfullyLogsIn()
 		{
-			var loginPage = new LoginPage(_driver);
-			loginPage.EnterUsername("Bob");
-			loginPage.EnterPassword("Test123!");
-			loginPage.ClickLogin();
+			//Arrange
+			_loginPage.EnterUsername("Bob");
+			_loginPage.EnterPassword("Test123!");
 
-			var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-			wait.Until(d => d.Url.Contains("CardList"));
-			Assert.IsTrue(_driver.Url.Contains("CardList"));
-		}
+			//Act
+			_loginPage.ClickLogin();
 
-		[TestCleanup]
-		public void Cleanup()
-		{
-			_driver.Quit();
+            //Assert
+            _loginPage._wait.Until(d => d.Url.Contains("CardList"));
+            Assert.IsTrue(_driver.Url.Contains("CardList"));
 		}
 	}
 }

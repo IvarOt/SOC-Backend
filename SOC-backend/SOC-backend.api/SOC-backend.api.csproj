@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -28,5 +28,4 @@
     <ProjectReference Include="..\SOC-backend.data\zSOC-backend.data.csproj" />
     <ProjectReference Include="..\SOC-backend.logic\SOC-backend.logic.csproj" />
   </ItemGroup>
-
 </Project>
