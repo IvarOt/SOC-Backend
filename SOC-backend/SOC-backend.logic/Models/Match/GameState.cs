@@ -33,7 +33,12 @@ namespace SOC_backend.logic.Models.Match
             opponent.Cards.Add(opponentCard);
         }
 
-        public void ResolveFight(List<Card> attackingPlayerCards, List<Card> attackingOpponentCards)
+        public void ResolveFightingStage(List<Card> attackingPlayerCards, List<Card> attackingOpponentCards)
+        {
+            ResolveFight(attackingPlayerCards, attackingOpponentCards);   
+        }
+
+        private void ResolveFight(List<Card> attackingPlayerCards, List<Card> attackingOpponentCards)
         {
             var maxCardAttacks = Math.Max(attackingPlayerCards.Count, attackingOpponentCards.Count);
             var minCardAttacks = Math.Min(attackingPlayerCards.Count, attackingOpponentCards.Count);

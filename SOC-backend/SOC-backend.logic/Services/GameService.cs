@@ -25,7 +25,7 @@ namespace SOC_backend.logic.Services
         public async Task<GameState> ResolveFight(int playerId, List<Card> attackingPlayerCards, List<Card> attackingOpponentCards)
         {
             GameState gameState = await _gameRepository.GetGameState(playerId);
-            gameState.ResolveFight(attackingPlayerCards, attackingOpponentCards);
+            gameState.ResolveFightingStage(attackingPlayerCards, attackingOpponentCards);
             return gameState;
         }
     }
