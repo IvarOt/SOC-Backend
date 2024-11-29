@@ -29,7 +29,7 @@ namespace SOC_backend.logic.Pipelines
         private async Task HandleException(HttpContext context, Exception ex)
         {
             HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
-            string message = "Something unforeseen happened..";
+            string message = ex.Message;
 
             switch (ex)
             {

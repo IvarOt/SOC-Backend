@@ -1,5 +1,7 @@
-﻿using SOC_backend.logic.Interfaces.Data;
+﻿using SOC_backend.logic.Interfaces;
+using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Interfaces.Logic;
+using SOC_backend.logic.Models.Cards;
 using SOC_backend.logic.Models.Match;
 
 namespace SOC_backend.logic.Services
@@ -15,8 +17,15 @@ namespace SOC_backend.logic.Services
 
         public async Task<GameState> StartNewGame(int playerId)
         {
-            GameState gameState = new GameState(playerId);
+            GameState gameState = new GameState();
             await _gameRepository.CreateNewGame(gameState);
+            return gameState;
+        }
+
+        public async Task<GameState> ResolveFight(int playerId, List<Card> attackingPlayerCards, List<Card> attackingOpponentCards)
+        {
+            GameState gameState = await _gameRepository.GetGameState(playerId);
+            gameState.ResolveFight(attackingPlayerCards, attackingOpponentCards);
             return gameState;
         }
     }

@@ -8,7 +8,7 @@ namespace SOC_backend.logic.Models.Match
         public int Id { get; set; }
 
         [ForeignKey("GameStateId")]
-        public int GameStateId {  get; set; }
+        public int GameStateId { get; set; }
         public string Name { get; set; }
         public int HP { get; set; }
         public int Coins { get; set; }
@@ -22,6 +22,11 @@ namespace SOC_backend.logic.Models.Match
             HP = hp;
             Coins = coins;
             Shop = new Shop();
+        }
+
+        public void TakeDamage(Card card)
+        {
+            HP = HP - card.DMG;
         }
     }
 }
