@@ -40,5 +40,23 @@ namespace SOC_backend.test.E2E.Tests
             _signUpPage._wait.Until(d => d.Url.Contains("login"));
             Assert.IsTrue(_driver.Url.Contains("login"));
         }
+
+        [TestMethod]
+        public void TestSignUp_ThrowsValidationException()
+        {
+            //Arrange
+            _signUpPage.EnterUsername("test");
+            _signUpPage.EnterPassword("test");
+            _signUpPage.EnterConfirmPassword("test");
+            _signUpPage.EnterEmail("test@test");
+
+            //Act
+            _signUpPage.ClickSignUp();
+
+            //Assert
+            string result = _signUpPage.GiveException();
+            Assert.IsNotNull(result, "Exception message should not be null");
+        }
+
     }
 }

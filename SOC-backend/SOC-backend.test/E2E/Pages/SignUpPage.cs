@@ -9,11 +9,12 @@ namespace SOC_backend.test.E2E.Pages
 {
     public class SignUpPage : BasePage
     {
-        private By UsernameField = By.Id("username");
-        private By PasswordField = By.Id("password");
-        private By ConfirmPasswordField = By.Id("confirmPassword");
-        private By EmailField = By.Id("email");
-        private By SubmitBtn = By.Id("signup-btn");
+        private By UsernameField = By.CssSelector("[data-test='username']");
+        private By PasswordField = By.CssSelector("[data-test='password']");
+        private By ConfirmPasswordField = By.CssSelector("[data-test='confirmPassword']");
+        private By EmailField = By.CssSelector("[data-test='email']");
+        private By SubmitBtn = By.CssSelector("[data-test='signup-btn']");
+        private By ExceptionField = By.CssSelector("[data-test='exceptionMessage']");
 
         public SignUpPage(IWebDriver driver) :base(driver) { }
 
@@ -41,5 +42,17 @@ namespace SOC_backend.test.E2E.Pages
         {
             _driver.FindElement(SubmitBtn).Click();
         }
+
+        public string GiveException()
+        {
+            return _wait.Until(driver =>
+            {
+                var exceptionElement = driver.FindElement(ExceptionField);
+                return exceptionElement.Displayed && !string.IsNullOrEmpty(exceptionElement.Text)
+                    ? exceptionElement.Text
+                    : null;
+            });
+        }
+
     }
 }
