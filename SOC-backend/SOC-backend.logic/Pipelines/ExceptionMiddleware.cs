@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
 
@@ -36,6 +37,10 @@ namespace SOC_backend.logic.Pipelines
                 case SqlException:
                     statusCode = HttpStatusCode.InternalServerError;
                     message = "Database connection could not be established";
+                    break;
+                case ValidationException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    message = ex.Message;
                     break;
             }
 

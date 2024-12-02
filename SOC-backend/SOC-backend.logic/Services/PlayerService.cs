@@ -43,7 +43,7 @@ namespace SOC_backend.logic.Services
 			}
 			else
 			{
-				throw new ValidationException();
+				throw new ValidationException("Incorrect credentials");
 			}
 		}
 
