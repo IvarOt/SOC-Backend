@@ -74,5 +74,22 @@ namespace SOC_backend.test.E2E.Tests
             string result = _signUpPage.GivePasswordException();
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        public void TestSignUp_ThrowsPasswordMisMatchException()
+        {
+            //Arrange
+            _signUpPage.EnterUsername("Test");
+            _signUpPage.EnterPassword("Test123!");
+            _signUpPage.EnterConfirmPassword("Test123");
+            _signUpPage.EnterEmail("Test@gmail.com");
+
+            //Act
+            _signUpPage.ClickSignUp();
+
+            //Assert
+            string result = _signUpPage.GiveConfirmPasswordException();
+            Assert.IsNotNull(result);
+        }
     }
 }

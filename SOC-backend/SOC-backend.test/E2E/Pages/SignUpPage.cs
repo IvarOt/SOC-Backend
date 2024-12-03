@@ -16,7 +16,7 @@ namespace SOC_backend.test.E2E.Pages
         private By SubmitBtn = By.CssSelector("[data-test='signup-btn']");
         private By UsernameError = By.CssSelector("[data-test='usernameError']");
         private By PasswordError = By.CssSelector("[data-test='passwordError']");
-
+        private By ConfirmPasswordError = By.CssSelector("[data-test='confirmPasswordError']");
         public SignUpPage(IWebDriver driver) :base(driver) { }
 
         public void EnterUsername(string username)
@@ -60,6 +60,17 @@ namespace SOC_backend.test.E2E.Pages
             return _wait.Until(driver =>
             {
                 var exceptionElement = driver.FindElement(PasswordError);
+                return exceptionElement.Displayed && !string.IsNullOrEmpty(exceptionElement.Text)
+                    ? exceptionElement.Text
+                    : null;
+            });
+        }
+
+        public string GiveConfirmPasswordException()
+        {
+            return _wait.Until(driver =>
+            {
+                var exceptionElement = driver.FindElement(ConfirmPasswordError);
                 return exceptionElement.Displayed && !string.IsNullOrEmpty(exceptionElement.Text)
                     ? exceptionElement.Text
                     : null;
