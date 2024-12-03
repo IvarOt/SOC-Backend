@@ -42,21 +42,37 @@ namespace SOC_backend.test.E2E.Tests
         }
 
         [TestMethod]
-        public void TestSignUp_ThrowsValidationException()
+        public void TestSignUp_ThrowsUsernameException()
         {
             //Arrange
-            _signUpPage.EnterUsername("test");
-            _signUpPage.EnterPassword("test");
-            _signUpPage.EnterConfirmPassword("test");
-            _signUpPage.EnterEmail("test@test");
+            _signUpPage.EnterUsername("t");
+            _signUpPage.EnterPassword("Test123!");
+            _signUpPage.EnterConfirmPassword("Test123!");
+            _signUpPage.EnterEmail("Test@gmail.com");
 
             //Act
             _signUpPage.ClickSignUp();
 
             //Assert
-            string result = _signUpPage.GiveException();
-            Assert.IsNotNull(result, "Exception message should not be null");
+            string result = _signUpPage.GiveUsernameException();
+            Assert.IsNotNull(result);
         }
 
+        [TestMethod]
+        public void TestSignUp_ThrowsPasswordException()
+        {
+            //Arrange
+            _signUpPage.EnterUsername("Test");
+            _signUpPage.EnterPassword("t");
+            _signUpPage.EnterConfirmPassword("t");
+            _signUpPage.EnterEmail("Test@gmail.com");
+
+            //Act
+            _signUpPage.ClickSignUp();
+
+            //Assert
+            string result = _signUpPage.GivePasswordException();
+            Assert.IsNotNull(result);
+        }
     }
 }
