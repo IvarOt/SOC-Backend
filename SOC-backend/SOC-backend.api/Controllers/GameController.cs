@@ -40,7 +40,7 @@ namespace SOC_backend.api.Controllers
                 new Card(2, "Bobbie", 3, 2, "GHUESWHGUFA", null),
                 new Card(1, "Bob", 5, 3, "GHUESWHGUIES", null),
             };
-            var gameState = await _gameService.ResolveFight(1, cards, otherCards);
+            var gameState = await _gameService.ResolveFight(1);
             return Ok(gameState);
         }
     }

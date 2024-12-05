@@ -17,7 +17,7 @@ namespace SOC_backend.test.E2E.Pages
         private By UsernameError = By.CssSelector("[data-test='usernameError']");
         private By PasswordError = By.CssSelector("[data-test='passwordError']");
         private By ConfirmPasswordError = By.CssSelector("[data-test='confirmPasswordError']");
-        public SignUpPage(IWebDriver driver) :base(driver) { }
+        public SignUpPage(IWebDriver driver) : base(driver) { }
 
         public void EnterUsername(string username)
         {

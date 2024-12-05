@@ -16,5 +16,6 @@ namespace SOC_backend.logic.Models.Match
 		public int CardId { get; set; }
 		[NotMapped]
 		public Card Card { get; set; }
+		public bool IsPurchased { get; set; } = false;
 	}
 }

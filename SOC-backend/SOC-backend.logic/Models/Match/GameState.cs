@@ -10,32 +10,24 @@ namespace SOC_backend.logic.Models.Match
         public List<Opponent> Players { get; set; }
         public bool PlayersTurn { get; set; }
 
-        public GameState()
+        public GameState(List<Card> deck)
         {
             Players = new List<Opponent> 
             {
-                new Opponent("Me", 30, 1),
-                new Opponent("Bob", 30, 1),
+                new Opponent("Me", 30, 1, deck),
+                new Opponent("Bob", 30, 1, deck),
             };
             PlayersTurn = true;
             PlayerId = 1;
         }
 
-        public void AssignCardToOpponent(Opponent opponent, Card card, bool isOffense = true)
+        public GameState() { }
+        public void ResolveFightingStage()
         {
-            var opponentCard = new OpponentCard
-            {
-                OpponentId = opponent.Id,
-                CardId = card.Id,
-                IsOffence = isOffense,
-                Card = card,
-            };
-            opponent.Cards.Add(opponentCard);
-        }
+            var test = new List<Card>();
+            var test1 = new List<Card>();
 
-        public void ResolveFightingStage(List<Card> attackingPlayerCards, List<Card> attackingOpponentCards)
-        {
-            ResolveFight(attackingPlayerCards, attackingOpponentCards);   
+            ResolveFight(test, test1);   
         }
 
         private void ResolveFight(List<Card> attackingPlayerCards, List<Card> attackingOpponentCards)
@@ -45,13 +37,13 @@ namespace SOC_backend.logic.Models.Match
             var player = Players[0];
             var opponent = Players[1];
 
-            foreach (var item in attackingOpponentCards)
+            foreach (var card in attackingOpponentCards)
             {
-                AssignCardToOpponent(Players[1], item);
+                player.AddCard(card);
             }
-            foreach (var item in attackingPlayerCards)
+            foreach (var card in attackingPlayerCards)
             {
-                AssignCardToOpponent(Players[0], item);
+                opponent.AddCard(card);
             }
 
             for (int turnIndex = 0; turnIndex < minCardAttacks; turnIndex++)
@@ -92,6 +84,10 @@ namespace SOC_backend.logic.Models.Match
                     }
                 }
             }
+        }
+
+        public void StartNewRound()
+        {
         }
     }
 }

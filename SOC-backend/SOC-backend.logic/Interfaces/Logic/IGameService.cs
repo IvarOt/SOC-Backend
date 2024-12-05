@@ -11,6 +11,6 @@ namespace SOC_backend.logic.Interfaces.Logic
     public interface IGameService
     {
         Task<GameState> StartNewGame(int playerId);
-        Task<GameState> ResolveFight(int playerId, List<Card> attackingPlayerCards, List<Card> attackingOpponentCards);
+        Task<GameState> ResolveFight(int playerId);
     }
 }
