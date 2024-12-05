@@ -21,6 +21,16 @@
             Color = color;
             ImageURL = imageUrl;
         }
+
+        public Card(string name, int hp, int dmg, string color, string? imageUrl)
+        {
+            Name = name;
+            HP = hp;
+            DMG = dmg;
+            Color = color;
+            ImageURL = imageUrl;
+        }
+
         public void Update(string name, int hp, int dmg, string color, string? imageUrl)
         {
             Name = name;
@@ -33,6 +43,11 @@
             }
         }
         
+        public void TakeDamage(int DMG)
+        {
+            HP = HP - DMG;
+        }
+
         public CardResponse ToCardResponse()
         {
             return new CardResponse(Id, Name, HP, DMG, Color, ImageURL);

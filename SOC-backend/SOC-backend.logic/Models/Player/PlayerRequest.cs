@@ -16,8 +16,6 @@ namespace SOC_backend.logic.Models.Player
 		[StringLength(30, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 6)]
 		public string Password { get; set; }
 
-		[Required]
-		public string Role { get; set; }
 
 		public PlayerRequest() { }
 	}

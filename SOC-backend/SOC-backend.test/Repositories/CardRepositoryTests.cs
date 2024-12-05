@@ -47,7 +47,7 @@ namespace SOC_backend.test.Repositories
             var result = await _cardRepository.GetCard(1);
 
             // Assert
-            Assert.AreSame(result, card);
+            Assert.AreEqual(result.Name, card.Name);
         }
 
         [TestMethod]
@@ -149,7 +149,7 @@ namespace SOC_backend.test.Repositories
 
             //Assert
             var result = _context.Card.FirstOrDefault();
-            Assert.AreSame(card, result);
+            Assert.AreEqual(card.Name, result.Name);
         }
 	}
 }

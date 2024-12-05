@@ -45,7 +45,7 @@ namespace SOC_backend.test.Services
         public async Task Register_MapsDataCorrectly()
         {
             //Arrange
-            var player = new RegisterPlayerRequest { Username = "Test", Password = "Test123!", ConfirmPassword = "Test123!", Email = "test@gmail.com", Role = "player" };
+            var player = new RegisterPlayerRequest { Username = "Test", Password = "Test123!", ConfirmPassword = "Test123!", Email = "test@gmail.com" };
 
             //Act
             await _playerService.Register(player);

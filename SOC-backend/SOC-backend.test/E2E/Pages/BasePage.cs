@@ -1,23 +1,17 @@
-﻿using CloudinaryDotNet.Actions;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SOC_backend.test.E2E.Pages
 {
-	public class BasePage
+	public abstract class BasePage
 	{
-		public IWebDriver _driver;
-		public WebDriverWait _wait;
+		protected IWebDriver _driver { get; }
+		public WebDriverWait _wait { get; }
 
-		public BasePage(IWebDriver driver)
+        protected BasePage(IWebDriver driver)
 		{
 			_driver = driver;
 			_wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 		}
-	}
+    }
 }

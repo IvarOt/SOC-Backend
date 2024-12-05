@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SOC_backend.logic.Interfaces.Logic;
+using SOC_backend.logic.Models.Cards;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace SOC_backend.api.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class GameController : ControllerBase
@@ -22,6 +22,13 @@ namespace SOC_backend.api.Controllers
         public async Task<ActionResult> StartGame()
         {
             var gameState = await _gameService.StartNewGame(1);
+            return Ok(gameState);
+        }
+
+        [HttpPost("ResolveFight")]
+        public async Task<ActionResult> ResolveFight()
+        {
+            var gameState = await _gameService.ResolveFight(1);
             return Ok(gameState);
         }
     }

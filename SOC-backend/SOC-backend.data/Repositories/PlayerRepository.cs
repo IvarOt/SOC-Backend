@@ -62,7 +62,7 @@ namespace SOC_backend.data.Repositories
             var existingPlayer = await _context.Player.FirstOrDefaultAsync(x => x.Username == player.Username);
 			if (existingPlayer == null)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("No player found with those credentials");
 			}
             else
             {

@@ -18,9 +18,16 @@ namespace SOC_backend.api.Controllers
         [HttpPost]
         public async Task<ActionResult> Register(RegisterPlayerRequest newPlayer)
         {
-            await _playerService.Register(newPlayer);
-            return Ok();
-        }
+            if (ModelState.IsValid)
+            {
+				await _playerService.Register(newPlayer);
+				return Ok();
+			}
+            else
+            {
+                return BadRequest();
+            }
+		}
 
         [HttpPost("Login")]
         public async Task<ActionResult> Login(PlayerLoginRequest loginRequest)
