@@ -9,15 +9,17 @@ namespace SOC_backend.logic.Services
     public class GameService : IGameService
     {
         private readonly IGameRepository _gameRepository;
+        private readonly ICardRepository _cardRepository;
 
-        public GameService(IGameRepository gameRepository)
+        public GameService(IGameRepository gameRepository, ICardRepository cardRepository)
         {
             _gameRepository = gameRepository;
+            _cardRepository = cardRepository;
         }
 
         public async Task<GameState> StartNewGame(int playerId)
         {
-            List<Card> cards = new List<Card>();
+            var cards = await _cardRepository.GetAllCards();
             GameState gameState = new GameState(cards);
             await _gameRepository.CreateNewGame(gameState);
             return gameState;

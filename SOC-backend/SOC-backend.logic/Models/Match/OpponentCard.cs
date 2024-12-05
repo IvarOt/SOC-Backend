@@ -13,10 +13,8 @@ namespace SOC_backend.logic.Models.Match
 	{
 		public int OpponentId { get; set; }
 		[JsonIgnore]
-		[NotMapped]
 		public Opponent Opponent { get; set; }
         public int CardId {  get; set; }
-		[NotMapped]
 		public Card Card { get; set; }
 		public bool IsOffence { get; set; } = false;
 

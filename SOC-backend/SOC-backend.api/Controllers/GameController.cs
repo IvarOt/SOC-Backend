@@ -28,18 +28,6 @@ namespace SOC_backend.api.Controllers
         [HttpPost("ResolveFight")]
         public async Task<ActionResult> ResolveFight()
         {
-            var cards = new List<Card>
-            {
-                new Card(1, "Bob", 5, 3, "GHUESWHGUIES", null),
-                new Card(2, "Bobbie", 3, 2, "GHUESWHGUFA", null),
-                new Card(2, "Bobbie", 3, 2, "GHUESWHGUFA", null),
-            };
-
-            var otherCards = new List<Card>
-            {
-                new Card(2, "Bobbie", 3, 2, "GHUESWHGUFA", null),
-                new Card(1, "Bob", 5, 3, "GHUESWHGUIES", null),
-            };
             var gameState = await _gameService.ResolveFight(1);
             return Ok(gameState);
         }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SOC_backend.logic.Models.Match
@@ -11,11 +12,12 @@ namespace SOC_backend.logic.Models.Match
 	public class ShopCard
 	{
 		public int ShopId { get; set; }
-        [NotMapped]
+		[JsonIgnore]
         public Shop Shop { get; set; }
 		public int CardId { get; set; }
-		[NotMapped]
 		public Card Card { get; set; }
 		public bool IsPurchased { get; set; } = false;
+
+		public ShopCard() { }
 	}
 }

@@ -41,12 +41,15 @@ namespace SOC_backend.logic.Models.Match
 
         public void FillWithCards(List<Card> deck)
         {
+            List<Card> deckCopy = new List<Card>(deck);
             List<Card> cardsForShop = new List<Card>();
             Random random = new Random();
-            for (int i = 0; i < deck.Count; i++)
+            var amountOfCards = deck.Count > 4 ? 4 : deck.Count;
+            for (int i = 0; i < amountOfCards; i++)
             {
-                var randomCardIndex = random.Next(0, deck.Count);
-                cardsForShop.Add(deck[randomCardIndex]);
+                var randomCardIndex = random.Next(0, deckCopy.Count);
+                cardsForShop.Add(deckCopy[randomCardIndex]);
+                deckCopy.RemoveAt(randomCardIndex);
             }
             cardsForShop.ForEach(card => AddCard(card));
         }

@@ -16,10 +16,10 @@ namespace SOC_backend.data
 		{
 			base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<OpponentCard>()
+			modelBuilder.Entity<OpponentCard>()
 				.HasKey(oc => new { oc.OpponentId, oc.CardId });
 
-			modelBuilder.Entity<OpponentCard>()
+            modelBuilder.Entity<OpponentCard>()
 				.HasOne(oc => oc.Opponent)
 				.WithMany(o => o.Cards)
 				.HasForeignKey(oc => oc.OpponentId)
