@@ -22,7 +22,6 @@ namespace SOC_backend.logic.Models.Match
             HP = hp;
             Coins = coins;
             Shop = new Shop(deck);
-            deck.ForEach(card => AddCard(card));
         }
 
         public void TakeDamage(Card card)
@@ -50,6 +49,14 @@ namespace SOC_backend.logic.Models.Match
             }
         }
 
-        
+        public void PurchaseCard(Card card)
+        {
+            if (Coins >= card.Cost)
+            {
+                Coins -= card.Cost;
+                AddCard(card);
+                Shop.SetCardAsPurchased(card);
+            }
+        }
     }
 }

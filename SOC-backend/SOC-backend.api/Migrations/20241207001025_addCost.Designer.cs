@@ -12,8 +12,8 @@ using SOC_backend.data;
 namespace SOC_backend.api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241205184926_UpdateShopCard")]
-    partial class UpdateShopCard
+    [Migration("20241207001025_addCost")]
+    partial class addCost
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,14 +98,9 @@ namespace SOC_backend.api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ShopId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("GameStateId");
-
-                    b.HasIndex("ShopId");
 
                     b.ToTable("Opponent");
                 });
@@ -131,10 +126,7 @@ namespace SOC_backend.api.Migrations
             modelBuilder.Entity("SOC_backend.logic.Models.Match.Shop", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.HasKey("Id");
 
@@ -201,14 +193,6 @@ namespace SOC_backend.api.Migrations
                         .HasForeignKey("GameStateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("SOC_backend.logic.Models.Match.Shop", "Shop")
-                        .WithMany()
-                        .HasForeignKey("ShopId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Shop");
                 });
 
             modelBuilder.Entity("SOC_backend.logic.Models.Match.OpponentCard", b =>
@@ -216,13 +200,13 @@ namespace SOC_backend.api.Migrations
                     b.HasOne("SOC_backend.logic.Models.Cards.Card", "Card")
                         .WithMany()
                         .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SOC_backend.logic.Models.Match.Opponent", "Opponent")
                         .WithMany("Cards")
                         .HasForeignKey("OpponentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Card");
@@ -230,18 +214,27 @@ namespace SOC_backend.api.Migrations
                     b.Navigation("Opponent");
                 });
 
+            modelBuilder.Entity("SOC_backend.logic.Models.Match.Shop", b =>
+                {
+                    b.HasOne("SOC_backend.logic.Models.Match.Opponent", null)
+                        .WithOne("Shop")
+                        .HasForeignKey("SOC_backend.logic.Models.Match.Shop", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SOC_backend.logic.Models.Match.ShopCard", b =>
                 {
                     b.HasOne("SOC_backend.logic.Models.Cards.Card", "Card")
                         .WithMany()
                         .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SOC_backend.logic.Models.Match.Shop", "Shop")
                         .WithMany("AvailableCards")
                         .HasForeignKey("ShopId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Card");
@@ -257,6 +250,9 @@ namespace SOC_backend.api.Migrations
             modelBuilder.Entity("SOC_backend.logic.Models.Match.Opponent", b =>
                 {
                     b.Navigation("Cards");
+
+                    b.Navigation("Shop")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SOC_backend.logic.Models.Match.Shop", b =>

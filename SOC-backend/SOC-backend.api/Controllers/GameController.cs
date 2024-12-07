@@ -31,5 +31,19 @@ namespace SOC_backend.api.Controllers
             var gameState = await _gameService.ResolveFight(1);
             return Ok(gameState);
         }
+
+        [HttpPost("PurchaseCard")]
+        public async Task<ActionResult> PurchaseCard(int cardId)
+        {
+            var gameState = await _gameService.PurchaseCard(cardId);
+            return Ok(gameState);
+        }
+
+        [HttpPost("EndGame")]
+        public async Task<ActionResult> EndGame()
+        {
+            await _gameService.EndGame();
+            return Ok();
+        }
     }
 }

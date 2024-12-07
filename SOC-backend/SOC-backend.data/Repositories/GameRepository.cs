@@ -28,5 +28,11 @@ namespace SOC_backend.data.Repositories
             }
             return gameState;
         }
+
+        public async Task DeleteGame(GameState gameState)
+        {
+            _context.GameState.Remove(gameState);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -5,25 +5,25 @@
 namespace SOC_backend.api.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateShopCard : Migration
+    public partial class addCost : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsPurchased",
-                table: "ShopCard",
-                type: "bit",
+            migrationBuilder.AddColumn<int>(
+                name: "Cost",
+                table: "Card",
+                type: "int",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: 0);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsPurchased",
-                table: "ShopCard");
+                name: "Cost",
+                table: "Card");
         }
     }
 }

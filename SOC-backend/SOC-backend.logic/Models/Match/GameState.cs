@@ -28,6 +28,7 @@ namespace SOC_backend.logic.Models.Match
             var test1 = new List<Card>();
 
             ResolveFight(test, test1);   
+            Players.ForEach(player => player.Shop.ClearPurchasedCards());
         }
 
         private void ResolveFight(List<Card> attackingPlayerCards, List<Card> attackingOpponentCards)
@@ -84,6 +85,11 @@ namespace SOC_backend.logic.Models.Match
                     }
                 }
             }
+        }
+
+        public void BuyCard(Card card)
+        {
+            Players[0].PurchaseCard(card);
         }
 
         public void StartNewRound()
