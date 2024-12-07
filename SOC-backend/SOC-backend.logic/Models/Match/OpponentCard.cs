@@ -11,7 +11,8 @@ namespace SOC_backend.logic.Models.Match
 {
 	public class OpponentCard
 	{
-		public int OpponentId { get; set; }
+		public int Id { get; set; }
+        public int OpponentId { get; set; }
 		[JsonIgnore]
 		public Opponent Opponent { get; set; }
         public int CardId {  get; set; }

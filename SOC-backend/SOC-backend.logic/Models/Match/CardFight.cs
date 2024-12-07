@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace SOC_backend.logic.Models.Match
     public class CardFight
     {
         public int Id { get; set; }
+        [ForeignKey("GameStateId")]
+        public int GameStateId { get; set; }
         private readonly List<FightCard> _Cards = new List<FightCard>();
         public List<FightCard> Cards { get { return _Cards; } }
 

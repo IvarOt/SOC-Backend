@@ -54,5 +54,10 @@ namespace SOC_backend.logic.Models.Match
             }
             cardsForShop.ForEach(card => AddCard(card));
         }
+
+        public void Update(List<ShopCard> availableCards)
+        {
+            AvailableCards = availableCards;
+        }
     }
 }

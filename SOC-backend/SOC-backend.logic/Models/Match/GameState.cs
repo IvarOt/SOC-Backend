@@ -40,8 +40,8 @@ namespace SOC_backend.logic.Models.Match
 
         private void ResolveFight()
         {
-            var attackingPlayerCards = Players[0].Cards.Where(x => x.IsOffence).ToList();
-            var attackingOpponentCards = Players[1].Cards.Where(x => x.IsOffence).ToList();
+            var attackingPlayerCards = Players[0].Cards;
+            var attackingOpponentCards = Players[1].Cards;
 
             var maxCardAttacks = Math.Max(attackingPlayerCards.Count, attackingOpponentCards.Count);
             var minCardAttacks = Math.Min(attackingPlayerCards.Count, attackingOpponentCards.Count);
@@ -107,6 +107,7 @@ namespace SOC_backend.logic.Models.Match
         public void BuyCard(Card card)
         {
             Players[0].PurchaseCard(card);
+            Players[1].AutoPurchaseCard();
         }
 
         public void GiveCardsTheirPositions()
@@ -115,6 +116,17 @@ namespace SOC_backend.logic.Models.Match
             {
                 player.Cards = player.Cards.OrderBy(x => x.IsOffence).ThenBy(x => x.PositionIndex).ToList();
             }
+        }
+
+        public void Update(GameState newState)
+        {
+            PlayerId = newState.PlayerId;
+            for (int i = 0; i < Players.Count - 1; i++)
+            {
+                Players[i].Update(newState.Players[i]);
+            }
+            TurnNumber = newState.TurnNumber;
+            Fights = newState.Fights;
         }
     }
 }

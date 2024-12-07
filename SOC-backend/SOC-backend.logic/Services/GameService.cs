@@ -30,6 +30,7 @@ namespace SOC_backend.logic.Services
             GameState gameState = await _gameRepository.GetGameState(1);
             var card = await _cardRepository.GetCard(cardId);
             gameState.BuyCard(card);
+            await _gameRepository.UpdateGame(gameState);
             return gameState;
         }
 
@@ -37,6 +38,7 @@ namespace SOC_backend.logic.Services
         {
             GameState gameState = await _gameRepository.GetGameState(playerId);
             gameState.ResolveTurn();
+            await _gameRepository.UpdateGame(gameState);
             return gameState;
         }
 

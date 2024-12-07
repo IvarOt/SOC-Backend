@@ -16,13 +16,15 @@ namespace SOC_backend.data
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<CardFight>()
-                .HasMany(c => c.Cards)
+			modelBuilder.Entity<GameState>()
+				.HasMany(x => x.Fights)
 				.WithOne()
 				.OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<OpponentCard>()
-				.HasKey(oc => new { oc.OpponentId, oc.CardId });
+            modelBuilder.Entity<CardFight>()
+                .HasMany(c => c.Cards)
+				.WithOne()
+				.OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<OpponentCard>()
 				.HasOne(oc => oc.Opponent)
@@ -56,6 +58,6 @@ namespace SOC_backend.data
 				.WithMany()
 				.HasForeignKey(oc => oc.CardId)
 				.OnDelete(DeleteBehavior.Cascade);
-		}
+        }
 	}
 }

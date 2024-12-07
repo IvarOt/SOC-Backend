@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Models.Cards;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,43 +8,37 @@ using System.Security.Claims;
 
 namespace SOC_backend.api.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class GameController : ControllerBase
+    public class GameHub : Hub
     {
         private readonly IGameService _gameService;
 
-        public GameController(IGameService gameService)
+        public GameHub(IGameService gameService)
         {
             _gameService = gameService;
         }
 
-        [HttpPost("StartGame")]
-        public async Task<ActionResult> StartGame()
+        public async Task StartGame()
         {
             var gameState = await _gameService.StartNewGame(1);
-            return Ok(gameState);
+            await Clients.Caller.SendAsync("gameState", gameState);
         }
 
-        [HttpPost("ResolveFight")]
-        public async Task<ActionResult> ResolveFight()
+        public async Task ResolveFight()
         {
             var gameState = await _gameService.ResolveFight(1);
-            return Ok(gameState);
+            await Clients.Caller.SendAsync("gameState", gameState);
         }
 
-        [HttpPost("PurchaseCard")]
-        public async Task<ActionResult> PurchaseCard(int cardId)
+        public async Task PurchaseCard(int cardId)
         {
             var gameState = await _gameService.PurchaseCard(cardId);
-            return Ok(gameState);
+            await Clients.Caller.SendAsync("gameState", gameState);
         }
 
-        [HttpPost("EndGame")]
-        public async Task<ActionResult> EndGame()
+        public async Task EndGame()
         {
             await _gameService.EndGame();
-            return Ok();
+            await Clients.Caller.SendAsync("GameEnded");
         }
     }
 }

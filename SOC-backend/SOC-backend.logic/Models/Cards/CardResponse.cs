@@ -8,8 +8,9 @@
         public int DMG { get; private set; }
         public string Color { get; private set; }
         public string ImageURL { get; private set; }
+        public int Cost { get; private set; }
 
-        public CardResponse(int id, string name, int hp, int dmg, string color, string imageURL)
+        public CardResponse(int id, string name, int hp, int dmg, string color, string imageURL, int cost)
         {
             Id = id;
             Name = name;
@@ -17,6 +18,7 @@
             DMG = dmg;
             Color = color;
             ImageURL = imageURL;
+            Cost = cost;
         }
     }
 }

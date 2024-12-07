@@ -57,12 +57,37 @@ namespace SOC_backend.logic.Models.Match
             }
         }
 
+        public void AutoPurchaseCard()
+        {
+            var purchaseableCards = Shop.AvailableCards.Where(c => c.Card.Cost <= Coins).ToList();
+            if (purchaseableCards.Count == 0)
+            {
+                return;
+            }
+            var cardToPurchase = purchaseableCards.OrderBy(c => c.Card.DMG).ThenBy(c => c.Card.HP).Last();
+            if (cardToPurchase != null)
+            {
+                Coins -= cardToPurchase.Card.Cost;
+                AddCard(cardToPurchase.Card);
+                Shop.SetCardAsPurchased(cardToPurchase.Card);
+            }
+        }
+
         public void GiveCoins(int amountOfCoins)
         {
             if (amountOfCoins > 0)
             {
                 Coins += amountOfCoins;
             }
+        }
+
+        public void Update(Opponent updatedOpponent)
+        {
+            Name = updatedOpponent.Name;
+            HP = updatedOpponent.HP;
+            Coins = updatedOpponent.Coins;
+            Cards = updatedOpponent.Cards;
+            Shop.Update(updatedOpponent.Shop.AvailableCards);
         }
     }
 }
