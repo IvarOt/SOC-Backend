@@ -25,12 +25,13 @@ namespace SOC_backend.logic.Models.Match
 
         public void ResolveTurn()
         {
-            GiveCardsTheirPositions();
             ResolveFight();
+            StartNewRound();
         }
 
         public void StartNewRound()
         {
+            TurnNumber++;
             foreach (var player in Players)
             {
                 player.GiveCoins(TurnNumber);

@@ -35,6 +35,8 @@ namespace SOC_backend.logic.Models.Match
                 CardId = card.Id,
                 Card = card,
                 IsOffence = isOffence,
+                HP = card.HP,
+                DMG = card.DMG
             });
         }
 
