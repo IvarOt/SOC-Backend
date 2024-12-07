@@ -10,17 +10,15 @@ namespace SOC_backend.logic.Models.Match
         [ForeignKey("GameStateId")]
         public int GameStateId { get; set; }
         public string Name { get; set; }
-        public int HP { get; set; }
-        public int Coins { get; set; }
+        public int HP { get; set; } = 30;
+        public int Coins { get; set; } = 1;
         public List<OpponentCard> Cards { get; set; } = new List<OpponentCard>();
         public Shop Shop { get; set; }
 
         public Opponent() { }
-        public Opponent(string name, int hp, int coins, List<Card> deck)
+        public Opponent(string name, List<Card> deck)
         {
             Name = name;
-            HP = hp;
-            Coins = coins;
             Shop = new Shop(deck);
         }
 
@@ -56,6 +54,14 @@ namespace SOC_backend.logic.Models.Match
                 Coins -= card.Cost;
                 AddCard(card);
                 Shop.SetCardAsPurchased(card);
+            }
+        }
+
+        public void GiveCoins(int amountOfCoins)
+        {
+            if (amountOfCoins > 0)
+            {
+                Coins += amountOfCoins;
             }
         }
     }

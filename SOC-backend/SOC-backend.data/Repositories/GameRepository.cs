@@ -21,7 +21,12 @@ namespace SOC_backend.data.Repositories
 
         public async Task<GameState> GetGameState(int playerId)
         {
-            GameState? gameState = await _context.GameState.Include(x => x.Players).ThenInclude(x => x.Cards).Where(x => x.PlayerId == playerId).FirstOrDefaultAsync();
+            GameState? gameState = await _context.GameState
+                .Include(x => x.Players)
+                .ThenInclude(x => x.Shop)
+                .ThenInclude(x => x.AvailableCards)
+                .ThenInclude(x => x.Card)
+                .Where(x => x.PlayerId == playerId).FirstOrDefaultAsync();
             if (gameState == null)
             {
                 throw new KeyNotFoundException();

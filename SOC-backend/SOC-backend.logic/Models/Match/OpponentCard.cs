@@ -17,7 +17,16 @@ namespace SOC_backend.logic.Models.Match
         public int CardId {  get; set; }
 		public Card Card { get; set; }
 		public bool IsOffence { get; set; } = false;
+		public int PositionIndex { get; set; }
+		public int HP { get; set; }
+        public int DMG { get; set; }
 
-		public OpponentCard() { }
+        public OpponentCard() { }
+
+        public void TakeDamage(int DMG)
+        {
+            HP = HP - DMG;
+        }
+
     }
 }

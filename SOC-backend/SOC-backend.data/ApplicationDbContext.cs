@@ -16,7 +16,12 @@ namespace SOC_backend.data
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<OpponentCard>()
+			modelBuilder.Entity<CardFight>()
+                .HasMany(c => c.Cards)
+				.WithOne()
+				.OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<OpponentCard>()
 				.HasKey(oc => new { oc.OpponentId, oc.CardId });
 
             modelBuilder.Entity<OpponentCard>()

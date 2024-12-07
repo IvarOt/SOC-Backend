@@ -43,10 +43,6 @@
             }
         }
         
-        public void TakeDamage(int DMG)
-        {
-            HP = HP - DMG;
-        }
 
         public CardResponse ToCardResponse()
         {
