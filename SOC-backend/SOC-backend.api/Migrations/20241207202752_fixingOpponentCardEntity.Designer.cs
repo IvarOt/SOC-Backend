@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SOC_backend.data;
 
@@ -11,9 +12,11 @@ using SOC_backend.data;
 namespace SOC_backend.api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241207202752_fixingOpponentCardEntity")]
+    partial class fixingOpponentCardEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,7 +66,7 @@ namespace SOC_backend.api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("GameStateId")
+                    b.Property<int?>("GameStateId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -246,9 +249,7 @@ namespace SOC_backend.api.Migrations
                 {
                     b.HasOne("SOC_backend.logic.Models.Match.GameState", null)
                         .WithMany("Fights")
-                        .HasForeignKey("GameStateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GameStateId");
                 });
 
             modelBuilder.Entity("SOC_backend.logic.Models.Match.FightCard", b =>

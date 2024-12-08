@@ -19,14 +19,39 @@ namespace SOC_backend.data.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateGame(GameState gameState)
+        {
+            var previousGameState = await GetGameState(1);
+
+            previousGameState.Update(gameState);
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<GameState> GetGameState(int playerId)
         {
-            GameState? gameState = await _context.GameState.Include(x => x.Players).ThenInclude(x => x.Cards).Where(x => x.PlayerId == playerId).FirstOrDefaultAsync();
+            var gameState = await _context.GameState
+                .Include(x => x.Players)
+                .ThenInclude(x => x.Cards)
+                .ThenInclude(x => x.Card)
+                .Include(x => x.Players)
+                .ThenInclude(x => x.Shop)
+                .ThenInclude(x => x.AvailableCards)
+                .ThenInclude(x => x.Card)
+                .Where(x => x.PlayerId == playerId)
+                .FirstOrDefaultAsync();
             if (gameState == null)
             {
                 throw new KeyNotFoundException();
             }
             return gameState;
         }
+
+        public async Task DeleteGame(GameState gameState)
+        {
+            _context.GameState.Remove(gameState);
+            await _context.SaveChangesAsync();
+        }
     }
 }
+

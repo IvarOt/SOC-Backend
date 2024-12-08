@@ -1,4 +1,5 @@
-﻿using SOC_backend.logic.Models.Cards;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using SOC_backend.logic.Models.Cards;
 
 namespace SOC_backend.logic.Models.Match
 {
@@ -34,9 +35,9 @@ namespace SOC_backend.logic.Models.Match
             }
         }
 
-        public void ClearShop()
+        public void ClearPurchasedCards()
         {
-            AvailableCards.Clear();
+            AvailableCards.RemoveAll(c => c.IsPurchased);
         }
 
         public void FillWithCards(List<Card> deck)
@@ -45,13 +46,18 @@ namespace SOC_backend.logic.Models.Match
             List<Card> cardsForShop = new List<Card>();
             Random random = new Random();
             var amountOfCards = deck.Count > 4 ? 4 : deck.Count;
-            for (int i = 0; i < amountOfCards; i++)
+            for (int i = AvailableCards.Count; i < amountOfCards; i++)
             {
                 var randomCardIndex = random.Next(0, deckCopy.Count);
                 cardsForShop.Add(deckCopy[randomCardIndex]);
                 deckCopy.RemoveAt(randomCardIndex);
             }
             cardsForShop.ForEach(card => AddCard(card));
+        }
+
+        public void Update(List<ShopCard> availableCards)
+        {
+            AvailableCards = availableCards;
         }
     }
 }

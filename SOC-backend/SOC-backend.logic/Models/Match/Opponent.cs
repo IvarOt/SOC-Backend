@@ -10,19 +10,16 @@ namespace SOC_backend.logic.Models.Match
         [ForeignKey("GameStateId")]
         public int GameStateId { get; set; }
         public string Name { get; set; }
-        public int HP { get; set; }
-        public int Coins { get; set; }
+        public int HP { get; set; } = 30;
+        public int Coins { get; set; } = 1;
         public List<OpponentCard> Cards { get; set; } = new List<OpponentCard>();
         public Shop Shop { get; set; }
 
         public Opponent() { }
-        public Opponent(string name, int hp, int coins, List<Card> deck)
+        public Opponent(string name, List<Card> deck)
         {
             Name = name;
-            HP = hp;
-            Coins = coins;
             Shop = new Shop(deck);
-            deck.ForEach(card => AddCard(card));
         }
 
         public void TakeDamage(Card card)
@@ -38,6 +35,8 @@ namespace SOC_backend.logic.Models.Match
                 CardId = card.Id,
                 Card = card,
                 IsOffence = isOffence,
+                HP = card.HP,
+                DMG = card.DMG
             });
         }
 
@@ -50,6 +49,47 @@ namespace SOC_backend.logic.Models.Match
             }
         }
 
-        
+        public void PurchaseCard(Card card)
+        {
+            if (Coins >= card.Cost)
+            {
+                Coins -= card.Cost;
+                AddCard(card);
+                Shop.SetCardAsPurchased(card);
+            }
+        }
+
+        public void AutoPurchaseCard()
+        {
+            var purchaseableCards = Shop.AvailableCards.Where(c => c.Card.Cost <= Coins).ToList();
+            if (purchaseableCards.Count == 0)
+            {
+                return;
+            }
+            var cardToPurchase = purchaseableCards.OrderBy(c => c.Card.DMG).ThenBy(c => c.Card.HP).Last();
+            if (cardToPurchase != null)
+            {
+                Coins -= cardToPurchase.Card.Cost;
+                AddCard(cardToPurchase.Card);
+                Shop.SetCardAsPurchased(cardToPurchase.Card);
+            }
+        }
+
+        public void GiveCoins(int amountOfCoins)
+        {
+            if (amountOfCoins > 0)
+            {
+                Coins += amountOfCoins;
+            }
+        }
+
+        public void Update(Opponent updatedOpponent)
+        {
+            Name = updatedOpponent.Name;
+            HP = updatedOpponent.HP;
+            Coins = updatedOpponent.Coins;
+            Cards = updatedOpponent.Cards;
+            Shop.Update(updatedOpponent.Shop.AvailableCards);
+        }
     }
 }

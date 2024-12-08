@@ -25,18 +25,27 @@ namespace SOC_backend.logic.Services
             return gameState;
         }
 
-        public async Task<GameState> ResolveFight(int playerId)
+        public async Task<GameState> PurchaseCard(int cardId)
         {
-            GameState gameState = await _gameRepository.GetGameState(playerId);
-            gameState.ResolveFightingStage();
+            GameState gameState = await _gameRepository.GetGameState(1);
+            var card = await _cardRepository.GetCard(cardId);
+            gameState.BuyCard(card);
+            await _gameRepository.UpdateGame(gameState);
             return gameState;
         }
 
-        public async Task<GameState> StartNewRound(int playerId)
+        public async Task<GameState> ResolveFight(int playerId)
         {
-            GameState gamestate = await _gameRepository.GetGameState(playerId);
+            GameState gameState = await _gameRepository.GetGameState(playerId);
+            gameState.ResolveTurn();
+            await _gameRepository.UpdateGame(gameState);
+            return gameState;
+        }
 
-            return gamestate;
+        public async Task EndGame()
+        {
+            GameState gameState = await _gameRepository.GetGameState(1);
+            await _gameRepository.DeleteGame(gameState);
         }
     }
 }

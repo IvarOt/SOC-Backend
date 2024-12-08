@@ -11,13 +11,23 @@ namespace SOC_backend.logic.Models.Match
 {
 	public class OpponentCard
 	{
-		public int OpponentId { get; set; }
+		public int Id { get; set; }
+        public int OpponentId { get; set; }
 		[JsonIgnore]
 		public Opponent Opponent { get; set; }
         public int CardId {  get; set; }
 		public Card Card { get; set; }
 		public bool IsOffence { get; set; } = false;
+		public int PositionIndex { get; set; }
+		public int HP { get; set; }
+        public int DMG { get; set; }
 
-		public OpponentCard() { }
+        public OpponentCard() { }
+
+        public void TakeDamage(int DMG)
+        {
+            HP = HP - DMG;
+        }
+
     }
 }

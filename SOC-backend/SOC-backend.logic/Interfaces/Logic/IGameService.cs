@@ -12,5 +12,7 @@ namespace SOC_backend.logic.Interfaces.Logic
     {
         Task<GameState> StartNewGame(int playerId);
         Task<GameState> ResolveFight(int playerId);
+        Task<GameState> PurchaseCard(int cardId);
+        Task EndGame();
     }
 }

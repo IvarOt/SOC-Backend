@@ -11,5 +11,7 @@ namespace SOC_backend.logic.Interfaces.Data
     {
         Task CreateNewGame(GameState gameState);
         Task<GameState> GetGameState(int playerId);
+        Task DeleteGame(GameState gameState);
+        Task UpdateGame(GameState gameState);
     }
 }

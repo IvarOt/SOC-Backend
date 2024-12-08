@@ -12,6 +12,17 @@
 
         //For entity framework
         public Card() { }
+        public Card(int id, string name, int hp, int dmg, string color, string? imageUrl, int cost)
+        {
+            Id = id;
+            Name = name;
+            HP = hp;
+            DMG = dmg;
+            Color = color;
+            ImageURL = imageUrl;
+            Cost = cost;
+        }
+
         public Card(int id, string name, int hp, int dmg, string color, string? imageUrl)
         {
             Id = id;
@@ -22,35 +33,33 @@
             ImageURL = imageUrl;
         }
 
-        public Card(string name, int hp, int dmg, string color, string? imageUrl)
+        public Card(string name, int hp, int dmg, string color, string? imageUrl, int cost)
         {
             Name = name;
             HP = hp;
             DMG = dmg;
             Color = color;
             ImageURL = imageUrl;
+            Cost = cost;
         }
 
-        public void Update(string name, int hp, int dmg, string color, string? imageUrl)
+        public void Update(string name, int hp, int dmg, string color, int cost, string? imageUrl)
         {
             Name = name;
             HP = hp;
             DMG = dmg;
             Color = color;
+            Cost = cost;
             if (ImageURL != null)
             {
                 ImageURL = imageUrl;
             }
         }
         
-        public void TakeDamage(int DMG)
-        {
-            HP = HP - DMG;
-        }
 
         public CardResponse ToCardResponse()
         {
-            return new CardResponse(Id, Name, HP, DMG, Color, ImageURL);
+            return new CardResponse(Id, Name, HP, DMG, Color, ImageURL, Cost);
         }
     }
 }

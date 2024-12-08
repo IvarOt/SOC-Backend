@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SOC_backend.data;
 
@@ -11,9 +12,11 @@ using SOC_backend.data;
 namespace SOC_backend.api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241207001025_addCost")]
+    partial class addCost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,48 +58,6 @@ namespace SOC_backend.api.Migrations
                     b.ToTable("Card");
                 });
 
-            modelBuilder.Entity("SOC_backend.logic.Models.Match.CardFight", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("GameStateId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameStateId");
-
-                    b.ToTable("CardFight");
-                });
-
-            modelBuilder.Entity("SOC_backend.logic.Models.Match.FightCard", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CardFightId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DMG")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HP")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CardFightId");
-
-                    b.ToTable("FightCard");
-                });
-
             modelBuilder.Entity("SOC_backend.logic.Models.Match.GameState", b =>
                 {
                     b.Property<int>("Id")
@@ -108,8 +69,8 @@ namespace SOC_backend.api.Migrations
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TurnNumber")
-                        .HasColumnType("int");
+                    b.Property<bool>("PlayersTurn")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -146,35 +107,18 @@ namespace SOC_backend.api.Migrations
 
             modelBuilder.Entity("SOC_backend.logic.Models.Match.OpponentCard", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("OpponentId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CardId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DMG")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HP")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsOffence")
                         .HasColumnType("bit");
 
-                    b.Property<int>("OpponentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PositionIndex")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("OpponentId", "CardId");
 
                     b.HasIndex("CardId");
-
-                    b.HasIndex("OpponentId");
 
                     b.ToTable("OpponentCard");
                 });
@@ -242,23 +186,6 @@ namespace SOC_backend.api.Migrations
                     b.ToTable("Player");
                 });
 
-            modelBuilder.Entity("SOC_backend.logic.Models.Match.CardFight", b =>
-                {
-                    b.HasOne("SOC_backend.logic.Models.Match.GameState", null)
-                        .WithMany("Fights")
-                        .HasForeignKey("GameStateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SOC_backend.logic.Models.Match.FightCard", b =>
-                {
-                    b.HasOne("SOC_backend.logic.Models.Match.CardFight", null)
-                        .WithMany("Cards")
-                        .HasForeignKey("CardFightId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("SOC_backend.logic.Models.Match.Opponent", b =>
                 {
                     b.HasOne("SOC_backend.logic.Models.Match.GameState", null)
@@ -315,15 +242,8 @@ namespace SOC_backend.api.Migrations
                     b.Navigation("Shop");
                 });
 
-            modelBuilder.Entity("SOC_backend.logic.Models.Match.CardFight", b =>
-                {
-                    b.Navigation("Cards");
-                });
-
             modelBuilder.Entity("SOC_backend.logic.Models.Match.GameState", b =>
                 {
-                    b.Navigation("Fights");
-
                     b.Navigation("Players");
                 });
 

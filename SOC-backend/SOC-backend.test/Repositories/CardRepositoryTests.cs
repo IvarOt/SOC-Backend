@@ -119,7 +119,7 @@ namespace SOC_backend.test.Repositories
             _context.SaveChanges();
 
             //Act
-            card.Update("Updated", 5, 5, "#4A90E2", "http://test.com/image.png");
+            card.Update("Updated", 5, 5, "#4A90E2", 3, "http://test.com/image.png");
             await _cardRepository.EditCard(card);
 
             //Assert

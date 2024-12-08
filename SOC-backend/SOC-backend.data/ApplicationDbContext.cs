@@ -16,35 +16,48 @@ namespace SOC_backend.data
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<OpponentCard>()
-				.HasKey(oc => new { oc.OpponentId, oc.CardId });
+			modelBuilder.Entity<GameState>()
+				.HasMany(x => x.Fights)
+				.WithOne()
+				.OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CardFight>()
+                .HasMany(c => c.Cards)
+				.WithOne()
+				.OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<OpponentCard>()
 				.HasOne(oc => oc.Opponent)
 				.WithMany(o => o.Cards)
 				.HasForeignKey(oc => oc.OpponentId)
-				.OnDelete(DeleteBehavior.Restrict);
+				.OnDelete(DeleteBehavior.Cascade);
 
 			modelBuilder.Entity<OpponentCard>()
 				.HasOne(oc => oc.Card)
 				.WithMany()
 				.HasForeignKey(oc => oc.CardId)
-				.OnDelete(DeleteBehavior.Restrict);
+				.OnDelete(DeleteBehavior.Cascade);
 
 			modelBuilder.Entity<ShopCard>()
 				.HasKey(oc => new { oc.ShopId, oc.CardId });
 
-			modelBuilder.Entity<ShopCard>()
+			modelBuilder.Entity<Opponent>()
+				.HasOne(o => o.Shop)
+				.WithOne()
+				.HasForeignKey<Shop>()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ShopCard>()
 				.HasOne(oc => oc.Shop)
 				.WithMany(o => o.AvailableCards)
 				.HasForeignKey(oc => oc.ShopId)
-				.OnDelete(DeleteBehavior.Restrict);
+				.OnDelete(DeleteBehavior.Cascade);
 
 			modelBuilder.Entity<ShopCard>()
 				.HasOne(oc => oc.Card)
 				.WithMany()
 				.HasForeignKey(oc => oc.CardId)
-				.OnDelete(DeleteBehavior.Restrict);
-		}
+				.OnDelete(DeleteBehavior.Cascade);
+        }
 	}
 }
