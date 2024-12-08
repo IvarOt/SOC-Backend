@@ -6,6 +6,7 @@ using SOC_backend.test.E2E.Pages;
 namespace SOC_backend.test.E2E.Tests
 {
     [TestClass]
+    [TestCategory("E2E")]
     public class LoginTests
     {
         private IWebDriver _driver;

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace SOC_backend.test.Repositories
 {
     [TestClass]
+    [TestCategory("Integration")]
     public class CardRepositoryTests
     {
         private ApplicationDbContext _context;

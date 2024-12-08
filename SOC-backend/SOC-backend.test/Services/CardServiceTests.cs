@@ -10,6 +10,7 @@ using System.Text;
 namespace SOC_backend.test.Services
 {
     [TestClass]
+    [TestCategory("Integration")]
     public class CardServiceTests
     {
         private Mock<ICardRepository> _mockCardRepository;

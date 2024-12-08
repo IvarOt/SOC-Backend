@@ -116,10 +116,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<GameHub>("/gamehub");
-    endpoints.MapControllers();
-});
+app.MapHub<GameHub>("/gameHub");
+app.MapControllers();
 
 app.Run();

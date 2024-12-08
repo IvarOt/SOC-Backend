@@ -13,6 +13,7 @@ using SOC_backend.logic.Models.Player;
 namespace SOC_backend.test.Services
 {
     [TestClass]
+    [TestCategory("Unit")]
     public class PlayerServiceTests
     {
         private Mock<IPlayerRepository> _mockPlayerRepository;

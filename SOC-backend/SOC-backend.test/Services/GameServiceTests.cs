@@ -7,6 +7,7 @@ using SOC_backend.logic.Services;
 namespace SOC_backend.test.Services
 {
     [TestClass]
+    [TestCategory("Unit")]
     public class GameServiceTests
     {
         private Mock<IGameRepository> _mockGameRepository;

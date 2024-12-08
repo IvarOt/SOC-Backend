@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 namespace SOC_backend.test.Repositories
 {
 	[TestClass]
-	public class PlayerRepositoryTests
+    [TestCategory("Integration")]
+    public class PlayerRepositoryTests
 	{
 		private ApplicationDbContext _context;
 		private DbContextOptions<ApplicationDbContext> _options;

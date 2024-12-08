@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 namespace SOC_backend.test.Services
 {
 	[TestClass]
-	public class TokenServiceTests
+    [TestCategory("Unit")]
+    public class TokenServiceTests
 	{
 		private Mock<IConfiguration> _mockConfiguration;
 		private TokenService _tokenService;
