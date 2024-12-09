@@ -23,16 +23,6 @@
             Cost = cost;
         }
 
-        public Card(int id, string name, int hp, int dmg, string color, string? imageUrl)
-        {
-            Id = id;
-            Name = name;
-            HP = hp;
-            DMG = dmg;
-            Color = color;
-            ImageURL = imageUrl;
-        }
-
         public Card(string name, int hp, int dmg, string color, string? imageUrl, int cost)
         {
             Name = name;

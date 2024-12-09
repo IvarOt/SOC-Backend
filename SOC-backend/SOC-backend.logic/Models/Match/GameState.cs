@@ -13,10 +13,11 @@ namespace SOC_backend.logic.Models.Match
 
         public GameState(List<Card> deck)
         {
+            var deck1 = new List<Card>(deck);
             Players = new List<Opponent>
             {
                 new Opponent("Me", deck),
-                new Opponent("Bob", deck),
+                new Opponent("Bob", deck1),
             };
             PlayerId = 1;
         }
@@ -36,6 +37,9 @@ namespace SOC_backend.logic.Models.Match
             {
                 player.GiveCoins(TurnNumber);
                 player.Shop.ClearPurchasedCards();
+                List<Card> cards = new List<Card>();
+                player.Shop.CardsForSale.ForEach(card => cards.Add(card.Card));
+                player.Shop.FillWithCards();
             }
         }
 
@@ -51,8 +55,8 @@ namespace SOC_backend.logic.Models.Match
 
             for (int turnIndex = 0; turnIndex < minCardAttacks; turnIndex++)
             {
-                var playerCard = attackingPlayerCards[turnIndex];
-                var opponentCard = attackingOpponentCards[turnIndex];
+                var playerCard = attackingPlayerCards[0];
+                var opponentCard = attackingOpponentCards[0];
 
                 playerCard.TakeDamage(opponentCard.DMG);
                 opponentCard.TakeDamage(playerCard.DMG);

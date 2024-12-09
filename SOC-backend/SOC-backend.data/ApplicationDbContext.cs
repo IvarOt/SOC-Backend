@@ -49,7 +49,7 @@ namespace SOC_backend.data
 
             modelBuilder.Entity<ShopCard>()
 				.HasOne(oc => oc.Shop)
-				.WithMany(o => o.AvailableCards)
+				.WithMany(o => o.CardsForSale)
 				.HasForeignKey(oc => oc.ShopId)
 				.OnDelete(DeleteBehavior.Cascade);
 
@@ -58,6 +58,10 @@ namespace SOC_backend.data
 				.WithMany()
 				.HasForeignKey(oc => oc.CardId)
 				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<Shop>()
+				.HasMany(s => s.AvailableCards)
+				.WithMany();
         }
 	}
 }

@@ -36,8 +36,11 @@ namespace SOC_backend.data.Repositories
                 .ThenInclude(x => x.Card)
                 .Include(x => x.Players)
                 .ThenInclude(x => x.Shop)
-                .ThenInclude(x => x.AvailableCards)
+                .ThenInclude(x => x.CardsForSale)
                 .ThenInclude(x => x.Card)
+                .Include(x => x.Players)
+                .ThenInclude(x => x.Shop)
+                .ThenInclude(x => x.AvailableCards)
                 .Where(x => x.PlayerId == playerId)
                 .FirstOrDefaultAsync();
             if (gameState == null)

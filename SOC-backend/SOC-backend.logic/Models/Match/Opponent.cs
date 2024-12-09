@@ -61,7 +61,7 @@ namespace SOC_backend.logic.Models.Match
 
         public void AutoPurchaseCard()
         {
-            var purchaseableCards = Shop.AvailableCards.Where(c => c.Card.Cost <= Coins).ToList();
+            var purchaseableCards = Shop.CardsForSale.Where(c => c.Card.Cost <= Coins && c.IsPurchased == false).ToList();
             if (purchaseableCards.Count == 0)
             {
                 return;
@@ -89,7 +89,7 @@ namespace SOC_backend.logic.Models.Match
             HP = updatedOpponent.HP;
             Coins = updatedOpponent.Coins;
             Cards = updatedOpponent.Cards;
-            Shop.Update(updatedOpponent.Shop.AvailableCards);
+            Shop.Update(updatedOpponent.Shop.CardsForSale);
         }
     }
 }

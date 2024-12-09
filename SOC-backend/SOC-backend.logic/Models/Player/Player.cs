@@ -29,28 +29,16 @@
 			Role = "player";
 		}
 
-		//Testing
-		public Player(int id, string username, string password)
-		{
-			Id = id;
-			Username = username;
-			Password= password;
-		}
-
-		public Player(int id, string username)
-		{
-			Id = id;
-			Username = username;
-		}
-
-		public Player(int id, string username, DateTime refreshTokenExpiry)
+        public Player(int id, string username, string email, string password)
         {
-            Id = id;
+			Id = id;
             Username = username;
-			RefreshTokenExpiry = refreshTokenExpiry;
+            Email = email;
+            Password = HashPassword(password);
+            Role = "player";
         }
 
-		public PlayerProfileResponse ToPlayerProfileResponse()
+        public PlayerProfileResponse ToPlayerProfileResponse()
 		{
 			return new PlayerProfileResponse(Username, Email);
 		}
