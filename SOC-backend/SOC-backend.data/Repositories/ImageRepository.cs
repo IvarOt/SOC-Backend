@@ -19,11 +19,14 @@ namespace SOC_backend.data.Repositories
             cloudinary.Api.Secure = true;
         }
 
-        public async Task DeleteImage()
+        public async Task DeleteImage(string imageURL)
         {
+            Uri uri = new Uri(imageURL);
+            string path = uri.AbsolutePath;
+            var imageId = System.IO.Path.GetFileNameWithoutExtension(path);
             var deleteParams = new DelResParams()
             {
-                PublicIds = new List<string> { "cld-sample" },
+                PublicIds = new List<string> { imageId },
                 Type = "upload",
                 ResourceType = ResourceType.Image
             };
