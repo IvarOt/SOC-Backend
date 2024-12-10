@@ -21,7 +21,7 @@ namespace SOC_backend.data.Repositories
 
         public async Task UpdateGame(GameState gameState)
         {
-            var previousGameState = await GetGameState(1);
+            var previousGameState = await GetGameState(gameState.PlayerId);
 
             previousGameState.Update(gameState);
 
@@ -50,9 +50,10 @@ namespace SOC_backend.data.Repositories
             return gameState;
         }
 
-        public async Task DeleteGame(GameState gameState)
+        public async Task EndGame(GameState gameState, FinishedMatch finishedMatch)
         {
             _context.GameState.Remove(gameState);
+            await _context.finishedMatch.AddAsync(finishedMatch);
             await _context.SaveChangesAsync();
         }
     }

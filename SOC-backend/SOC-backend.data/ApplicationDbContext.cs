@@ -10,13 +10,20 @@ namespace SOC_backend.data
 		public DbSet<Card> Card { get; set; } = null!;
 		public DbSet<Player> Player { get; set; } = null!;
 		public DbSet<GameState> GameState { get; set; } = null!;
+		public DbSet<FinishedMatch> finishedMatch { get; set; } = null!;
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<GameState>()
+			modelBuilder.Entity<FinishedMatch>()
+				.HasOne<Player>()
+				.WithMany()
+				.HasForeignKey(x => x.PlayerId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<GameState>()
 				.HasMany(x => x.Fights)
 				.WithOne()
 				.OnDelete(DeleteBehavior.Cascade);

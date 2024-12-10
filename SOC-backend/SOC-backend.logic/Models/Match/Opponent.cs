@@ -14,6 +14,7 @@ namespace SOC_backend.logic.Models.Match
         public int Coins { get; set; } = 1;
         public List<OpponentCard> Cards { get; set; } = new List<OpponentCard>();
         public Shop Shop { get; set; }
+        public bool IsWin { get; set; } = false;
 
         public Opponent() { }
         public Opponent(string name, List<Card> deck)
@@ -22,7 +23,7 @@ namespace SOC_backend.logic.Models.Match
             Shop = new Shop(deck);
         }
 
-        public void TakeDamage(Card card)
+        public void TakeDamage(OpponentCard card)
         {
             HP = HP - card.DMG;
         }

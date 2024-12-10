@@ -19,25 +19,31 @@ namespace SOC_backend.api.Controllers
 
         public async Task StartGame()
         {
-            var gameState = await _gameService.StartNewGame(1);
+            var gameState = await _gameService.StartNewGame(8);
             await Clients.Caller.SendAsync("gameState", gameState);
         }
 
         public async Task ResolveFight()
         {
-            var gameState = await _gameService.ResolveFight(1);
+            var gameState = await _gameService.ResolveFight(8);
             await Clients.Caller.SendAsync("gameState", gameState);
         }
 
         public async Task PurchaseCard(int cardId)
         {
-            var gameState = await _gameService.PurchaseCard(cardId);
+            var gameState = await _gameService.PurchaseCard(cardId, 8);
+            await Clients.Caller.SendAsync("gameState", gameState);
+        }
+
+        public async Task PassTurn()
+        {
+            var gameState = await _gameService.PassTurn(8);
             await Clients.Caller.SendAsync("gameState", gameState);
         }
 
         public async Task EndGame()
         {
-            await _gameService.EndGame();
+            await _gameService.EndGame(8);
             await Clients.Caller.SendAsync("GameEnded");
         }
     }
