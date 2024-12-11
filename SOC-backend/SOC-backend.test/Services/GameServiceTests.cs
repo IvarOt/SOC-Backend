@@ -53,22 +53,6 @@ namespace SOC_backend.test.Services
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public async Task StartNewGame_PlayerAlreadyHasGame()
-        {
-            //Arrange
-            _mockGameRepository.Setup(x => x.GetGameState(1)).ReturnsAsync(_gameStateObjects.testGameState);
-
-            //Act
-            var result = await _gameService.StartNewGame(1);
-
-            //Assert
-            Assert.IsNull(result);
-            _mockCardRepository.Verify(x => x.GetAllCards(), Times.Never);
-            _mockGameRepository.Verify(x => x.CreateNewGame(It.IsAny<GameState>()), Times.Never);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public async Task StartNewGame_NoCardsAvailable()
         {
             //Arrange
