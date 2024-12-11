@@ -21,7 +21,7 @@ namespace SOC_backend.data.Repositories
 
         public async Task UpdateGame(GameState gameState)
         {
-            var previousGameState = await GetGameState(1);
+            var previousGameState = await GetGameState(gameState.PlayerId);
 
             previousGameState.Update(gameState);
 
@@ -36,8 +36,11 @@ namespace SOC_backend.data.Repositories
                 .ThenInclude(x => x.Card)
                 .Include(x => x.Players)
                 .ThenInclude(x => x.Shop)
-                .ThenInclude(x => x.AvailableCards)
+                .ThenInclude(x => x.CardsForSale)
                 .ThenInclude(x => x.Card)
+                .Include(x => x.Players)
+                .ThenInclude(x => x.Shop)
+                .ThenInclude(x => x.AvailableCards)
                 .Where(x => x.PlayerId == playerId)
                 .FirstOrDefaultAsync();
             if (gameState == null)
@@ -47,9 +50,10 @@ namespace SOC_backend.data.Repositories
             return gameState;
         }
 
-        public async Task DeleteGame(GameState gameState)
+        public async Task EndGame(GameState gameState, FinishedMatch finishedMatch)
         {
             _context.GameState.Remove(gameState);
+            await _context.finishedMatch.AddAsync(finishedMatch);
             await _context.SaveChangesAsync();
         }
     }

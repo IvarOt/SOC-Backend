@@ -10,33 +10,50 @@ namespace SOC_backend.logic.Models.Match
         public List<Opponent> Players { get; set; }
         public int TurnNumber { get; set; } = 1;
         public List<CardFight> Fights { get; set; } = new List<CardFight>();
+        public bool GameEnded { get; set; } = false;
 
-        public GameState(List<Card> deck)
+        public GameState(List<Card> deck, int playerId)
         {
+            var deck1 = new List<Card>(deck);
             Players = new List<Opponent>
             {
                 new Opponent("Me", deck),
-                new Opponent("Bob", deck),
+                new Opponent("Bob", deck1),
             };
-            PlayerId = 1;
+            PlayerId = playerId;
         }
 
         public GameState() { }
 
         public void ResolveTurn()
         {
+            Players[1].AutoPurchaseCard();
             ResolveFight();
             StartNewRound();
         }
 
         public void StartNewRound()
         {
+            if (Players[0].HP <= 0 || Players[1].HP <= 0)
+            {
+                DeclareWinner();
+            }
             TurnNumber++;
             foreach (var player in Players)
             {
                 player.GiveCoins(TurnNumber);
                 player.Shop.ClearPurchasedCards();
+                List<Card> cards = new List<Card>();
+                player.Shop.CardsForSale.ForEach(card => cards.Add(card.Card));
+                player.Shop.FillWithCards();
             }
+        }
+
+        public void PassTurn()
+        {
+            Players[1].AutoPurchaseCard();
+            ResolveFight();
+            StartNewRound();
         }
 
         private void ResolveFight()
@@ -48,23 +65,44 @@ namespace SOC_backend.logic.Models.Match
             var minCardAttacks = Math.Min(attackingPlayerCards.Count, attackingOpponentCards.Count);
             var player = Players[0];
             var opponent = Players[1];
+            int opponenCardsIndex = 0;
+            int playerCardsIndex = 0;
+
+            OpponentCard opponentCard = new OpponentCard();
+            OpponentCard playerCard = new OpponentCard();
 
             for (int turnIndex = 0; turnIndex < minCardAttacks; turnIndex++)
             {
-                var playerCard = attackingPlayerCards[turnIndex];
-                var opponentCard = attackingOpponentCards[turnIndex];
-
-                playerCard.TakeDamage(opponentCard.DMG);
-                opponentCard.TakeDamage(playerCard.DMG);
-
-                if (playerCard.HP <= 0)
+                if (attackingPlayerCards.Count == 0 && attackingOpponentCards.Count == 0)
                 {
-                    player.Cards.RemoveAt(turnIndex);
+                    return;
                 }
-                if (opponentCard.HP <= 0)
+                if (attackingPlayerCards.Count > 0 && attackingOpponentCards.Count > 0)
                 {
-                    opponent.Cards.RemoveAt(turnIndex);
+                    if (attackingPlayerCards.Count >= playerCardsIndex)
+                    {
+                        playerCard = attackingPlayerCards[playerCardsIndex];
+                    }
+                    if (attackingOpponentCards.Count >= opponenCardsIndex)
+                    {
+                        opponentCard = attackingOpponentCards[opponenCardsIndex];
+                    }
+                    playerCard.TakeDamage(opponentCard.DMG);
+                    opponentCard.TakeDamage(playerCard.DMG);
+                    if (playerCard.HP <= 0)
+                    {
+                        player.Cards.Remove(playerCard);
+                        playerCardsIndex--;
+                    }
+                    if (opponentCard.HP <= 0)
+                    {
+                        opponent.Cards.Remove(opponentCard);
+                        opponenCardsIndex--;
+                    }
+                    opponenCardsIndex++;
+                    playerCardsIndex++;
                 }
+
                 List<FightCard> cards = new List<FightCard>
                 {
                     new FightCard
@@ -90,16 +128,22 @@ namespace SOC_backend.logic.Models.Match
                 {
                     for (int turnIndex = 0; turnIndex < differential; turnIndex++)
                     {
-                        var playerCard = attackingPlayerCards[turnIndex].Card;
-                        opponent.TakeDamage(playerCard);
+                        if (attackingPlayerCards[turnIndex] != null)
+                        {
+                            playerCard = attackingPlayerCards[turnIndex];
+                            opponent.TakeDamage(playerCard);
+                        }
                     }
                 }
                 else
                 {
                     for (int turnIndex = 0; turnIndex < differential; turnIndex++)
                     {
-                        var opponentCard = attackingOpponentCards[turnIndex].Card;
-                        player.TakeDamage(opponentCard);
+                        if (attackingOpponentCards[turnIndex] != null)
+                        {
+                            opponentCard = attackingOpponentCards[turnIndex];
+                            player.TakeDamage(opponentCard);
+                        }
                     }
                 }
             }
@@ -128,6 +172,26 @@ namespace SOC_backend.logic.Models.Match
             }
             TurnNumber = newState.TurnNumber;
             Fights = newState.Fights;
+        }
+
+        public void DeclareWinner()
+        {
+            if (Players[0].HP <= 0)
+            {
+                Players[1].IsWin = true;
+                GameEnded = true;
+            }
+            else if (Players[1].HP <= 0)
+            {
+                Players[0].IsWin = true;
+                GameEnded = true;
+            }
+        }
+
+        public void Surrender()
+        {
+            Players[1].IsWin = true;
+            GameEnded = true;
         }
     }
 }

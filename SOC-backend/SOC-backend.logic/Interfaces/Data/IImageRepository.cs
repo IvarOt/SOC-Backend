@@ -9,7 +9,7 @@ namespace SOC_backend.logic.Interfaces.Data
 {
     public interface IImageRepository
     {
-        Task DeleteImage();
+        Task DeleteImage(string image);
         Task<string> UploadImage(IFormFile image);
     }
 }

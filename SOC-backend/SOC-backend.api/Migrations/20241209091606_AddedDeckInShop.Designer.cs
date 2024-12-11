@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SOC_backend.data;
 
@@ -11,9 +12,11 @@ using SOC_backend.data;
 namespace SOC_backend.api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241209091606_AddedDeckInShop")]
+    partial class AddedDeckInShop
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,34 +115,6 @@ namespace SOC_backend.api.Migrations
                     b.ToTable("FightCard");
                 });
 
-            modelBuilder.Entity("SOC_backend.logic.Models.Match.FinishedMatch", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("DidWin")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("OpponentName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlayerId");
-
-                    b.ToTable("finishedMatch");
-                });
-
             modelBuilder.Entity("SOC_backend.logic.Models.Match.GameState", b =>
                 {
                     b.Property<int>("Id")
@@ -147,9 +122,6 @@ namespace SOC_backend.api.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("GameEnded")
-                        .HasColumnType("bit");
 
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
@@ -178,9 +150,6 @@ namespace SOC_backend.api.Migrations
 
                     b.Property<int>("HP")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsWin")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -321,15 +290,6 @@ namespace SOC_backend.api.Migrations
                         .WithMany("Cards")
                         .HasForeignKey("CardFightId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SOC_backend.logic.Models.Match.FinishedMatch", b =>
-                {
-                    b.HasOne("SOC_backend.logic.Models.Player.Player", null)
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("SOC_backend.logic.Models.Match.Opponent", b =>
