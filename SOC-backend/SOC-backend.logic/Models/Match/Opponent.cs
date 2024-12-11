@@ -50,13 +50,26 @@ namespace SOC_backend.logic.Models.Match
             }
         }
 
-        public void PurchaseCard(Card card)
+        public void PurchaseCard(int cardId)
         {
-            if (Coins >= card.Cost)
+            var shopCard = Shop.CardsForSale.Where(c => c.Card.Id == cardId).FirstOrDefault();
+            if (shopCard == null)
             {
-                Coins -= card.Cost;
-                AddCard(card);
-                Shop.SetCardAsPurchased(card);
+                throw new InvalidOperationException("Card not found.");
+            }
+            else
+            {
+                var card = shopCard.Card;
+                if (Coins >= card.Cost)
+                {
+                    Coins -= card.Cost;
+                    AddCard(card);
+                    Shop.SetCardAsPurchased(card);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Not enough coins.");
+                }
             }
         }
 
@@ -65,7 +78,7 @@ namespace SOC_backend.logic.Models.Match
             var purchaseableCards = Shop.CardsForSale.Where(c => c.Card.Cost <= Coins && c.IsPurchased == false).ToList();
             if (purchaseableCards.Count == 0)
             {
-                return;
+                throw new InvalidOperationException(Name + " has no purchaseable cards.");
             }
             var cardToPurchase = purchaseableCards.OrderBy(c => c.Card.DMG).ThenBy(c => c.Card.HP).Last();
             if (cardToPurchase != null)

@@ -5,6 +5,7 @@ using SOC_backend.logic.Interfaces;
 using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Models.Cards;
 using SOC_backend.logic.Services;
+using SOC_backend.test.TestObjects;
 using System.Text;
 
 namespace SOC_backend.test.Services
@@ -16,6 +17,7 @@ namespace SOC_backend.test.Services
         private Mock<ICardRepository> _mockCardRepository;
         private Mock<IImageRepository> _mockImageRepository;
         private CardService _cardService;
+        private CardObjects _cardObjects;
 
         [TestInitialize]
         public void Setup()
@@ -23,6 +25,7 @@ namespace SOC_backend.test.Services
             _mockCardRepository = new Mock<ICardRepository>();
             _mockImageRepository = new Mock<IImageRepository>();
             _cardService = new CardService(_mockCardRepository.Object, _mockImageRepository.Object);
+            _cardObjects = new CardObjects();
         }
 
         [TestMethod]
@@ -78,6 +81,7 @@ namespace SOC_backend.test.Services
             //Arrange
             var card = new EditCardRequest { Name = "Test", Image = CreateMockFormFile() };
             _mockImageRepository.Setup(repo => repo.UploadImage(card.Image)).ReturnsAsync("http://test.com/image.png");
+            _mockCardRepository.Setup(repo => repo.GetCard(card.Id)).ReturnsAsync(_cardObjects.testCard);
 
             //Act
             await _cardService.EditCard(card);
@@ -92,6 +96,7 @@ namespace SOC_backend.test.Services
         {
             //Arrange
             int cardId = 1;
+            _mockCardRepository.Setup(repo => repo.GetCard(cardId)).ReturnsAsync(_cardObjects.testCard);
 
             //Act
             await _cardService.DeleteCard(cardId);

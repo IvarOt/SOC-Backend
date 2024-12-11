@@ -12,6 +12,7 @@ namespace SOC_backend.test.TestObjects
     {
         public Card testCard {  get; set; }
         public List<Card> testCards { get; set; }
+        public List<Card> expensiveTestCards { get; set; }
 
         public CardObjects()
         {
@@ -20,6 +21,11 @@ namespace SOC_backend.test.TestObjects
             {
                 testCard, 
                 new Card(2, "test", 1, 1, "#TestColor", null, 1)
+            };
+            expensiveTestCards = new List<Card>
+            {
+                new Card(3, "test", 1, 1, "#TestColor", null, 100),
+                new Card(4, "test", 1, 1, "#TestColor", null, 100)
             };
         }
     }

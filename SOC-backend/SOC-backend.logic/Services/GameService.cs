@@ -28,8 +28,7 @@ namespace SOC_backend.logic.Services
         public async Task<GameState> PurchaseCard(int cardId, int playerId)
         {
             GameState gameState = await _gameRepository.GetGameState(playerId);
-            var card = await _cardRepository.GetCard(cardId);
-            gameState.BuyCard(card);
+            gameState.BuyCard(cardId);
             await _gameRepository.UpdateGame(gameState);
             return gameState;
         }

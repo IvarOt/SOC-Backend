@@ -14,20 +14,26 @@ namespace SOC_backend.logic.Models.Match
 
         public GameState(List<Card> deck, int playerId)
         {
-            var deck1 = new List<Card>(deck);
-            Players = new List<Opponent>
+            if (deck.Count == 0)
+            {
+                throw new InvalidOperationException("Deck cannot be empty.");
+            }
+            else
+            {
+                var deck1 = new List<Card>(deck);
+                Players = new List<Opponent>
             {
                 new Opponent("Me", deck),
                 new Opponent("Bob", deck1),
             };
-            PlayerId = playerId;
+                PlayerId = playerId;
+            }
         }
 
         public GameState() { }
 
         public void ResolveTurn()
         {
-            Players[1].AutoPurchaseCard();
             ResolveFight();
             StartNewRound();
         }
@@ -149,9 +155,9 @@ namespace SOC_backend.logic.Models.Match
             }
         }
 
-        public void BuyCard(Card card)
+        public void BuyCard(int cardId)
         {
-            Players[0].PurchaseCard(card);
+            Players[0].PurchaseCard(cardId);
             Players[1].AutoPurchaseCard();
         }
 
