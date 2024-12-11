@@ -46,6 +46,13 @@ namespace SOC_backend.api.Controllers
             return Ok(player.AccesToken);
         }
 
+        [HttpPut("ChangeAvatar")]
+        public async Task<ActionResult> ChangeAvatar(int playerId, string imageURL)
+        {
+            await _playerService.ChangeAvatar(playerId, imageURL);
+            return Ok();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult> Profile(int id)
         {
@@ -64,6 +71,13 @@ namespace SOC_backend.api.Controllers
             var accesToken = await _playerService.RefreshAccesToken(refreshToken);
             
             return Ok(accesToken);
+        }
+
+        [HttpGet("MatchHistory")]
+        public async Task<ActionResult> GetMatchHistory(int playerId)
+        {
+            var matchHistory = await _playerService.GetMatchHistory(playerId); 
+            return Ok(matchHistory);
         }
     }
 }

@@ -17,6 +17,12 @@ namespace SOC_backend.logic.Services
             _cardRepository = cardRepository;
         }
 
+        public async Task<GameState> GetGameState(int playerId)
+        {
+            var gameState = await _gameRepository.GetGameState(playerId);
+            return gameState;
+        }
+
         public async Task<GameState> StartNewGame(int playerId)
         {
             var cards = await _cardRepository.GetAllCards();

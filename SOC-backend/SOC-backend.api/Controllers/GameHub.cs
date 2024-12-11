@@ -17,6 +17,34 @@ namespace SOC_backend.api.Controllers
             _gameService = gameService;
         }
 
+        public override async Task OnConnectedAsync()
+        {
+            try
+            {
+                var gameState = await _gameService.GetGameState(8);
+                await Clients.Caller.SendAsync("gameState", gameState);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in OnConnectedAsync: {ex.Message}");
+            }
+            finally
+            {
+                await base.OnConnectedAsync();
+            }
+        }
+
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            await base.OnDisconnectedAsync(exception);
+        }
+
+        public async Task GetGameState()
+        {
+            var gameState = await _gameService.GetGameState(8);
+            await Clients.Caller.SendAsync("gameState", gameState);
+        }
+
         public async Task StartGame()
         {
             var gameState = await _gameService.StartNewGame(8);

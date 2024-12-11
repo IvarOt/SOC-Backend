@@ -1,5 +1,6 @@
 ﻿using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Interfaces.Logic;
+using SOC_backend.logic.Models.Match;
 using SOC_backend.logic.Models.Player;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
@@ -15,6 +16,17 @@ namespace SOC_backend.logic.Services
 			_playerRepository = playerRepository;
 			_tokenService = tokenService;
 		}
+
+		public async Task<List<FinishedMatch>> GetMatchHistory(int playerId)
+		{
+            var matchHistory = await _playerRepository.GetMatchHistory(playerId);
+            return matchHistory;
+        }
+
+		public async Task ChangeAvatar(int playerId, string imageURL)
+		{
+			await _playerRepository.ChangeAvatar(playerId, imageURL);
+        }
 
 		public async Task<PlayerProfileResponse> GetProfileInfo(int id)
 		{

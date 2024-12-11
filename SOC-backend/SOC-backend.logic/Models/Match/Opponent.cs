@@ -78,7 +78,7 @@ namespace SOC_backend.logic.Models.Match
             var purchaseableCards = Shop.CardsForSale.Where(c => c.Card.Cost <= Coins && c.IsPurchased == false).ToList();
             if (purchaseableCards.Count == 0)
             {
-                throw new InvalidOperationException(Name + " has no purchaseable cards.");
+                return;
             }
             var cardToPurchase = purchaseableCards.OrderBy(c => c.Card.DMG).ThenBy(c => c.Card.HP).Last();
             if (cardToPurchase != null)

@@ -45,7 +45,7 @@ namespace SOC_backend.data.Repositories
                 .FirstOrDefaultAsync();
             if (gameState == null)
             {
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException("No active game found");
             }
             return gameState;
         }

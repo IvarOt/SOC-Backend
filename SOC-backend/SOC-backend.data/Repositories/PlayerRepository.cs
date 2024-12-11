@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SOC_backend.logic.Interfaces.Data;
+using SOC_backend.logic.Models.Match;
 using SOC_backend.logic.Models.Player;
 
 namespace SOC_backend.data.Repositories
@@ -22,6 +23,20 @@ namespace SOC_backend.data.Repositories
             else
             {
                 return player;
+            }
+        }
+
+        public async Task ChangeAvatar(int playerId, string imageURL)
+        {
+            var player = await _context.Player.FirstOrDefaultAsync(x => x.Id == playerId);
+            if (player == null)
+            {
+                throw new KeyNotFoundException("Player not found");
+            }
+            else
+            {
+                player.ProfileAvatar = imageURL;
+                await _context.SaveChangesAsync();
             }
         }
 
@@ -69,5 +84,15 @@ namespace SOC_backend.data.Repositories
                 return existingPlayer;
             }
 		}
+
+        public async Task<List<FinishedMatch>> GetMatchHistory(int playerId)
+        {
+            var matches = await _context.finishedMatch.Where(x => x.PlayerId == playerId).OrderByDescending(x => x.DateTime).ToListAsync();
+            if (matches == null)
+            {
+                throw new KeyNotFoundException("No matches found");
+            }
+            return matches;
+        }
     }
 }
