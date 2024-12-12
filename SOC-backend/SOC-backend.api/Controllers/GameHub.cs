@@ -17,10 +17,21 @@ namespace SOC_backend.api.Controllers
             _gameService = gameService;
         }
 
+        public Task JoinGroup(string roomName)
+        {
+            return Groups.AddToGroupAsync(Context.ConnectionId, roomName);
+        }
+
+        public Task LeaveRoom(string roomName)
+        {
+            return Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
+        }
+
         public override async Task OnConnectedAsync()
         {
             try
             {
+                //Match player to a game and JoinGroup();
                 var gameState = await _gameService.GetGameState(8);
                 await Clients.Caller.SendAsync("gameState", gameState);
             }
