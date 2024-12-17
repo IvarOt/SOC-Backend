@@ -31,8 +31,9 @@ namespace SOC_backend.api.Controllers
         {
             try
             {
-                //Match player to a game and JoinGroup();
                 var gameState = await _gameService.GetGameState(8);
+                var groupName = $"game-{gameState.Id}";
+                await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
                 await Clients.Caller.SendAsync("gameState", gameState);
             }
             catch (Exception ex)
@@ -59,31 +60,37 @@ namespace SOC_backend.api.Controllers
         public async Task StartGame()
         {
             var gameState = await _gameService.StartNewGame(8);
-            await Clients.Caller.SendAsync("gameState", gameState);
+            var groupName = $"game-{gameState.Id}";
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            await Clients.Group(groupName).SendAsync("gameState", gameState);
         }
 
         public async Task ResolveFight()
         {
             var gameState = await _gameService.ResolveFight(8);
-            await Clients.Caller.SendAsync("gameState", gameState);
+            var groupName = $"game-{gameState.Id}";
+            await Clients.Group(groupName).SendAsync("gameState", gameState);
         }
 
         public async Task PurchaseCard(int cardId)
         {
             var gameState = await _gameService.PurchaseCard(cardId, 8);
-            await Clients.Caller.SendAsync("gameState", gameState);
+            var groupName = $"game-{gameState.Id}";
+            await Clients.Group(groupName).SendAsync("gameState", gameState);
         }
 
         public async Task PassTurn()
         {
             var gameState = await _gameService.PassTurn(8);
-            await Clients.Caller.SendAsync("gameState", gameState);
+            var groupName = $"game-{gameState.Id}";
+            await Clients.Group(groupName).SendAsync("gameState", gameState);
         }
 
         public async Task EndGame()
         {
             await _gameService.EndGame(8);
-            await Clients.Caller.SendAsync("GameEnded");
+            var groupName = $"game-{8}";
+            await Clients.Group(groupName).SendAsync("GameEnded");
         }
     }
 }
