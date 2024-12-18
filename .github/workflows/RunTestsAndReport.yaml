@@ -27,6 +27,9 @@ jobs:
 
       - name: Run selenium chrome docker
         run: docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome:latest
+        
+      - name: Wait for Selenium to start
+        run: sleep 10
 
       - name: E2E tests
         run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E"
