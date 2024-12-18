@@ -1,6 +1,7 @@
 ﻿using CloudinaryDotNet.Actions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Remote;
 using SOC_backend.test.E2E.Pages;
 
 namespace SOC_backend.test.E2E.Tests
@@ -15,7 +16,9 @@ namespace SOC_backend.test.E2E.Tests
         [TestInitialize]
         public void Setup()
         {
-            _driver = new ChromeDriver();
+            var options = new ChromeOptions();
+            Uri url = new Uri("http://localhost:4444⁠");
+            _driver = new RemoteWebDriver(url, options);
             _driver.Navigate().GoToUrl("http://localhost:4444⁠/Login");
             _loginPage = new LoginPage(_driver);
         }
