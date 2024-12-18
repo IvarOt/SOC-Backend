@@ -15,9 +15,12 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
-      - uses: browser-actions/setup-chrome@latest
-      - run: chrome --version
 
+      - name: Setup Chrome
+        run: sudo apt-get install -y google-chrome-stable
+
+      - name: Setup ChromeDriver
+        run: sudo apt-get install -y chromium-chromedriver
     
       - name: Restore
         run: dotnet restore SOC-backend/SOC-backend.sln
