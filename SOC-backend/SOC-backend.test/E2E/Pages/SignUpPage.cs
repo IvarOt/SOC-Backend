@@ -26,25 +26,25 @@ namespace SOC_backend.test.E2E.Pages
 
         public void EnterUsername(string username)
         {
-            _wait.Until(driver => driver.FindElement(UsernameField).Displayed);
+            WaitForElementToBeVisible(UsernameField);
             _driver.FindElement(UsernameField).SendKeys(username);
         }
 
         public void EnterEmail(string email)
         {
-            _wait.Until(driver => driver.FindElement(EmailField).Displayed);
+            WaitForElementToBeVisible(EmailField);
             _driver.FindElement(EmailField).SendKeys(email);
         }
 
         public void EnterPassword(string password)
         {
-            _wait.Until(driver => driver.FindElement(PasswordField).Displayed);
+            WaitForElementToBeVisible(PasswordField);
             _driver.FindElement(PasswordField).SendKeys(password);
         }
 
         public void EnterConfirmPassword(string confirmPassword)
         {
-            _wait.Until(driver => driver.FindElement(ConfirmPasswordField).Displayed);
+            WaitForElementToBeVisible(ConfirmPasswordField);
             _driver.FindElement(ConfirmPasswordField).SendKeys(confirmPassword);
         }
 
@@ -90,6 +90,11 @@ namespace SOC_backend.test.E2E.Pages
         private void WaitForElementToBeClickable(By by)
         {
             _wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(by));
+        }
+
+        private void WaitForElementToBeVisible(By by)
+        {
+            _wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(by));
         }
 
         private void ClickElementUsingJavaScript(By by)
