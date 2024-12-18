@@ -5,42 +5,43 @@ using SeleniumExtras.WaitHelpers;
 
 namespace SOC_backend.test.E2E.Pages
 {
-	public class LoginPage : BasePage
-	{
-		private By UsernameField = By.CssSelector("[data-test='username']");
-		private By PasswordField = By.CssSelector("[data-test='password']");
-		private By LoginButton = By.CssSelector("[data-test='login-btn']");
-		private By ExceptionField = By.CssSelector("[data-test='exceptionMessage']");
-		private By NavigateToLogin = By.CssSelector("[data-test='navigateToLogin']");
+    public class LoginPage : BasePage
+    {
+        private By UsernameField = By.CssSelector("[data-test='username']");
+        private By PasswordField = By.CssSelector("[data-test='password']");
+        private By LoginButton = By.CssSelector("[data-test='login-btn']");
+        private By ExceptionField = By.CssSelector("[data-test='exceptionMessage']");
+        private By NavigateToLogin = By.CssSelector("[data-test='navigateToLogin']");
 
         public LoginPage(IWebDriver driver) : base(driver) { }
 
-		public void GoToLoginPage()
+        public void GoToLoginPage()
         {
-            _wait.Until(ExpectedConditions.ElementToBeClickable(NavigateToLogin));
-            _driver.FindElement(NavigateToLogin).Click();
+            WaitForElementToBeClickable(NavigateToLogin);
+            ClickElementUsingJavaScript(NavigateToLogin);
         }
 
         public void EnterUsername(string username)
-		{
-			_wait.Until(driver => driver.FindElement(UsernameField).Displayed);
+        {
+            _wait.Until(driver => driver.FindElement(UsernameField).Displayed);
             _driver.FindElement(UsernameField).SendKeys(username);
-		}
+        }
 
-		public void EnterPassword(string password)
-		{
+        public void EnterPassword(string password)
+        {
             _wait.Until(driver => driver.FindElement(PasswordField).Displayed);
             _driver.FindElement(PasswordField).SendKeys(password);
-		}
-		public void ClickLogin()
-		{
-            _wait.Until(ExpectedConditions.ElementToBeClickable(LoginButton));
-            _driver.FindElement(LoginButton).Click();
+        }
+
+        public void ClickLogin()
+        {
+            WaitForElementToBeClickable(LoginButton);
+            ClickElementUsingJavaScript(LoginButton);
             _wait.Until(driver => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
         }
 
         public string GiveException()
-		{
+        {
             return _wait.Until(driver =>
             {
                 var exceptionElement = driver.FindElement(ExceptionField);
@@ -49,5 +50,17 @@ namespace SOC_backend.test.E2E.Pages
                     : null;
             });
         }
-	}
+
+        private void WaitForElementToBeClickable(By by)
+        {
+            _wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(by));
+        }
+
+        private void ClickElementUsingJavaScript(By by)
+        {
+            var element = _driver.FindElement(by);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
+        }
+    }
 }
+
