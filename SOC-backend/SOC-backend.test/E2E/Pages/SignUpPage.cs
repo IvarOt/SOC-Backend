@@ -21,26 +21,31 @@ namespace SOC_backend.test.E2E.Pages
 
         public void EnterUsername(string username)
         {
+            _wait.Until(driver => driver.FindElement(UsernameField).Displayed);
             _driver.FindElement(UsernameField).SendKeys(username);
         }
 
         public void EnterEmail(string email)
         {
+            _wait.Until(driver => driver.FindElement(EmailField).Displayed);
             _driver.FindElement(EmailField).SendKeys(email);
         }
 
         public void EnterPassword(string password)
         {
+            _wait.Until(driver => driver.FindElement(PasswordField).Displayed);
             _driver.FindElement(PasswordField).SendKeys(password);
         }
 
         public void EnterConfirmPassword(string confirmPassword)
         {
+            _wait.Until(driver => driver.FindElement(ConfirmPasswordField).Displayed);
             _driver.FindElement(ConfirmPasswordField).SendKeys(confirmPassword);
         }
 
         public void ClickSignUp()
         {
+            _wait.Until(driver => driver.FindElement(SubmitBtn).Displayed);
             _driver.FindElement(SubmitBtn).Click();
         }
 
