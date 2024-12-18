@@ -16,7 +16,7 @@ namespace SOC_backend.test.E2E.Tests
         public void Setup()
         {
             _driver = new ChromeDriver();
-            _driver.Navigate().GoToUrl("http://localhost:5173/Login");
+            _driver.Navigate().GoToUrl("http://localhost:4444⁠/Login");
             _loginPage = new LoginPage(_driver);
         }
 
