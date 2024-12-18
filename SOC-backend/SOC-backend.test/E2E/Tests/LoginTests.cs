@@ -24,6 +24,7 @@ namespace SOC_backend.test.E2E.Tests
             _driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
             _loginPage = new LoginPage(_driver);
             _loginPage.GoToLoginPage();
+            Console.WriteLine(_driver.Url);
         }
 
         [TestCleanup]
