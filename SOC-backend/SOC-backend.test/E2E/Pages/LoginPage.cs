@@ -10,10 +10,17 @@ namespace SOC_backend.test.E2E.Pages
 		private By PasswordField = By.CssSelector("[data-test='password']");
 		private By LoginButton = By.CssSelector("[data-test='login-btn']");
 		private By ExceptionField = By.CssSelector("[data-test='exceptionMessage']");
+		private By NavigateToLogin = By.CssSelector("[data-test='navigateToLogin']");
 
         public LoginPage(IWebDriver driver) : base(driver) { }
 
-		public void EnterUsername(string username)
+		public void GoToLoginPage()
+        {
+            _wait.Until(driver => driver.FindElement(NavigateToLogin).Displayed);
+            _driver.FindElement(NavigateToLogin).Click();
+        }
+
+        public void EnterUsername(string username)
 		{
 			_wait.Until(driver => driver.FindElement(UsernameField).Displayed);
             _driver.FindElement(UsernameField).SendKeys(username);
