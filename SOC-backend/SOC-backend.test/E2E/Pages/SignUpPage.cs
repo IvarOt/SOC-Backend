@@ -1,75 +1,102 @@
 ﻿using OpenQA.Selenium;
-using SOC_backend.test.E2E.Pages;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
-public class SignUpPage : BasePage
+namespace SOC_backend.test.E2E.Pages
 {
-    private By UsernameField = By.CssSelector("[data-test='username']");
-    private By PasswordField = By.CssSelector("[data-test='password']");
-    private By ConfirmPasswordField = By.CssSelector("[data-test='confirmPassword']");
-    private By EmailField = By.CssSelector("[data-test='email']");
-    private By SubmitBtn = By.CssSelector("[data-test='signup-btn']");
-    private By UsernameError = By.CssSelector("[data-test='usernameError']");
-    private By PasswordError = By.CssSelector("[data-test='passwordError']");
-    private By ConfirmPasswordError = By.CssSelector("[data-test='confirmPasswordError']");
-    private By NavigateToSignUp = By.CssSelector("[data-test='navigateToSignUp']");
-
-    public SignUpPage(IWebDriver driver) : base(driver) { }
-
-    public void GoToSignUpPage()
+    public class SignUpPage : BasePage
     {
-        _driver.FindElement(NavigateToSignUp).Click();
-    }
+        private By UsernameField = By.CssSelector("[data-test='username']");
+        private By PasswordField = By.CssSelector("[data-test='password']");
+        private By ConfirmPasswordField = By.CssSelector("[data-test='confirmPassword']");
+        private By EmailField = By.CssSelector("[data-test='email']");
+        private By SubmitBtn = By.CssSelector("[data-test='signup-btn']");
+        private By UsernameError = By.CssSelector("[data-test='usernameError']");
+        private By PasswordError = By.CssSelector("[data-test='passwordError']");
+        private By ConfirmPasswordError = By.CssSelector("[data-test='confirmPasswordError']");
+        private By NavigateToSignUp = By.CssSelector("[data-test='navigateToSignUp']");
 
-    public void EnterUsername(string username)
-    {
-        _driver.FindElement(UsernameField).SendKeys(username);
-    }
+        public SignUpPage(IWebDriver driver) : base(driver) { }
 
-    public void EnterEmail(string email)
-    {
-        _driver.FindElement(EmailField).SendKeys(email);
-    }
+        public void GoToSignUpPage()
+        {
+            WaitForElementToBeClickable(NavigateToSignUp);
+            ClickElementUsingJavaScript(NavigateToSignUp);
+        }
 
-    public void EnterPassword(string password)
-    {
-        _driver.FindElement(PasswordField).SendKeys(password);
-    }
+        public void EnterUsername(string username)
+        {
+            _wait.Until(driver => driver.FindElement(UsernameField).Displayed);
+            _driver.FindElement(UsernameField).SendKeys(username);
+        }
 
-    public void EnterConfirmPassword(string confirmPassword)
-    {
-        _driver.FindElement(ConfirmPasswordField).SendKeys(confirmPassword);
-    }
+        public void EnterEmail(string email)
+        {
+            _wait.Until(driver => driver.FindElement(EmailField).Displayed);
+            _driver.FindElement(EmailField).SendKeys(email);
+        }
 
-    public void ClickSignUp()
-    {
-        WaitForElementToBeClickable(SubmitBtn);
-        ClickElementUsingJavaScript(SubmitBtn);
-    }
+        public void EnterPassword(string password)
+        {
+            _wait.Until(driver => driver.FindElement(PasswordField).Displayed);
+            _driver.FindElement(PasswordField).SendKeys(password);
+        }
 
-    public string GiveUsernameException()
-    {
-        return _driver.FindElement(UsernameError).Text;
-    }
+        public void EnterConfirmPassword(string confirmPassword)
+        {
+            _wait.Until(driver => driver.FindElement(ConfirmPasswordField).Displayed);
+            _driver.FindElement(ConfirmPasswordField).SendKeys(confirmPassword);
+        }
 
-    public string GivePasswordException()
-    {
-        return _driver.FindElement(PasswordError).Text;
-    }
+        public void ClickSignUp()
+        {
+            WaitForElementToBeClickable(SubmitBtn);
+            ClickElementUsingJavaScript(SubmitBtn);
+        }
 
-    public string GiveConfirmPasswordException()
-    {
-        return _driver.FindElement(ConfirmPasswordError).Text;
-    }
+        public string GiveUsernameException()
+        {
+            return _wait.Until(driver =>
+            {
+                var exceptionElement = driver.FindElement(UsernameError);
+                return exceptionElement.Displayed && !string.IsNullOrEmpty(exceptionElement.Text)
+                    ? exceptionElement.Text
+                    : null;
+            });
+        }
 
-    private void WaitForElementToBeClickable(By by)
-    {
-        _wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(by));
-    }
+        public string GivePasswordException()
+        {
+            return _wait.Until(driver =>
+            {
+                var exceptionElement = driver.FindElement(PasswordError);
+                return exceptionElement.Displayed && !string.IsNullOrEmpty(exceptionElement.Text)
+                    ? exceptionElement.Text
+                    : null;
+            });
+        }
 
-    private void ClickElementUsingJavaScript(By by)
-    {
-        var element = _driver.FindElement(by);
-        ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
+        public string GiveConfirmPasswordException()
+        {
+            return _wait.Until(driver =>
+            {
+                var exceptionElement = driver.FindElement(ConfirmPasswordError);
+                return exceptionElement.Displayed && !string.IsNullOrEmpty(exceptionElement.Text)
+                    ? exceptionElement.Text
+                    : null;
+            });
+        }
+
+        private void WaitForElementToBeClickable(By by)
+        {
+            _wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(by));
+        }
+
+        private void ClickElementUsingJavaScript(By by)
+        {
+            var element = _driver.FindElement(by);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
+        }
     }
 }
 
