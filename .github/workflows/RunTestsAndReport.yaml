@@ -15,12 +15,6 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
-
-      - name: Setup Chrome
-        run: sudo apt-get install -y google-chrome-stable
-
-      - name: Setup ChromeDriver
-        run: sudo apt-get install -y chromium-chromedriver
     
       - name: Restore
         run: dotnet restore SOC-backend/SOC-backend.sln
@@ -29,7 +23,16 @@ jobs:
         run: dotnet build SOC-backend/SOC-backend.sln --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./test-results 
+        run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./test-results --filter "TestCategory!=E2E"
+
+      - name: Run Selenium Tests in Docker
+        run: |
+          docker run --rm \
+          -v ${{ github.workspace }}:/app \
+          -w /app/SOC-backend/SOC-backend.test \
+          selenium/standalone-chrome:latest sh -c "\
+          dotnet test --filter TestCategory=E2E \
+          --results-directory ./test-results --logger:trx"
 
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v4
