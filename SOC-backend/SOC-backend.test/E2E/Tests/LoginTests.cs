@@ -17,9 +17,9 @@ namespace SOC_backend.test.E2E.Tests
         public void Setup()
         {
             var options = new ChromeOptions();
-            Uri url = new Uri("http://host.docker.internal:4444⁠");
+            Uri url = new Uri("http://localhost:4444/⁠");
             _driver = new RemoteWebDriver(url, options);
-            _driver.Navigate().GoToUrl("http://host.docker.internal:4444/Login");
+            _driver.Navigate().GoToUrl("http://localhost:4444//Login");
             _loginPage = new LoginPage(_driver);
         }
 
