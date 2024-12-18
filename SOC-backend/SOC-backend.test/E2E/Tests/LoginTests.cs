@@ -19,7 +19,7 @@ namespace SOC_backend.test.E2E.Tests
             var options = new ChromeOptions();
             Uri url = new Uri("http://localhost:4444");
             _driver = new RemoteWebDriver(url, options);
-            _driver.Navigate().GoToUrl("http://localhost:4444/Login");
+            _driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/Login");
             _loginPage = new LoginPage(_driver);
         }
 
