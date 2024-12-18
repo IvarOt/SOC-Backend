@@ -17,6 +17,7 @@ namespace SOC_backend.test.E2E.Tests
         public void Setup()
         {
             var options = new ChromeOptions();
+            options.AddArgument("--headless");
             Uri url = new Uri("http://localhost:4444");
             _driver = new RemoteWebDriver(url, options);
             _driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
