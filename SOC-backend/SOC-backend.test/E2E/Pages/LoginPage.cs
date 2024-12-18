@@ -1,6 +1,7 @@
 ﻿using CloudinaryDotNet.Actions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace SOC_backend.test.E2E.Pages
 {
@@ -16,7 +17,7 @@ namespace SOC_backend.test.E2E.Pages
 
 		public void GoToLoginPage()
         {
-            _wait.Until(driver => driver.FindElement(NavigateToLogin).Displayed);
+            _wait.Until(ExpectedConditions.ElementToBeClickable(NavigateToLogin));
             _driver.FindElement(NavigateToLogin).Click();
         }
 
@@ -33,7 +34,7 @@ namespace SOC_backend.test.E2E.Pages
 		}
 		public void ClickLogin()
 		{
-			_wait.Until(driver => driver.FindElement(LoginButton).Displayed);
+            _wait.Until(ExpectedConditions.ElementToBeClickable(LoginButton));
             _driver.FindElement(LoginButton).Click();
             _wait.Until(driver => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
         }

@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +25,7 @@ namespace SOC_backend.test.E2E.Pages
 
         public void GoToSignUpPage()
         {
-            _wait.Until(driver => driver.FindElement(NavigateToSignUp).Displayed);
+            _wait.Until(ExpectedConditions.ElementToBeClickable(NavigateToSignUp));
             _driver.FindElement(NavigateToSignUp).Click();
         }
 
@@ -53,7 +55,7 @@ namespace SOC_backend.test.E2E.Pages
 
         public void ClickSignUp()
         {
-            _wait.Until(driver => driver.FindElement(SubmitBtn).Displayed);
+            _wait.Until(ExpectedConditions.ElementToBeClickable(SubmitBtn));
             _driver.FindElement(SubmitBtn).Click();
         }
 

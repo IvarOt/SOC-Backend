@@ -18,6 +18,7 @@ namespace SOC_backend.test.E2E.Tests
         {
             var options = new ChromeOptions();
             options.AddArgument("--headless");
+            options.AddArgument("--no-sandbox");
             Uri url = new Uri("http://localhost:4444");
             _driver = new RemoteWebDriver(url, options);
             _driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
