@@ -39,6 +39,7 @@ jobs:
         run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-SignUp"
 
       - name: E2E Login tests
+        if: always()
         run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-Login"
 
       - name: Upload screenshots
