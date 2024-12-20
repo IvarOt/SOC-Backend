@@ -33,13 +33,6 @@ jobs:
       - name: Test
         run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./test-results --filter "TestCategory!=E2E"
 
-      - name: Wait for back-end
-        run: |
-          echo "Waiting for back-end to be ready..."
-          while ! curl -sSf http://localhost:5113/health; do
-            sleep 5
-          done
-          
       - name: E2E tests
         run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E"
         env: 
