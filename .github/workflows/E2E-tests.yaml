@@ -28,7 +28,7 @@ jobs:
       - name: Health check
         run: | 
           echo "Waiting for healthy response.."
-          while ! curl -sSf http://localhost:5113/health; do
+          while ! curl -sSf http://localhost:8080/health; do
             sleep 5
           done
 
