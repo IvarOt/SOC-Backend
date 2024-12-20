@@ -20,7 +20,9 @@ namespace SOC_backend.test.E2E.Pages
         public void GoToLoginPage()
         {
             WaitForElementToBeClickable(NavigateToLogin);
+            Console.WriteLine("NavigateToLoginElement is clickable");
             ClickElementUsingJavaScript(NavigateToLogin);
+            Console.WriteLine("NavigateToLoginElement has been clicked");
         }
 
         public void EnterUsername(string username)
@@ -38,7 +40,9 @@ namespace SOC_backend.test.E2E.Pages
         public void ClickLogin()
         {
             WaitForElementToBeClickable(LoginButton);
+            Console.WriteLine("Login is clickable");
             ClickElementUsingJavaScript(LoginButton);
+            Console.WriteLine("Login has been clicked");
             _wait.Until(driver => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
         }
 
