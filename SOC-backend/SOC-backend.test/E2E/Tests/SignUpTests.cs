@@ -117,6 +117,16 @@ namespace SOC_backend.test.E2E.Tests
             var filePath = $"./screenshots/{testName}.png";
             screenshot.SaveAsFile(filePath);
             Console.WriteLine($"Screenshot saved: {filePath}");
+
+            // Verify that the screenshot file exists
+            if (File.Exists(filePath))
+            {
+                Console.WriteLine($"Verified screenshot exists: {filePath}");
+            }
+            else
+            {
+                Console.WriteLine($"Screenshot not found: {filePath}");
+            }
         }
     }
 }
