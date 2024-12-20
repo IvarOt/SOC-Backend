@@ -29,7 +29,7 @@ namespace SOC_backend.test.E2E.Tests
             _signUpPage.GoToSignUpPage();
             Console.WriteLine(_driver.Url);
 
-            Directory.CreateDirectory("./screenshots");
+            Directory.CreateDirectory("screenshots");
         }
 
         [TestCleanup]
@@ -114,7 +114,7 @@ namespace SOC_backend.test.E2E.Tests
         private void TakeScreenshot(string testName)
         {
             var screenshot = _driver.TakeScreenshot();
-            var filePath = $"./screenshots/{testName}.png";
+            var filePath = $"screenshots/{testName}.png";
             screenshot.SaveAsFile(filePath);
             Console.WriteLine($"Screenshot saved: {filePath}");
 
