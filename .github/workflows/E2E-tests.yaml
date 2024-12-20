@@ -44,7 +44,7 @@ jobs:
 
       - name: Check container logs
         if: always()
-        run: docker logs my-app-container
+        run: docker logs sagaofcards-container
 
       - name: Upload screenshots
         if: always()
