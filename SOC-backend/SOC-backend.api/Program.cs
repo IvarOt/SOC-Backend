@@ -95,12 +95,21 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+var environment = builder.Environment.EnvironmentName;
+if (environment == "Testing")
 {
-    options.UseSqlServer(connectionstring, b => b.MigrationsAssembly("SOC-backend.api"));
-});
-
+    DbContextOptionsBuilder<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        .UseInMemoryDatabase("TestDatabase")
+        .Options;
+}
+else
+{
+    var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    {
+        options.UseSqlServer(connectionstring, b => b.MigrationsAssembly("SOC-backend.api"));
+    });
+}
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
