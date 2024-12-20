@@ -15,6 +15,8 @@ namespace SOC_backend.test.E2E.Pages
 
         public LoginPage(IWebDriver driver) : base(driver) { }
 
+        public LoginPage() : base(null) { }
+
         public void GoToLoginPage()
         {
             WaitForElementToBeClickable(NavigateToLogin);

@@ -10,25 +10,14 @@ namespace SOC_backend.test.E2E.Tests
     [TestCategory("E2E")]
     public class LoginTests
     {
-        private IWebDriver _driver;
-        private LoginPage _loginPage;
+        private LoginPage _loginPage = new LoginPage();
 
         [TestInitialize]
         public void Setup()
         {
-            var options = new ChromeOptions();
-            Uri url = new Uri("http://localhost:4444");
-            _driver = new RemoteWebDriver(url, options);
-            _driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
-            _loginPage = new LoginPage(_driver);
+            _loginPage._driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
             _loginPage.GoToLoginPage();
-            Console.WriteLine(_driver.Url);
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            _driver.Quit();
+            Console.WriteLine(_loginPage._driver.Url);
         }
 
         [TestMethod]
@@ -43,7 +32,7 @@ namespace SOC_backend.test.E2E.Tests
 
             //Assert
             _loginPage._wait.Until(d => d.Url.Contains("CardList"));
-            Assert.IsTrue(_driver.Url.Contains("CardList"));
+            Assert.IsTrue(_loginPage._driver.Url.Contains("CardList"));
         }
 
         [TestMethod]
