@@ -18,7 +18,7 @@ namespace SOC_backend.test.E2E.Pages
 
         public SignUpPage(IWebDriver driver) : base(driver) { }
 
-        public SignUpPage() : base(null) { }
+        public SignUpPage() : base() { }
 
         public void GoToSignUpPage()
         {

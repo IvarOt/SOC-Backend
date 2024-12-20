@@ -14,8 +14,8 @@ namespace SOC_backend.test.E2E.Tests
         [TestInitialize]
         public void Setup()
         {
-            _signUpPage._driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
             _signUpPage = new SignUpPage();
+            _signUpPage._driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
             _signUpPage.GoToSignUpPage();
             Console.WriteLine(_signUpPage._driver);
         }

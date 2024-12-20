@@ -10,11 +10,12 @@ namespace SOC_backend.test.E2E.Tests
     [TestCategory("E2E")]
     public class LoginTests
     {
-        private LoginPage _loginPage = new LoginPage();
+        private LoginPage _loginPage;
 
         [TestInitialize]
         public void Setup()
         {
+            _loginPage = new LoginPage();
             _loginPage._driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
             _loginPage.GoToLoginPage();
             Console.WriteLine(_loginPage._driver.Url);
