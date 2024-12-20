@@ -98,9 +98,8 @@ builder.Services.AddSwaggerGen(c =>
 var environment = builder.Environment.EnvironmentName;
 if (environment == "Testing")
 {
-    DbContextOptionsBuilder<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>()
-        .UseInMemoryDatabase("TestDatabase")
-        .Options;
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseInMemoryDatabase("TestDatabase"));
 }
 else
 {
