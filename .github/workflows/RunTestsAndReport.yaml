@@ -15,7 +15,11 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
-    
+      - name: Set up ChromeDriver
+        uses: actions/setup-chromedriver@v1
+        with:
+          chromedriver-version: 'latest'
+          
       - name: Restore
         run: dotnet restore SOC-backend/SOC-backend.sln
 
@@ -25,9 +29,6 @@ jobs:
       - name: Test
         run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./test-results --filter "TestCategory!=E2E"
 
-      - name: Run selenium chrome docker
-        run: docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome:latest
-            
       - name: E2E tests
         run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E"
         env: 
