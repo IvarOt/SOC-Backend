@@ -1,0 +1,46 @@
+name: Run E2E tests and upload screenshots
+
+on:
+  push:
+    branches: ['main', 'dev']
+  pull_request:
+    branches: ['main']
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore SOC-backend/SOC-backend.sln
+
+      - name: Build Docker image 
+        run: docker build -t sagaOfCards::${{ github.sha }} .
+
+      - name: Run Docker container 
+        run: docker run -d -p 8080:8080 --name sagaOfCards-Container sagaOfCards:${{ github.sha
+
+      - name: Health check
+        run: | 
+          echo "Waiting for healthy response.."
+          while ! curl -sSf http://localhost:5113/health; do
+            sleep 5
+          done
+
+      - name: E2E SignUp tests
+        run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-SignUp"
+
+      - name: E2E Login tests
+        run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-Login"
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: screenshots
+          path: /home/runner/work/SOC-Backend/screenshots
