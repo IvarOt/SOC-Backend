@@ -95,9 +95,25 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-options.UseInMemoryDatabase("TestDatabase"));
-Console.WriteLine("Using InMemoryDatabase");
+var environment = builder.Environment.EnvironmentName;
+
+if (environment == "Testing")
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    {
+        options.UseInMemoryDatabase("TestDatabase");
+    });
+}
+else
+{
+    var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    {
+        options.UseSqlServer(connectionstring, b => b.MigrationsAssembly("SOC-backend.api"));
+    });
+}
+
+
 
 var app = builder.Build();
 
