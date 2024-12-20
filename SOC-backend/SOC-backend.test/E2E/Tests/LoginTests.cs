@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Support.Extensions;
 using SOC_backend.test.E2E.Pages;
 
 namespace SOC_backend.test.E2E.Tests
@@ -48,6 +49,7 @@ namespace SOC_backend.test.E2E.Tests
             _loginPage.ClickLogin();
 
             //Assert
+            TakeScreenshot("TestLogin_SuccesfullyLogsIn");
             _loginPage._wait.Until(d => d.Url.Contains("CardList"));
             Assert.IsTrue(_loginPage._driver.Url.Contains("CardList"));
         }
@@ -63,8 +65,18 @@ namespace SOC_backend.test.E2E.Tests
             _loginPage.ClickLogin();
 
             //Assert
+            TakeScreenshot("TestLogin_GivesBackCredentialException");
             string result = _loginPage.GiveException();
             Assert.IsNotNull(result, "Exception message should not be null");
         }
+
+        private void TakeScreenshot(string testName)
+        {
+            var screenshot = _driver.TakeScreenshot();
+            var filePath = $"./screenshots/{testName}.png";
+            screenshot.SaveAsFile(filePath);
+            Console.WriteLine($"Screenshot saved: {filePath}");
+        }
+
     }
 }
