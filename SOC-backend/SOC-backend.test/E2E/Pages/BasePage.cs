@@ -18,10 +18,12 @@ namespace SOC_backend.test.E2E.Pages
 
         protected BasePage()
         {
-            var options = new ChromeOptions();
-            Uri url = new Uri("http://localhost:4444");
-            _driver = new RemoteWebDriver(url, options);
-            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(20));
+            /*            var options = new ChromeOptions();
+                        Uri url = new Uri("http://localhost:4444");
+                        _driver = new RemoteWebDriver(url, options);
+                        _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(20));
+            */
+            _driver = new ChromeDriver();  
         }
     }
 }

@@ -20,6 +20,12 @@ namespace SOC_backend.test.E2E.Tests
             Console.WriteLine(_signUpPage._driver);
         }
 
+        [TestCleanup]
+        public void Cleanup()
+        {
+            _signUpPage._driver.Quit();
+        }
+
         [TestMethod]
         public void TestSignUp_SignsUpCorrectly()
         {

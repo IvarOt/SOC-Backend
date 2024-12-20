@@ -21,6 +21,12 @@ namespace SOC_backend.test.E2E.Tests
             Console.WriteLine(_loginPage._driver.Url);
         }
 
+        [TestCleanup]
+        public void Cleanup()
+        {
+            _loginPage._driver.Quit();
+        }
+
         [TestMethod]
         public void TestLogin_SuccesfullyLogsIn()
         {
