@@ -42,7 +42,7 @@ namespace SOC_backend.test.E2E.Tests
         public void TestSignUp_SignsUpCorrectly()
         {
             //Arrange
-            _signUpPage.EnterUsername("Test");
+            _signUpPage.EnterUsername("Bob");
             _signUpPage.EnterPassword("Test123!");
             _signUpPage.EnterConfirmPassword("Test123!");
             _signUpPage.EnterEmail("Test@gmail.com");
