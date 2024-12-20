@@ -100,6 +100,7 @@ if (environment == "Testing")
 {
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseInMemoryDatabase("TestDatabase"));
+    Console.WriteLine("Using InMemoryDatabase");
 }
 else
 {

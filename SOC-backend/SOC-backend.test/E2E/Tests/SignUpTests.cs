@@ -9,12 +9,21 @@ namespace SOC_backend.test.E2E.Tests
     [TestCategory("E2E")]
     public class SignUpTests
     {
+        private IWebDriver _driver;
         private SignUpPage _signUpPage;
 
         [TestInitialize]
         public void Setup()
         {
-            _signUpPage = new SignUpPage();
+            var options = new ChromeOptions();
+            options.AddArgument("--headless");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
+            options.AddArgument("--disable-gpu");
+            options.AddArgument("--window-size=1920,1080");
+
+            _driver = new ChromeDriver(options);
+            _signUpPage = new SignUpPage(_driver);
             _signUpPage._driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
             _signUpPage.GoToSignUpPage();
             Console.WriteLine(_signUpPage._driver);
@@ -23,7 +32,7 @@ namespace SOC_backend.test.E2E.Tests
         [TestCleanup]
         public void Cleanup()
         {
-            _signUpPage._driver.Quit();
+            _driver.Quit();
         }
 
         [TestMethod]
