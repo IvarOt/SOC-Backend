@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 
@@ -23,7 +24,13 @@ namespace SOC_backend.test.E2E.Pages
                         _driver = new RemoteWebDriver(url, options);
                         _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(20));
             */
-            _driver = new ChromeDriver();  
+            var options = new ChromeOptions();
+            options.AddArgument("--headless");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
+            options.AddArgument("--disable-gpu");
+            options.AddArgument("--window-size=1920,1080");
+            _driver = new ChromeDriver(options);  
         }
     }
 }
