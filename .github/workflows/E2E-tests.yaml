@@ -26,7 +26,7 @@ jobs:
         run: docker build --build-arg ASPNETCORE_ENVIRONMENT=Testing -t sagaofcards:${{ github.sha }} .
 
       - name: Run Docker container 
-        run: docker run -d -p 8080:8080 --name sagaofcards-container sagaofcards:${{ github.sha }}
+        run: docker run -d -p 8080:8080 --env ASPNETCORE_ENVIRONMENT=Testing --name sagaofcards-container sagaofcards:${{ github.sha }}
 
       - name: Health check
         run: | 
