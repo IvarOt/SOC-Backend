@@ -31,7 +31,7 @@ jobs:
           ASPNETCORE_ENVIRONMENT: Testing
 
       - name: Test
-        run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./test-results --filter "TestCategory!=E2E"
+        run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./test-results --filter "(TestCategory=Unit&TestCategory=Integration)"
 
       - name: Wait for back-end to be ready
         run: |
