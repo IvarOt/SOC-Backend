@@ -23,7 +23,10 @@ namespace SOC_backend.test.E2E.Pages
         public void GoToSignUpPage()
         {
             WaitForElementToBeClickable(NavigateToSignUp);
+            Console.WriteLine("GoToSignUp is clickable");
             ClickElementUsingJavaScript(NavigateToSignUp);
+            Console.WriteLine("GoToSignUp has been clicked");
+
         }
 
         public void EnterUsername(string username)
@@ -53,7 +56,9 @@ namespace SOC_backend.test.E2E.Pages
         public void ClickSignUp()
         {
             WaitForElementToBeClickable(SubmitBtn);
+            Console.WriteLine("SignUp is clickable");
             ClickElementUsingJavaScript(SubmitBtn);
+            Console.WriteLine("SignUp has been clicked");
         }
 
         public string GiveUsernameException()
