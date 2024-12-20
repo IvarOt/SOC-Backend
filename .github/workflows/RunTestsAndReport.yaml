@@ -15,8 +15,9 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
+          
       - name: Set up ChromeDriver
-        uses: actions/setup-chromedriver@v1
+        uses: nanasess/setup-chromedriver@v2.2.2
         with:
           chromedriver-version: 'latest'
           
