@@ -40,10 +40,11 @@ jobs:
             sleep 5
           done
           
-      - name: E2E tests
-        run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E"
-        env: 
-          ASPNETCORE_ENVIRONMENT: Testing
+      - name: E2E SignUp tests
+        run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-SignUp"
+
+      - name: E2E Login tests
+        run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-Login"
 
       - name: Upload screenshots
         if: always()
