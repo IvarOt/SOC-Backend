@@ -44,7 +44,13 @@ jobs:
         run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E"
         env: 
           ASPNETCORE_ENVIRONMENT: Testing
-        
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshots
+          path: ./screenshots
+          
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v4
         with:
