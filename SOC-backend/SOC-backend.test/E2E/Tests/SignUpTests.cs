@@ -23,7 +23,8 @@ namespace SOC_backend.test.E2E.Tests
             options.AddArgument("--disable-gpu");
             options.AddArgument("--window-size=1920,1080");
 
-            _driver = new ChromeDriver(options);
+            Uri url = new Uri("http://localhost:4444");
+            _driver = new RemoteWebDriver(url, options);
             _signUpPage = new SignUpPage(_driver);
             _driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
             _signUpPage.GoToSignUpPage();
