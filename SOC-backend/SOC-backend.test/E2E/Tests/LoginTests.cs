@@ -31,7 +31,7 @@ namespace SOC_backend.test.E2E.Tests
             _loginPage.GoToLoginPage();
             Console.WriteLine(_driver.Url);
 
-            Directory.CreateDirectory("screenshots");
+            Directory.CreateDirectory("/home/runner/work/SOC-Backend/screenshots");
         }
 
         [TestCleanup]
@@ -75,7 +75,7 @@ namespace SOC_backend.test.E2E.Tests
         private void TakeScreenshot(string testName)
         {
             var screenshot = _driver.TakeScreenshot();
-            var filePath = $"screenshots/{testName}.png";
+            var filePath = $"/home/runner/work/SOC-Backend/screenshots/{testName}.png";
             screenshot.SaveAsFile(filePath);
             Console.WriteLine($"Screenshot saved: {filePath}");
 
