@@ -16,6 +16,9 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Setup selenium/standalone-chrome
+        run: docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome:latest
+
       - name: Restore
         run: dotnet restore SOC-backend/SOC-backend.sln
 
