@@ -82,7 +82,6 @@ namespace SOC_backend.test.E2E.Tests
             _signUpPage.EnterPassword("t");
             _signUpPage.EnterConfirmPassword("t");
             _signUpPage.EnterEmail("Test@gmail.com");
-            _driver.TakeScreenshot().SaveAsFile("C:\\Users\\User\\Desktop\\screenshot.png");
 
             //Act
             _signUpPage.ClickSignUp();
@@ -114,7 +113,7 @@ namespace SOC_backend.test.E2E.Tests
         private void TakeScreenshot(string testName)
         {
             var screenshot = _driver.TakeScreenshot();
-            var filePath = $"/home/runner/work/SOC-Backend/screenshots\"/{testName}.png";
+            var filePath = $"/home/runner/work/SOC-Backend/screenshots/{testName}.png";
             screenshot.SaveAsFile(filePath);
             Console.WriteLine($"Screenshot saved: {filePath}");
 
@@ -128,5 +127,6 @@ namespace SOC_backend.test.E2E.Tests
                 Console.WriteLine($"Screenshot not found: {filePath}");
             }
         }
+
     }
 }
