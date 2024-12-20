@@ -58,35 +58,24 @@ namespace SOC_backend.test.E2E.Pages
 
         public string GiveUsernameException()
         {
-            return _wait.Until(driver =>
-            {
-                var exceptionElement = driver.FindElement(UsernameError);
-                return exceptionElement.Displayed && !string.IsNullOrEmpty(exceptionElement.Text)
-                    ? exceptionElement.Text
-                    : null;
-            });
+            WaitForElementToBeVisible(UsernameError);
+            var value = _driver.FindElement(UsernameError).Text;
+            return value;
+
         }
 
         public string GivePasswordException()
         {
-            return _wait.Until(driver =>
-            {
-                var exceptionElement = driver.FindElement(PasswordError);
-                return exceptionElement.Displayed && !string.IsNullOrEmpty(exceptionElement.Text)
-                    ? exceptionElement.Text
-                    : null;
-            });
+            WaitForElementToBeVisible(PasswordError);
+            var value = _driver.FindElement(PasswordError).Text;
+            return value;
         }
 
         public string GiveConfirmPasswordException()
         {
-            return _wait.Until(driver =>
-            {
-                var exceptionElement = driver.FindElement(ConfirmPasswordError);
-                return exceptionElement.Displayed && !string.IsNullOrEmpty(exceptionElement.Text)
-                    ? exceptionElement.Text
-                    : null;
-            });
+            WaitForElementToBeVisible(ConfirmPasswordError);
+            var value = _driver.FindElement(ConfirmPasswordError).Text;
+            return value;
         }
 
         private void WaitForElementToBeClickable(By by)

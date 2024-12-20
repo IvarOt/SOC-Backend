@@ -48,13 +48,9 @@ namespace SOC_backend.test.E2E.Pages
 
         public string GiveException()
         {
-            return _wait.Until(driver =>
-            {
-                var exceptionElement = driver.FindElement(ExceptionField);
-                return exceptionElement.Displayed && !string.IsNullOrEmpty(exceptionElement.Text)
-                    ? exceptionElement.Text
-                    : null;
-            });
+            WaitForElementToBeVisible(ExceptionField);
+            var value = _driver.FindElement(ExceptionField).Text;
+            return value;
         }
 
         private void WaitForElementToBeClickable(By by)
