@@ -26,7 +26,7 @@ namespace SOC_backend.test.E2E.Tests
             _driver = new ChromeDriver(options);
             _loginPage = new LoginPage(_driver);
 
-            _loginPage._driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
+            _driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
             _loginPage.GoToLoginPage();
             Console.WriteLine(_driver.Url);
         }
