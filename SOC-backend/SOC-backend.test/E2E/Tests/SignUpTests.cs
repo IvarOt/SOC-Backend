@@ -28,6 +28,8 @@ namespace SOC_backend.test.E2E.Tests
             _driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
             _signUpPage.GoToSignUpPage();
             Console.WriteLine(_driver.Url);
+
+            Directory.CreateDirectory("./screenshots");
         }
 
         [TestCleanup]
