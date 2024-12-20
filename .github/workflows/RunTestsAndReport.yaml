@@ -18,8 +18,6 @@ jobs:
           
       - name: Set up ChromeDriver
         uses: nanasess/setup-chromedriver@v2.2.2
-        with:
-          chromedriver-version: 'latest'
           
       - name: Restore
         run: dotnet restore SOC-backend/SOC-backend.sln
