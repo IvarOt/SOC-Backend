@@ -42,6 +42,10 @@ jobs:
         if: always()
         run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-Login"
 
+      - name: Check container logs
+        if: always()
+        run: docker logs my-app-container
+
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v3
