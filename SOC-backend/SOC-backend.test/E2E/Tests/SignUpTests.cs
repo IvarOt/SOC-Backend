@@ -26,7 +26,7 @@ namespace SOC_backend.test.E2E.Tests
             _signUpPage = new SignUpPage(_driver);
             _signUpPage._driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
             _signUpPage.GoToSignUpPage();
-            Console.WriteLine(_signUpPage._driver);
+            Console.WriteLine(_driver);
         }
 
         [TestCleanup]
