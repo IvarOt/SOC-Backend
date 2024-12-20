@@ -26,6 +26,11 @@ jobs:
       - name: Build
         run: dotnet build SOC-backend/SOC-backend.sln --configuration Release --no-restore
 
+      - name: Run SOC-Backend
+        run: dotnet run --project SOC-backend.api --configuration Release --no-build
+        env:
+          ASPNETCORE_ENVIRONMENT: Testing
+
       - name: Test
         run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./test-results --filter "TestCategory!=E2E"
 
