@@ -7,7 +7,7 @@ using SOC_backend.test.E2E.Pages;
 namespace SOC_backend.test.E2E.Tests
 {
     [TestClass]
-    [TestCategory("E2E")]
+    [TestCategory("E2E-SignUp")]
     public class SignUpTests
     {
         private IWebDriver _driver;
