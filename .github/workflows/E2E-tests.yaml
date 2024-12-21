@@ -20,7 +20,7 @@ jobs:
         run: docker network create app-network
         
       - name: Setup selenium/standalone-chrome
-        run: docker run -d --network app-network -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome:latest
+        run: docker run -d --network app-network --name selenium-container -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome:latest
 
       - name: Restore
         run: dotnet restore SOC-backend/SOC-backend.sln
