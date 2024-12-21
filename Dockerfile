@@ -13,10 +13,10 @@ WORKDIR /src
 COPY SOC-backend/ ./SOC-backend/
 RUN dotnet restore SOC-backend/SOC-backend.sln
 RUN dotnet build SOC-backend/SOC-backend.sln \
-    -c $BUILD_CONFIGURATION \
-    -o /app/build \
+    -c "$BUILD_CONFIGURATION" \
+    --output /app/build \
     --no-restore \
-    /p:ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT
+    /p:ASPNETCORE_ENVIRONMENT="$ASPNETCORE_ENVIRONMENT"
 
 # Publish the app
 FROM build AS publish
