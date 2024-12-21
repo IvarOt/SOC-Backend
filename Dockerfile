@@ -30,5 +30,5 @@ RUN dotnet publish SOC-backend/SOC-backend.api/SOC-backend.api.csproj \
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENV ASPNETCORE_ENVIRONMENT Testing
+ENV ASPNETCORE_ENVIRONMENT=Testing
 ENTRYPOINT ["dotnet", "SOC-backend.api.dll"]
