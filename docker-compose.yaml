@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend: 
+    container_name: sagaofcards=container
+    image: "sagaofcards:latest"
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Testing
+    ports:
+      - "8080:8080"
+
+  selenium: 
+    container_name: selenium-container
+    image: selenium/standalone-chrome:latest 
+    shm_size: "2g" 
+    environment:
+       - SE_ENABLE_TRACING=false
+    ports: 
+      - "4444:4444" 
+      - "7900:7900" 
+    depends_on: 
+      - backend
+    
+networks:
+  default:
+    name: app-network
+    driver: bridge
