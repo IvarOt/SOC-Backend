@@ -23,7 +23,7 @@ jobs:
         run: dotnet build SOC-backend/SOC-backend.sln --configuration Release --no-restore
 
       - name: Run unit tests
-        run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./test-results --filter "TestCategory=Unit"
+        run: dotnet test SOC-backend/SOC-backend.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./test-results --filter "TestCategory!=E2E"
           
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v4
