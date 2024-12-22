@@ -7,7 +7,7 @@
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Testing"
             },
-            "applicationUrl": "http://localhost:5113",
+            "applicationUrl": "http://localhost:5113"
         },
         "http": {
             "commandName": "Project",

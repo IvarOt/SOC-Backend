@@ -23,11 +23,12 @@ namespace SOC_backend.test.E2E.Tests
             options.AddArgument("--disable-dev-shm-usage");
             options.AddArgument("--disable-gpu");
             options.AddArgument("--window-size=1920,1080");
+            options.AddArgument("--disable-features=BlockInsecurePrivateNetworkRequests");
 
             Uri url = new Uri("http://localhost:4444");
             _driver = new RemoteWebDriver(url, options);
             _loginPage = new LoginPage(_driver);
-            _driver.Navigate().GoToUrl("https://i538283.hera.fontysict.net/");
+            _driver.Navigate().GoToUrl("http://i538283.hera.fontysict.net/");
             _loginPage.GoToLoginPage();
             Console.WriteLine(_driver.Url);
 
