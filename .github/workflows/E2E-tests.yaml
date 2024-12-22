@@ -14,7 +14,9 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Setup docker-compose
-        run: docker-compose --version
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
 
       - name: Run docker-compose
         run: docker-compose up --build -d
