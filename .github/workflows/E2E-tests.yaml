@@ -5,44 +5,37 @@ on:
     branches: ['main', 'dev']
   pull_request:
     branches: ['main']
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup docker-compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-        
       - name: Run docker-compose
-        run: docker-compose up --build &
+        run: docker-compose up --build -d
 
       - name: Health check
-        run: | 
+        run: |
           echo "Waiting for healthy response.."
-          while ! curl -sSf http://localhost:8080/health; do
-            sleep 5
-          done
-          
+          timeout 2m bash -c 'while ! curl -sSf http://localhost:8080/health; do sleep 5; done'
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
 
-      - name: Restore
-        run: dotnet restore SOC-backend/SOC-backend.sln
       - name: E2E SignUp tests
-        run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-SignUp"
+        run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-SignUp" 
 
       - name: E2E Login tests
         if: always()
-        run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-Login"
+        run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-Login" 
 
       - name: Check container logs
         if: always()
-        run: docker logs sagaofcards-container
+        run: docker-compose logs
 
       - name: Upload screenshots
         if: always()
