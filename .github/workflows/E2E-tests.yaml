@@ -12,6 +12,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Setup docker-compose
+        run: docker-compose --version
 
       - name: Run docker-compose
         run: docker-compose up --build -d
