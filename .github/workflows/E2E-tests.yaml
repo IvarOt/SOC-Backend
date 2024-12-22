@@ -11,25 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
-
-      - name: Run Docker container for the API
-        run: docker network create app-network
-        
-      - name: Setup selenium/standalone-chrome
-        run: docker run -d --network app-network --name selenium-container -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome:latest
-
-      - name: Restore
-        run: dotnet restore SOC-backend/SOC-backend.sln
-
-      - name: Build Docker image 
-        run: docker build --build-arg ASPNETCORE_ENVIRONMENT=Testing -t sagaofcards:${{ github.sha }} .
-
-      - name: Run Docker container 
-        run: docker run -d --network app-network -p 8080:8080 --env ASPNETCORE_ENVIRONMENT=Testing --name sagaofcards-container sagaofcards:${{ github.sha }}
+      - name: Run docker-compose
+        run: docker-compose up --build
 
       - name: Health check
         run: | 
@@ -37,7 +20,14 @@ jobs:
           while ! curl -sSf http://localhost:8080/health; do
             sleep 5
           done
+          
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
 
+      - name: Restore
+        run: dotnet restore SOC-backend/SOC-backend.sln
       - name: E2E SignUp tests
         run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-SignUp"
 
