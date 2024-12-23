@@ -13,9 +13,6 @@ services:
   frontend: 
     container_name: sagaofcards-frontend-container
     image: ghcr.io/ivarot/sagaofcards-frontend:latest
-    build: 
-      context: .
-      dockerfile: Dockerfile
     environment:
       - ENVIRONMENT=Testing
     ports:
