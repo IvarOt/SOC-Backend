@@ -55,7 +55,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "ReactProject",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4173", "http://localhost:5173", "http://localhost:5174", "https://i538283.hera.fontysict.net", "http://i538283.hera.fontysict.net", "http://localhost:4444", "http://selenium-container:4444")
+            policy.WithOrigins("http://localhost:4173", "http://sagaofcards-frontend-container:4173", "http://localhost:5173", "http://localhost:5174", "https://i538283.hera.fontysict.net", "http://i538283.hera.fontysict.net", "http://localhost:4444", "http://selenium-container:4444")
             .AllowCredentials()
             .AllowAnyHeader()
             .AllowAnyMethod();

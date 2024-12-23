@@ -15,7 +15,7 @@ namespace SOC_backend.test.E2E.Pages
         protected BasePage(IWebDriver driver)
         {
             _driver = driver;
-            _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
         }
 
         protected BasePage()
@@ -27,7 +27,7 @@ namespace SOC_backend.test.E2E.Pages
             options.AddArgument("--disable-gpu");
             options.AddArgument("--window-size=1920,1080");
             _driver = new ChromeDriver(options);
-            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(20));
+            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
         }
     }
 }

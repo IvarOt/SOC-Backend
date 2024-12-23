@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend: 
     container_name: sagaofcards-container
@@ -11,6 +9,19 @@ services:
       - ASPNETCORE_ENVIRONMENT=Testing
     ports:
       - "8080:8080"
+
+  frontend: 
+    container_name: sagaofcards-frontend-container
+    image: ghcr.io/ivarot/sagaofcards-frontend:latest
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ENVIRONMENT=Testing
+    ports:
+      - 4173:4173
+    depends_on: 
+      - backend
 
   selenium: 
     container_name: selenium-container

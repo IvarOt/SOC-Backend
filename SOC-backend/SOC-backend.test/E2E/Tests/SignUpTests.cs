@@ -27,7 +27,7 @@ namespace SOC_backend.test.E2E.Tests
             Uri url = new Uri("http://localhost:4444");
             _driver = new RemoteWebDriver(url, options);
             _signUpPage = new SignUpPage(_driver);
-            _driver.Navigate().GoToUrl("http://i538283.hera.fontysict.net/");
+            _driver.Navigate().GoToUrl("http://sagaofcards-frontend-container:4173/");
             _signUpPage.GoToSignUpPage();
             Console.WriteLine(_driver.Url);
 
