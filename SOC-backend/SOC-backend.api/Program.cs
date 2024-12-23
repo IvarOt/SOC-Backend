@@ -9,6 +9,7 @@ using SOC_backend.data.Repositories;
 using SOC_backend.logic.Interfaces;
 using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Interfaces.Logic;
+using SOC_backend.logic.Models.Player;
 using SOC_backend.logic.Pipelines;
 using SOC_backend.logic.Services;
 using System.Text;
@@ -101,7 +102,7 @@ if (environment == "Testing")
 {
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
-        options.UseInMemoryDatabase("TestDatabase");
+    options.UseInMemoryDatabase("TestDatabase");
     });
 }
 else
@@ -113,9 +114,8 @@ else
     });
 }
 
-
-
 var app = builder.Build();
+
 
 app.UseMiddleware<ExceptionMiddleware>();
 
@@ -130,7 +130,24 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+if (environment == "Testing")
+{
+    SeedDatabase(app.Services);
+}
+
 app.MapHub<GameHub>("/gameHub");
 app.MapControllers();
 
 app.Run();
+
+void SeedDatabase(IServiceProvider serviceProvider)
+{
+    using (var scope = serviceProvider.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        Player player = new Player("Bob", "Test@gmail.com", "Test123!");
+        context.Player.Add(player);
+        context.SaveChanges();
+    }
+}
+
