@@ -31,12 +31,8 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: E2E SignUp tests
-        run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-SignUp" 
-
-      - name: E2E Login tests
-        if: always()
-        run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E-Login" 
+      - name: Run E2E tests
+        run: dotnet test SOC-backend/SOC-backend.sln --filter "TestCategory=E2E" 
 
       - name: Check container logs
         if: always()
