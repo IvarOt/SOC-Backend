@@ -37,6 +37,7 @@ jobs:
           local-dir: ./publish/
           server-dir: ${{ secrets.LUNA_DIR }}
           protocol: ftps
+          port: 21
           dangerous-clean-slate: true
       
       
