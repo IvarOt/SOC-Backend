@@ -7,7 +7,6 @@
     <RootNamespace>SOC_backend.api</RootNamespace>
     <UserSecretsId>1cb3273e-207a-497f-bc35-14f9b75518fa</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-	  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
