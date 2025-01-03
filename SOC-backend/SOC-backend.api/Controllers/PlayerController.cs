@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Models.Player;
@@ -47,6 +48,7 @@ namespace SOC_backend.api.Controllers
         }
 
         [HttpPut("ChangeAvatar")]
+        [Authorize]
         public async Task<ActionResult> ChangeAvatar(int playerId, string imageURL)
         {
             await _playerService.ChangeAvatar(playerId, imageURL);
@@ -54,6 +56,7 @@ namespace SOC_backend.api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult> Profile(int id)
         {
             var playerInfo = await _playerService.GetProfileInfo(id);
@@ -61,6 +64,7 @@ namespace SOC_backend.api.Controllers
         }
 
         [HttpPost("refresh-token")]
+        [Authorize]
         public async Task<ActionResult> RefreshToken()
         {
             var refreshToken = Request.Cookies["RefreshToken"];
@@ -74,6 +78,7 @@ namespace SOC_backend.api.Controllers
         }
 
         [HttpGet("MatchHistory")]
+        [Authorize]
         public async Task<ActionResult> GetMatchHistory(int playerId)
         {
             var matchHistory = await _playerService.GetMatchHistory(playerId); 

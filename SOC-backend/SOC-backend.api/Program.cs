@@ -12,6 +12,7 @@ using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Models.Player;
 using SOC_backend.logic.Pipelines;
 using SOC_backend.logic.Services;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);

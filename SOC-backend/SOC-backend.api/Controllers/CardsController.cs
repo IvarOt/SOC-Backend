@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Models.Cards;
@@ -31,22 +32,34 @@ namespace SOC_backend.api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateCard([FromForm]CreateCardRequest requestCard)
+        public async Task<ActionResult> CreateCard([FromForm] CreateCardRequest requestCard)
         {
-            if (ModelState.IsValid)
+            if (User.IsInRole("admin"))
             {
-                await _cardService.CreateCard(requestCard);
-                return Ok();
+                if (ModelState.IsValid)
+                {
+                    await _cardService.CreateCard(requestCard);
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             else
             {
-                return BadRequest();
+                return Unauthorized();
             }
         }
 
         [HttpPut]
         public async Task<ActionResult> EditCard(EditCardRequest card)
         {
+            if (!User.IsInRole("admin"))
+            {
+                return Unauthorized();
+            }
+
             if (ModelState.IsValid)
             {
                 await _cardService.EditCard(card);
@@ -62,6 +75,11 @@ namespace SOC_backend.api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCard(int id)
         {
+            if (!User.IsInRole("admin"))
+            {
+                return Unauthorized();
+            }
+
             await _cardService.DeleteCard(id);
             return Ok();
         }
