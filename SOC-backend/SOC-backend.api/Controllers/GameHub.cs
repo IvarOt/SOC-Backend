@@ -8,7 +8,6 @@ using System.Security.Claims;
 
 namespace SOC_backend.api.Controllers
 {
-    [Authorize]
     public class GameHub : Hub
     {
         private readonly IGameService _gameService;
