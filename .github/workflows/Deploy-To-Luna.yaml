@@ -32,7 +32,7 @@ jobs:
           server: ${{ secrets.LUNA_SERVER }}
           username: ${{ secrets.LUNA_USERNAME }}
           password: ${{ secrets.LUNA_PASSWORD }}
-          local-dir: ./publish
+          local-dir: ./publish/
           server-dir: ${{ secrets.LUNA_DIR }}
           protocol: ftps
       
