@@ -20,17 +20,17 @@ jobs:
       - name: Restore dependencies
         run: | 
           dotnet restore SOC-backend/SOC-backend.api/SOC-backend.api.csproj
-          dotnet restore SOC-backend/SOC-backend/SOC-backend.logic/SOC-backend.logic.csproj
-          dotnet restore SOC-backend/SOC-backend/SOC-backend.data/SOC-backend.data.csproj
+          dotnet restore SOC-backend/SOC-backend.logic/SOC-backend.logic.csproj
+          dotnet restore SOC-backend/SOC-backend.data/SOC-backend.data.csproj
 
       - name: Build project
         run: | 
-          dotnet build SOC-backend/SOC-backend/SOC-backend.api/SOC-backend.api.csproj --configuration Release --no-restore
-          dotnet build SOC-backend/SOC-backend/SOC-backend.logic/SOC-backend.logic.csproj --configuration Release --no-restore
-          dotnet build SOC-backend/SOC-backend/SOC-backend.data/SOC-backend.data.csproj --configuration Release --no-restore
+          dotnet build SOC-backend/SOC-backend.api/SOC-backend.api.csproj --configuration Release --no-restore
+          dotnet build SOC-backend/SOC-backend.logic/SOC-backend.logic.csproj --configuration Release --no-restore
+          dotnet build SOC-backend/SOC-backend.data/SOC-backend.data.csproj --configuration Release --no-restore
 
       - name: Publish the project
-        run: dotnet publish SOC-backend/SOC-backend/SOC-backend.api/SOC-backend.api.csproj --configuration Release --runtime win-x64 --output ./publish --self-contained false --no-build
+        run: dotnet publish SOC-backend/SOC-backend.api/SOC-backend.api.csproj --configuration Release --runtime win-x64 --output ./publish --self-contained false --no-build
 
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
