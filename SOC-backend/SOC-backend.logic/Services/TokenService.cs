@@ -27,6 +27,7 @@ namespace SOC_backend.logic.Services
                 {
                     new Claim(ClaimTypes.NameIdentifier, player.Id.ToString()),
                     new Claim(ClaimTypes.Name, player.Username.ToString()),
+                    new Claim(ClaimTypes.Role, player.Role.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
