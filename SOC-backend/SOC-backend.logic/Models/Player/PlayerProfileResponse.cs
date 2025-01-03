@@ -10,11 +10,13 @@ namespace SOC_backend.logic.Models.Player
     {
         public string Username { get; private set; }
         public string Email { get; private set; }
+        public string ProfileAvatar { get; private set; }
 
-        public PlayerProfileResponse(string username, string email)
+        public PlayerProfileResponse(string username, string email, string profileAvatar)
         {
             Username = username;
             Email = email;
+            ProfileAvatar = profileAvatar;
         }
     }
 }

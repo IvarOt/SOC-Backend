@@ -9,15 +9,18 @@ using System.Text;
 using System.Threading.Tasks;
 using SOC_backend.logic.Interfaces.Logic;
 using SOC_backend.logic.Models.Player;
+using SOC_backend.test.TestObjects;
 
 namespace SOC_backend.test.Services
 {
     [TestClass]
+    [TestCategory("Unit")]
     public class PlayerServiceTests
     {
         private Mock<IPlayerRepository> _mockPlayerRepository;
         private Mock<ITokenService> _mockTokenService;
         private PlayerService _playerService;
+        public PlayerObjects _playerObjects;
 
         [TestInitialize]
         public void Setup()
@@ -25,13 +28,14 @@ namespace SOC_backend.test.Services
             _mockPlayerRepository = new Mock<IPlayerRepository>();
             _mockTokenService = new Mock<ITokenService>();
             _playerService = new PlayerService(_mockPlayerRepository.Object, _mockTokenService.Object);
+            _playerObjects = new PlayerObjects();
         }
 
         [TestMethod]
         public async Task GetProfileInfo_MapsToResponseCorrectly()
         {
             //Arrange
-            var player = new Player();
+            var player = _playerObjects.testPlayer;
             _mockPlayerRepository.Setup(repo => repo.GetPlayer(1)).ReturnsAsync(player);
 
             //Act
@@ -45,7 +49,7 @@ namespace SOC_backend.test.Services
         public async Task Register_MapsDataCorrectly()
         {
             //Arrange
-            var player = new RegisterPlayerRequest { Username = "Test", Password = "Test123!", ConfirmPassword = "Test123!", Email = "test@gmail.com", Role = "player" };
+            var player = new RegisterPlayerRequest { Username = "Test", Password = "Test123!", ConfirmPassword = "Test123!", Email = "test@gmail.com" };
 
             //Act
             await _playerService.Register(player);
@@ -59,7 +63,7 @@ namespace SOC_backend.test.Services
         {
             //Arrange
             var loginRequest = new PlayerLoginRequest { Username = "Test", Password = "Test123!"};
-            var retreivedPlayer = new Player(1, "Test", BCrypt.Net.BCrypt.EnhancedHashPassword("Test123!"));
+            var retreivedPlayer = _playerObjects.testPlayer;
 
             _mockPlayerRepository.Setup(repo => repo.Login(It.IsAny<Player>())).ReturnsAsync(retreivedPlayer);
             _mockTokenService.Setup(service => service.CreateAccesToken(It.IsAny<Player>())).Returns("acces_token");
@@ -79,7 +83,7 @@ namespace SOC_backend.test.Services
         public async Task RefreshAccesToken_ReturnsAccesToken()
         {
             //Arrange
-            var player = new Player(1, "Test", DateTime.Now.AddMinutes(5));
+            var player = _playerObjects.testPlayer;
             string refreshToken = "refresh_token";
             string accesToken = "acces_token";
             _mockPlayerRepository.Setup(repo => repo.GetMatchingPlayer(refreshToken)).ReturnsAsync(player);

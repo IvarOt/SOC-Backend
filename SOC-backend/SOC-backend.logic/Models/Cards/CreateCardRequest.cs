@@ -12,7 +12,7 @@ namespace SOC_backend.logic.Models.Cards
 
         public Card ToCard()
         {
-            return new Card(0, Name, HP, DMG, Color, null);
+            return new Card(Name, HP, DMG, Color, null, Cost);
         }
     }
 }

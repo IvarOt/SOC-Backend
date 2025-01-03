@@ -3,6 +3,7 @@ using Moq;
 using Newtonsoft.Json.Linq;
 using SOC_backend.logic.Models.Player;
 using SOC_backend.logic.Services;
+using SOC_backend.test.TestObjects;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,10 +14,12 @@ using System.Threading.Tasks;
 namespace SOC_backend.test.Services
 {
 	[TestClass]
-	public class TokenServiceTests
+    [TestCategory("Unit")]
+    public class TokenServiceTests
 	{
 		private Mock<IConfiguration> _mockConfiguration;
 		private TokenService _tokenService;
+		private PlayerObjects _playerObjects;
 
 		[TestInitialize]
 		public void Setup()
@@ -27,16 +30,17 @@ namespace SOC_backend.test.Services
 			_mockConfiguration.Setup(c => c["JwtSettings:Audience"]).Returns("TestAudience");
 
 			_tokenService = new TokenService(_mockConfiguration.Object);
+			_playerObjects = new PlayerObjects();
 		}
 
 		[TestMethod]
 		public async Task CreateAccesToken_ReturnsAccessToken()
 		{
-			//Arrange
-			var player = new Player(1, "Test");
+            //Arrange
+            var player = _playerObjects.testPlayer;
 
-			//Act
-			var result = _tokenService.CreateAccesToken(player);
+            //Act
+            var result = _tokenService.CreateAccesToken(player);
 
 			//Assert
 			Assert.IsNotNull(result);

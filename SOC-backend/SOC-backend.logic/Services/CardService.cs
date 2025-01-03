@@ -46,15 +46,22 @@ namespace SOC_backend.logic.Services
         public async Task EditCard(EditCardRequest cardRequest)
         {
             var card = cardRequest.ToCardModel();
+            var cardToEdit = await _cardRepository.GetCard(cardRequest.Id);
             if (cardRequest.Image != null)
             {
                 card.ImageURL = await _imageRepository.UploadImage(cardRequest.Image);
+                if (!string.IsNullOrEmpty(card.ImageURL))
+                {
+                    await _imageRepository.DeleteImage(cardToEdit.ImageURL);
+                }
             }
             await _cardRepository.EditCard(card);
         }
 
         public async Task DeleteCard(int id)
         {
+            var card = await _cardRepository.GetCard(id);
+            await _imageRepository.DeleteImage(card.ImageURL);
             await _cardRepository.DeleteCard(id);
         }
     }

@@ -18,9 +18,16 @@ namespace SOC_backend.api.Controllers
         [HttpPost]
         public async Task<ActionResult> Register(RegisterPlayerRequest newPlayer)
         {
-            await _playerService.Register(newPlayer);
-            return Ok();
-        }
+            if (ModelState.IsValid)
+            {
+				await _playerService.Register(newPlayer);
+				return Ok();
+			}
+            else
+            {
+                return BadRequest();
+            }
+		}
 
         [HttpPost("Login")]
         public async Task<ActionResult> Login(PlayerLoginRequest loginRequest)
@@ -37,6 +44,13 @@ namespace SOC_backend.api.Controllers
 
             Response.Cookies.Append("RefreshToken", player.RefreshToken, cookieOptions);
             return Ok(player.AccesToken);
+        }
+
+        [HttpPut("ChangeAvatar")]
+        public async Task<ActionResult> ChangeAvatar(int playerId, string imageURL)
+        {
+            await _playerService.ChangeAvatar(playerId, imageURL);
+            return Ok();
         }
 
         [HttpGet("{id}")]
@@ -57,6 +71,13 @@ namespace SOC_backend.api.Controllers
             var accesToken = await _playerService.RefreshAccesToken(refreshToken);
             
             return Ok(accesToken);
+        }
+
+        [HttpGet("MatchHistory")]
+        public async Task<ActionResult> GetMatchHistory(int playerId)
+        {
+            var matchHistory = await _playerService.GetMatchHistory(playerId); 
+            return Ok(matchHistory);
         }
     }
 }

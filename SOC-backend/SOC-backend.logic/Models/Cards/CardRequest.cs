@@ -18,6 +18,10 @@ namespace SOC_backend.logic.Models.Cards
         public int DMG { get; set; }
 
         [Required]
+        [Range(0, 20)]
+        public int Cost { get; set; }
+
+        [Required]
         [StringLength(20, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 1)]
         public string Color { get; set; } = string.Empty;
 

@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SOC_backend.api;
+using SOC_backend.api.Controllers;
 using SOC_backend.data;
 using SOC_backend.data.Repositories;
 using SOC_backend.logic.Interfaces;
 using SOC_backend.logic.Interfaces.Data;
 using SOC_backend.logic.Interfaces.Logic;
+using SOC_backend.logic.Models.Player;
 using SOC_backend.logic.Pipelines;
 using SOC_backend.logic.Services;
 using System.Text;
@@ -47,12 +49,14 @@ builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IGameService, GameService>();
 
+builder.Services.AddSignalR();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "ReactProject",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173", "http://localhost:5174")
+            policy.WithOrigins("http://localhost:4173", "http://sagaofcards-frontend-container:4173", "http://localhost:5173", "http://localhost:5174", "https://i538283.hera.fontysict.net", "http://i538283.hera.fontysict.net", "http://localhost:4444", "http://selenium-container:4444")
             .AllowCredentials()
             .AllowAnyHeader()
             .AllowAnyMethod();
@@ -92,13 +96,26 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+var environment = builder.Environment.EnvironmentName;
+
+if (environment == "Testing")
 {
-    options.UseSqlServer(connectionstring, b => b.MigrationsAssembly("SOC-backend.api"));
-});
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    {
+    options.UseInMemoryDatabase("TestDatabase");
+    });
+}
+else
+{
+    var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    {
+        options.UseSqlServer(connectionstring, b => b.MigrationsAssembly("SOC-backend.api"));
+    });
+}
 
 var app = builder.Build();
+
 
 app.UseMiddleware<ExceptionMiddleware>();
 
@@ -113,6 +130,24 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+if (environment == "Testing")
+{
+    SeedDatabase(app.Services);
+}
+
+app.MapHub<GameHub>("/gameHub");
 app.MapControllers();
 
 app.Run();
+
+void SeedDatabase(IServiceProvider serviceProvider)
+{
+    using (var scope = serviceProvider.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        Player player = new Player("Bob", "Test@gmail.com", "Test123!");
+        context.Player.Add(player);
+        context.SaveChanges();
+    }
+}
+

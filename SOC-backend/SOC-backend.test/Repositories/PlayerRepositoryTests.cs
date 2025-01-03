@@ -2,6 +2,7 @@
 using SOC_backend.data;
 using SOC_backend.data.Repositories;
 using SOC_backend.logic.Models.Player;
+using SOC_backend.test.TestObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,13 @@ using System.Threading.Tasks;
 namespace SOC_backend.test.Repositories
 {
 	[TestClass]
-	public class PlayerRepositoryTests
+    [TestCategory("Integration")]
+    public class PlayerRepositoryTests
 	{
 		private ApplicationDbContext _context;
 		private DbContextOptions<ApplicationDbContext> _options;
 		private PlayerRepository _playerRepository;
+		private PlayerObjects _playerObjects;
 
 
 		[TestInitialize]
@@ -29,6 +32,7 @@ namespace SOC_backend.test.Repositories
 			_context.Database.EnsureCreated();
 
 			_playerRepository = new PlayerRepository(_context);
+			_playerObjects = new PlayerObjects();
 		}
 
 		[TestCleanup]
@@ -41,7 +45,7 @@ namespace SOC_backend.test.Repositories
 		public async Task GetPlayer_ReturnsPlayer()
 		{
 			//Arrange
-			var player = new Player("Test", "Test@gmail.com", "Test123!");
+			var player = _playerObjects.testPlayer;
 			_context.Player.Add(player);
 			_context.SaveChanges();
 
@@ -64,9 +68,9 @@ namespace SOC_backend.test.Repositories
 		[TestMethod]
 		public async Task StoreRefreshToken_StoresRefreshTokenCorrectly()
 		{
-			//Arrange
-			var player = new Player("Test", "Test@gmail.com", "Test123!");
-			_context.Player.Add(player);
+            //Arrange
+            var player = _playerObjects.testPlayer;
+            _context.Player.Add(player);
 			_context.SaveChanges();
 			string refreshToken = "refresh_token";
 			int playerId = 1;
@@ -94,9 +98,9 @@ namespace SOC_backend.test.Repositories
 		[TestMethod]
 		public async Task GetMatchingPlayer_ReturnsMatchingPlayer()
 		{
-			//Arrange
-			var player = new Player("Test", "Test@gmail.com", "Test123!");
-			string refreshToken = "refresh_token";
+            //Arrange
+            var player = _playerObjects.testPlayer;
+            string refreshToken = "refresh_token";
 			player.RefreshToken = refreshToken;
 			_context.Player.Add(player);
 			_context.SaveChanges();
@@ -122,11 +126,11 @@ namespace SOC_backend.test.Repositories
 		[TestMethod]
 		public async Task Register_AddsPlayer()
 		{
-			//Arrange
-			var player = new Player("Test", "Test@gmail.com", "Test123!");
+            //Arrange
+            var player = _playerObjects.testPlayer;
 
-			//Act
-			await _playerRepository.Register(player);
+            //Act
+            await _playerRepository.Register(player);
 
 			//Assert
 			var result = _context.Player.FirstOrDefault();
@@ -136,9 +140,9 @@ namespace SOC_backend.test.Repositories
 		[TestMethod]
 		public async Task Login_GetsExistingPlayer()
 		{
-			//Arrange
-			var player = new Player("Test", "Test@gmail.com", "Test123!");
-			_context.Player.Add(player);
+            //Arrange
+            var player = _playerObjects.testPlayer;
+            _context.Player.Add(player);
 			_context.SaveChanges();
 
 			//Act
@@ -152,11 +156,11 @@ namespace SOC_backend.test.Repositories
 		[ExpectedException(typeof(InvalidOperationException))]
 		public async Task Login_ThrowsException()
 		{
-			//Arrange
-			var player = new Player("Test", "Test@gmail.com", "Test123!");
+            //Arrange
+            var player = _playerObjects.testPlayer;
 
-			//Act
-			var result = await _playerRepository.Login(player);
+            //Act
+            var result = await _playerRepository.Login(player);
 		}
 	}
 }

@@ -17,10 +17,25 @@ namespace SOC_backend.api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CardShop", b =>
+                {
+                    b.Property<int>("AvailableCardsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShopId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AvailableCardsId", "ShopId");
+
+                    b.HasIndex("ShopId");
+
+                    b.ToTable("CardShop");
+                });
 
             modelBuilder.Entity("SOC_backend.logic.Models.Cards.Card", b =>
                 {
@@ -55,6 +70,76 @@ namespace SOC_backend.api.Migrations
                     b.ToTable("Card");
                 });
 
+            modelBuilder.Entity("SOC_backend.logic.Models.Match.CardFight", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GameStateId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameStateId");
+
+                    b.ToTable("CardFight");
+                });
+
+            modelBuilder.Entity("SOC_backend.logic.Models.Match.FightCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CardFightId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DMG")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HP")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardFightId");
+
+                    b.ToTable("FightCard");
+                });
+
+            modelBuilder.Entity("SOC_backend.logic.Models.Match.FinishedMatch", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("DidWin")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OpponentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("finishedMatch");
+                });
+
             modelBuilder.Entity("SOC_backend.logic.Models.Match.GameState", b =>
                 {
                     b.Property<int>("Id")
@@ -63,11 +148,14 @@ namespace SOC_backend.api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("GameEnded")
+                        .HasColumnType("bit");
+
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("PlayersTurn")
-                        .HasColumnType("bit");
+                    b.Property<int>("TurnNumber")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -91,36 +179,51 @@ namespace SOC_backend.api.Migrations
                     b.Property<int>("HP")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsWin")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ShopId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("GameStateId");
-
-                    b.HasIndex("ShopId");
 
                     b.ToTable("Opponent");
                 });
 
             modelBuilder.Entity("SOC_backend.logic.Models.Match.OpponentCard", b =>
                 {
-                    b.Property<int>("OpponentId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("CardId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DMG")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HP")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsOffence")
                         .HasColumnType("bit");
 
-                    b.HasKey("OpponentId", "CardId");
+                    b.Property<int>("OpponentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PositionIndex")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("CardId");
+
+                    b.HasIndex("OpponentId");
 
                     b.ToTable("OpponentCard");
                 });
@@ -128,10 +231,7 @@ namespace SOC_backend.api.Migrations
             modelBuilder.Entity("SOC_backend.logic.Models.Match.Shop", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.HasKey("Id");
 
@@ -145,6 +245,9 @@ namespace SOC_backend.api.Migrations
 
                     b.Property<int>("CardId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsPurchased")
+                        .HasColumnType("bit");
 
                     b.HasKey("ShopId", "CardId");
 
@@ -169,6 +272,10 @@ namespace SOC_backend.api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProfileAvatar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("RefreshToken")
                         .HasColumnType("nvarchar(max)");
 
@@ -188,6 +295,47 @@ namespace SOC_backend.api.Migrations
                     b.ToTable("Player");
                 });
 
+            modelBuilder.Entity("CardShop", b =>
+                {
+                    b.HasOne("SOC_backend.logic.Models.Cards.Card", null)
+                        .WithMany()
+                        .HasForeignKey("AvailableCardsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SOC_backend.logic.Models.Match.Shop", null)
+                        .WithMany()
+                        .HasForeignKey("ShopId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SOC_backend.logic.Models.Match.CardFight", b =>
+                {
+                    b.HasOne("SOC_backend.logic.Models.Match.GameState", null)
+                        .WithMany("Fights")
+                        .HasForeignKey("GameStateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SOC_backend.logic.Models.Match.FightCard", b =>
+                {
+                    b.HasOne("SOC_backend.logic.Models.Match.CardFight", null)
+                        .WithMany("Cards")
+                        .HasForeignKey("CardFightId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SOC_backend.logic.Models.Match.FinishedMatch", b =>
+                {
+                    b.HasOne("SOC_backend.logic.Models.Player.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SOC_backend.logic.Models.Match.Opponent", b =>
                 {
                     b.HasOne("SOC_backend.logic.Models.Match.GameState", null)
@@ -195,14 +343,6 @@ namespace SOC_backend.api.Migrations
                         .HasForeignKey("GameStateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("SOC_backend.logic.Models.Match.Shop", "Shop")
-                        .WithMany()
-                        .HasForeignKey("ShopId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Shop");
                 });
 
             modelBuilder.Entity("SOC_backend.logic.Models.Match.OpponentCard", b =>
@@ -210,13 +350,13 @@ namespace SOC_backend.api.Migrations
                     b.HasOne("SOC_backend.logic.Models.Cards.Card", "Card")
                         .WithMany()
                         .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SOC_backend.logic.Models.Match.Opponent", "Opponent")
                         .WithMany("Cards")
                         .HasForeignKey("OpponentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Card");
@@ -224,18 +364,27 @@ namespace SOC_backend.api.Migrations
                     b.Navigation("Opponent");
                 });
 
+            modelBuilder.Entity("SOC_backend.logic.Models.Match.Shop", b =>
+                {
+                    b.HasOne("SOC_backend.logic.Models.Match.Opponent", null)
+                        .WithOne("Shop")
+                        .HasForeignKey("SOC_backend.logic.Models.Match.Shop", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SOC_backend.logic.Models.Match.ShopCard", b =>
                 {
                     b.HasOne("SOC_backend.logic.Models.Cards.Card", "Card")
                         .WithMany()
                         .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SOC_backend.logic.Models.Match.Shop", "Shop")
-                        .WithMany("AvailableCards")
+                        .WithMany("CardsForSale")
                         .HasForeignKey("ShopId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Card");
@@ -243,19 +392,29 @@ namespace SOC_backend.api.Migrations
                     b.Navigation("Shop");
                 });
 
+            modelBuilder.Entity("SOC_backend.logic.Models.Match.CardFight", b =>
+                {
+                    b.Navigation("Cards");
+                });
+
             modelBuilder.Entity("SOC_backend.logic.Models.Match.GameState", b =>
                 {
+                    b.Navigation("Fights");
+
                     b.Navigation("Players");
                 });
 
             modelBuilder.Entity("SOC_backend.logic.Models.Match.Opponent", b =>
                 {
                     b.Navigation("Cards");
+
+                    b.Navigation("Shop")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SOC_backend.logic.Models.Match.Shop", b =>
                 {
-                    b.Navigation("AvailableCards");
+                    b.Navigation("CardsForSale");
                 });
 #pragma warning restore 612, 618
         }

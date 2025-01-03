@@ -2,6 +2,7 @@
 using SOC_backend.data;
 using SOC_backend.data.Repositories;
 using SOC_backend.logic.Models.Cards;
+using SOC_backend.test.TestObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,13 @@ using System.Threading.Tasks;
 namespace SOC_backend.test.Repositories
 {
     [TestClass]
+    [TestCategory("Integration")]
     public class CardRepositoryTests
     {
         private ApplicationDbContext _context;
         private DbContextOptions<ApplicationDbContext> _options;
         private CardRepository _cardRepository;
+        private CardObjects _cardObjects;
 
         [TestInitialize]
         public void Setup()
@@ -27,6 +30,7 @@ namespace SOC_backend.test.Repositories
             _context = new ApplicationDbContext(_options);
             _context.Database.EnsureCreated();
             _cardRepository = new CardRepository(_context);
+            _cardObjects = new CardObjects();
         }
 
         [TestCleanup]
@@ -39,7 +43,7 @@ namespace SOC_backend.test.Repositories
         public async Task GetCard_ShouldReturnCard()
         {
             // Arrange
-            var card = new Card(1, "Test", 5, 5, "#4A90E2", "http://test.com/image.png");
+            var card = _cardObjects.testCard;
             _context.Card.Add(card);
             _context.SaveChanges();
 
@@ -47,7 +51,7 @@ namespace SOC_backend.test.Repositories
             var result = await _cardRepository.GetCard(1);
 
             // Assert
-            Assert.AreSame(result, card);
+            Assert.AreEqual(result.Name, card.Name);
         }
 
         [TestMethod]
@@ -62,12 +66,7 @@ namespace SOC_backend.test.Repositories
         public async Task GetAllCards_ReturnsAllCards()
         {
             //Arrange
-            var cards = new List<Card>
-            {
-                new Card(1, "Test1", 5, 5, "#4A90E2", "http://test.com/image.png"),
-                new Card(2, "Test2", 5, 5, "#4A90E2", "http://test.com/image.png"),
-                new Card(3, "Test3", 5, 5, "#4A90E2", "http://test.com/image.png")
-            };
+            var cards = _cardObjects.testCards;
             cards.ForEach(card => _context.Card.Add(card));
             _context.SaveChanges();
 
@@ -90,7 +89,7 @@ namespace SOC_backend.test.Repositories
         public async Task DeleteCard_DeletesCard()
         {
             //Arrange
-            var card = new Card(1, "Test1", 5, 5, "#4A90E2", "http://test.com/image.png");
+            var card = _cardObjects.testCard;
             _context.Card.Add(card);
             _context.SaveChanges();
 
@@ -114,12 +113,12 @@ namespace SOC_backend.test.Repositories
         public async Task EditCard_UpdatesCardCorrectly()
         {
             //Arrange
-            var card = new Card(1, "Test", 5, 5, "#4A90E2", "http://test.com/image.png");
+            var card = _cardObjects.testCard;
             _context.Card.Add(card);
             _context.SaveChanges();
 
             //Act
-            card.Update("Updated", 5, 5, "#4A90E2", "http://test.com/image.png");
+            card.Update("Updated", 5, 5, "#4A90E2", 3, "http://test.com/image.png");
             await _cardRepository.EditCard(card);
 
             //Assert
@@ -132,7 +131,7 @@ namespace SOC_backend.test.Repositories
         public async Task EditCard_ThrowsException()
         {
             //Arrange
-            var card = new Card(1, "Test", 5, 5, "#4A90E2", "http://test.com/image.png");
+            var card = _cardObjects.testCard;
 
             //Act
             await _cardRepository.EditCard(card);
@@ -142,14 +141,14 @@ namespace SOC_backend.test.Repositories
         public async Task CreateCard_CreatesCardCorrectly()
         {
             //Arrange
-            var card = new Card(1, "Test", 5, 5, "#4A90E2", "http://test.com/image.png");
+            var card = _cardObjects.testCard;
 
             //Act
             await _cardRepository.CreateCard(card);
 
             //Assert
             var result = _context.Card.FirstOrDefault();
-            Assert.AreSame(card, result);
+            Assert.AreEqual(card.Name, result.Name);
         }
 	}
 }

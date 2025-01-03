@@ -19,14 +19,43 @@ namespace SOC_backend.data.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateGame(GameState gameState)
+        {
+            var previousGameState = await GetGameState(gameState.PlayerId);
+
+            previousGameState.Update(gameState);
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<GameState> GetGameState(int playerId)
         {
-            GameState? gameState = await _context.GameState.Where(x => x.PlayerId == playerId).FirstOrDefaultAsync();
+            var gameState = await _context.GameState
+                .Include(x => x.Players)
+                .ThenInclude(x => x.Cards)
+                .ThenInclude(x => x.Card)
+                .Include(x => x.Players)
+                .ThenInclude(x => x.Shop)
+                .ThenInclude(x => x.CardsForSale)
+                .ThenInclude(x => x.Card)
+                .Include(x => x.Players)
+                .ThenInclude(x => x.Shop)
+                .ThenInclude(x => x.AvailableCards)
+                .Where(x => x.PlayerId == playerId)
+                .FirstOrDefaultAsync();
             if (gameState == null)
             {
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException("No active game found");
             }
             return gameState;
         }
+
+        public async Task EndGame(GameState gameState, FinishedMatch finishedMatch)
+        {
+            _context.GameState.Remove(gameState);
+            await _context.finishedMatch.AddAsync(finishedMatch);
+            await _context.SaveChangesAsync();
+        }
     }
 }
+

@@ -1,4 +1,6 @@
-﻿namespace SOC_backend.logic.Models.Player
+﻿using static System.Net.WebRequestMethods;
+
+namespace SOC_backend.logic.Models.Player
 {
 	public class Player
 	{
@@ -7,8 +9,9 @@
 		public string Email { get; private set; }
 		public string Password { get; private set; }
 		public string Role { get; private set; }
-		public string? RefreshToken { get; set; }
-		public DateTime? RefreshTokenExpiry { get; set; }
+        public string? RefreshToken { get; set; }
+		public string ProfileAvatar { get; set; } = "https://res.cloudinary.com/dnk25qb6c/image/upload/v1733924960/profile_1.jpg";
+        public DateTime? RefreshTokenExpiry { get; set; }
 
 		//Entity framework
 		public Player() { }
@@ -29,30 +32,18 @@
 			Role = "player";
 		}
 
-		//Testing
-		public Player(int id, string username, string password)
-		{
-			Id = id;
-			Username = username;
-			Password= password;
-		}
-
-		public Player(int id, string username)
-		{
-			Id = id;
-			Username = username;
-		}
-
-		public Player(int id, string username, DateTime refreshTokenExpiry)
+        public Player(int id, string username, string email, string password)
         {
-            Id = id;
+			Id = id;
             Username = username;
-			RefreshTokenExpiry = refreshTokenExpiry;
+            Email = email;
+            Password = HashPassword(password);
+            Role = "player";
         }
 
-		public PlayerProfileResponse ToPlayerProfileResponse()
+        public PlayerProfileResponse ToPlayerProfileResponse()
 		{
-			return new PlayerProfileResponse(Username, Email);
+			return new PlayerProfileResponse(Username, Email, ProfileAvatar);
 		}
 
 

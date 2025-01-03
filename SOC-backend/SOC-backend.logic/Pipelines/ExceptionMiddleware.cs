@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
 
@@ -29,13 +30,17 @@ namespace SOC_backend.logic.Pipelines
         private async Task HandleException(HttpContext context, Exception ex)
         {
             HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
-            string message = "Something unforeseen happened..";
+            string message = ex.Message;
 
             switch (ex)
             {
                 case SqlException:
                     statusCode = HttpStatusCode.InternalServerError;
                     message = "Database connection could not be established";
+                    break;
+                case ValidationException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    message = ex.Message;
                     break;
             }
 
