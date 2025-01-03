@@ -19,7 +19,7 @@ jobs:
 
       - name: Restore dependencies
         run: | 
-          dotnet restore SOC-backend/SOC-backend/SOC-backend.api/SOC-backend.api.csproj
+          dotnet restore SOC-backend/SOC-backend.api/SOC-backend.api.csproj
           dotnet restore SOC-backend/SOC-backend/SOC-backend.logic/SOC-backend.logic.csproj
           dotnet restore SOC-backend/SOC-backend/SOC-backend.data/SOC-backend.data.csproj
 
