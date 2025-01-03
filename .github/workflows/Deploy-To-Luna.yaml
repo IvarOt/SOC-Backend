@@ -1,0 +1,41 @@
+name: Deploy backend to Luna server
+
+on: 
+  push: 
+    branches: [ main ]
+
+jobs: 
+  build: 
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore SOC-backend/SOC-backend.sln
+
+      - name: Build project
+        run: dotnet build SOC-backend/SOC-backend.sln --configuration Release --no-restore
+
+      - name: Publish the project
+        run: dotnet publish SOC-backend/SOC-backend.sln --configuration Releaase --output ./publish
+
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.LUNA_SERVER }}
+          username: ${{ secrets.LUNA_USERNAME }}
+          password: ${{ secrets.LUNA_PASSWORD }}
+          local-dir: ./publish
+          server-dir: ${{ secrets.LUNA_DIR }}
+          protocol: ftps
+      
+      
+      
+      
