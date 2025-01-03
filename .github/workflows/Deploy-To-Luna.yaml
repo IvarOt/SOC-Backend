@@ -26,7 +26,7 @@ jobs:
           dotnet build SOC-backend/SOC-backend.api/SOC-backend.api.csproj --configuration Release --no-restore
 
       - name: Publish the project
-        run: dotnet publish SOC-backend/SOC-backend.api/SOC-backend.api.csproj --configuration Release --output ./publish --self-contained true --no-build
+        run: dotnet publish SOC-backend/SOC-backend.api/SOC-backend.api.csproj --configuration Release --output ./publish --no-build
 
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
